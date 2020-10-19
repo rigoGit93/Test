@@ -29,18 +29,24 @@ public class Dashboard extends Views {
     private void initLayout(){
 
         //Menu
-        MenuBar menuBar = new MenuBar();
+        MenuBar salesBar = new MenuBar();
+        MenuBar managerBar = new MenuBar();
         Menu homeMenu = new Menu("Home");
         Menu salesMenu = new Menu("Sales");
         Menu stockMenu = new Menu("Stock");
+        Menu managerSalesMenu = new Menu("Sales");
 
         //sorteer menu toegevoegd
-        menuBar.getMenus().addAll(homeMenu, salesMenu, stockMenu);
+        salesBar.getMenus().addAll(homeMenu, salesMenu);
+        managerBar.getMenus().addAll(homeMenu,managerSalesMenu, stockMenu);
 
         //salesmenu en homemenu
-        homeMenuItem = new MenuItem("Laden");
-        salesMenuItem = new MenuItem("Opslaan");
-        salesMenu.getItems().addAll(homeMenuItem);
+        orderMenuItem = new MenuItem("Order");
+        listOrderMenuItem = new MenuItem("List orders");
+        maintainMenuItem = new MenuItem("Maintain");
+        salesMenu.getItems().addAll(orderMenuItem, listOrderMenuItem);
+        stockMenu.getItems().addAll(maintainMenuItem);
+        managerSalesMenu.getItems().addAll(listOrderMenuItem);
 
         VBox vBox = new VBox();
 
@@ -51,7 +57,7 @@ public class Dashboard extends Views {
         Label dateLabel = new Label("Today is: ");
 
         // add a layout node and controls
-        vBox.getChildren().addAll(welcomeLabel, roleLabel, dateLabel);
+        vBox.getChildren().addAll(salesBar, welcomeLabel, roleLabel, dateLabel);
         root = vBox;
     }
 

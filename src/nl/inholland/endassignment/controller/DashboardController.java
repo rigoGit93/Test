@@ -13,6 +13,11 @@ public class DashboardController extends Controllers{
     public DashboardController(){
         view = new Dashboard();
         userDao = MainApplication.getUserDao();
+        //view.getOrderMenuItem().setOnAction(e -> createOrderButton());
+    }
+
+    public void createOrderButton(){
+        MainApplication.switchController(new CreateOrderController());
     }
 
     @Override
