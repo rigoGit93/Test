@@ -30,13 +30,13 @@ public class CreateOrder extends Views{
 
     private TableView<Article> articleTableView;
     private TableColumn<Article, String> quantityColumn;
-    private TableColumn<Article, String> brandColulmn;
-    private TableColumn<Article, String> modelColulmn;
-    private TableColumn<Article, String> acousticColulmn;
-    private TableColumn<Article, String> typeColulmn;
-    private TableColumn<Article, String> priceColulmn;
+    private TableColumn<Article, String> brandColumn;
+    private TableColumn<Article, String> modelColumn;
+    private TableColumn<Article, String> acousticColumn;
+    private TableColumn<Article, String> typeColumn;
+    private TableColumn<Article, String> priceColumn;
 
-    public CreateOrder(){initLayout();};
+    public CreateOrder(){initLayout();}
 
     private void initLayout(){
 
@@ -90,29 +90,29 @@ public class CreateOrder extends Views{
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         quantityColumn.setPrefWidth(50);
 
-        brandColulmn = new TableColumn("Brand");
-        brandColulmn.setCellValueFactory(new PropertyValueFactory<>("brand"));
-        brandColulmn.setPrefWidth(50);
+        brandColumn = new TableColumn("Brand");
+        brandColumn.setCellValueFactory(new PropertyValueFactory<>("brand"));
+        brandColumn.setPrefWidth(50);
 
-        modelColulmn = new TableColumn("Model");
-        modelColulmn.setCellValueFactory(new PropertyValueFactory<>("model"));
-        modelColulmn.setPrefWidth(50);
+        modelColumn = new TableColumn("Model");
+        modelColumn.setCellValueFactory(new PropertyValueFactory<>("model"));
+        modelColumn.setPrefWidth(50);
 
-        acousticColulmn = new TableColumn("Acoustic");
-        acousticColulmn.setCellValueFactory(new PropertyValueFactory<>("acoustic"));
-        acousticColulmn.setPrefWidth(50);
+        acousticColumn = new TableColumn("Acoustic");
+        acousticColumn.setCellValueFactory(new PropertyValueFactory<>("acoustic"));
+        acousticColumn.setPrefWidth(50);
 
-        typeColulmn = new TableColumn("Type");
-        typeColulmn.setCellValueFactory(new PropertyValueFactory<>("type"));
-        typeColulmn.setPrefWidth(50);
+        typeColumn = new TableColumn("Type");
+        typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+        typeColumn.setPrefWidth(50);
 
-        priceColulmn = new TableColumn("price");
-        priceColulmn.setCellValueFactory(new PropertyValueFactory<>("price"));
-        priceColulmn.setPrefWidth(50);
+        priceColumn = new TableColumn("Price");
+        priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+        priceColumn.setPrefWidth(50);
 
         //columns into the tableview
-        articleTableView.getColumns().addAll(quantityColumn, brandColulmn, modelColulmn, acousticColulmn,
-                typeColulmn, priceColulmn);
+        articleTableView.getColumns().addAll(quantityColumn, brandColumn, modelColumn, acousticColumn,
+                typeColumn, priceColumn);
 
         addButton= new Button("Add");
         deleteButton= new Button("Delete");
@@ -261,44 +261,44 @@ public class CreateOrder extends Views{
         this.quantityColumn = quantityColumn;
     }
 
-    public TableColumn<Article, String> getBrandColulmn() {
-        return brandColulmn;
+    public TableColumn<Article, String> getBrandColumn() {
+        return brandColumn;
     }
 
-    public void setBrandColulmn(TableColumn<Article, String> brandColulmn) {
-        this.brandColulmn = brandColulmn;
+    public void setBrandColumn(TableColumn<Article, String> brandColumn) {
+        this.brandColumn = brandColumn;
     }
 
-    public TableColumn<Article, String> getModelColulmn() {
-        return modelColulmn;
+    public TableColumn<Article, String> getModelColumn() {
+        return modelColumn;
     }
 
-    public void setModelColulmn(TableColumn<Article, String> modelColulmn) {
-        this.modelColulmn = modelColulmn;
+    public void setModelColumn(TableColumn<Article, String> modelColumn) {
+        this.modelColumn = modelColumn;
     }
 
-    public TableColumn<Article, String> getAcousticColulmn() {
-        return acousticColulmn;
+    public TableColumn<Article, String> getAcousticColumn() {
+        return acousticColumn;
     }
 
-    public void setAcousticColulmn(TableColumn<Article, String> acousticColulmn) {
-        this.acousticColulmn = acousticColulmn;
+    public void setAcousticColumn(TableColumn<Article, String> acousticColumn) {
+        this.acousticColumn = acousticColumn;
     }
 
-    public TableColumn<Article, String> getTypeColulmn() {
-        return typeColulmn;
+    public TableColumn<Article, String> getTypeColumn() {
+        return typeColumn;
     }
 
-    public void setTypeColulmn(TableColumn<Article, String> typeColulmn) {
-        this.typeColulmn = typeColulmn;
+    public void setTypeColumn(TableColumn<Article, String> typeColumn) {
+        this.typeColumn = typeColumn;
     }
 
-    public TableColumn<Article, String> getPriceColulmn() {
-        return priceColulmn;
+    public TableColumn<Article, String> getPriceColumn() {
+        return priceColumn;
     }
 
-    public void setPriceColulmn(TableColumn<Article, String> priceColulmn) {
-        this.priceColulmn = priceColulmn;
+    public void setPriceColumn(TableColumn<Article, String> priceColumn) {
+        this.priceColumn = priceColumn;
     }
 
     @Override

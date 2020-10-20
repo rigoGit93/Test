@@ -23,7 +23,6 @@ public class Dashboard extends Views {
 
     public Dashboard() {
         initLayout();
-
     }
 
     private void initLayout(){

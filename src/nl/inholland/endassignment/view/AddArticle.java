@@ -1,40 +1,39 @@
 package nl.inholland.endassignment.view;
 
 import javafx.scene.Parent;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import nl.inholland.endassignment.model.Article;
 
-public class Stock extends Views{
+public class AddArticle extends Views{
 
     private Parent root;
-    private TextField quantityArticleInput;
+    private TextField amountArticleInput;
     private Button addButton;
+    private Button cancelButton;
     private VBox vBox;
     private HBox hBox;
 
-    private TableView<Article> stockArticleTableView;
-    private TableColumn<Article, String> quantityColumn;
+    private TableView<Article> addArticleTableView;
     private TableColumn<Article, String> brandColumn;
     private TableColumn<Article, String> modelColumn;
     private TableColumn<Article, String> acousticColumn;
     private TableColumn<Article, String> typeColumn;
-    private CheckBox negateBox;
+    private TableColumn<Article, String> priceColumn;
 
-    public Stock(){
+    public AddArticle(){
         initLayout();
     }
 
     private void initLayout(){
 
-        stockArticleTableView = new TableView();
-        stockArticleTableView.setEditable(true);
-
-        quantityColumn = new TableColumn("Quantity");
-        quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-        quantityColumn.setPrefWidth(50);
+        addArticleTableView = new TableView();
+        addArticleTableView.setEditable(true);
 
         brandColumn = new TableColumn("Brand");
         brandColumn.setCellValueFactory(new PropertyValueFactory<>("brand"));
@@ -52,23 +51,26 @@ public class Stock extends Views{
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
         typeColumn.setPrefWidth(50);
 
-        stockArticleTableView.getColumns().addAll(quantityColumn,brandColumn, modelColumn, acousticColumn,
-                typeColumn);
+        priceColumn = new TableColumn("Price");
+        priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+        priceColumn.setPrefWidth(50);
 
-        quantityArticleInput = new TextField();
-        negateBox = new CheckBox("Negate");
+        //columns into the tableview
+        addArticleTableView.getColumns().addAll(brandColumn, modelColumn, acousticColumn,
+                typeColumn, priceColumn);
+
         addButton= new Button("Add");
+        cancelButton= new Button("Cancel");
 
         hBox = new HBox();
-        hBox.getChildren().addAll(quantityArticleInput,negateBox,addButton);
+        hBox.getChildren().addAll(addButton,cancelButton);
 
         vBox = new VBox();
-        vBox.getChildren().addAll(stockArticleTableView, hBox);
+        vBox.getChildren().addAll(addArticleTableView, hBox);
 
         root = vBox;
 
     }
-
 
     @Override
     public Parent getRoot() {
@@ -79,12 +81,12 @@ public class Stock extends Views{
         this.root = root;
     }
 
-    public TextField getQuantityArticleInput() {
-        return quantityArticleInput;
+    public TextField getAmountArticleInput() {
+        return amountArticleInput;
     }
 
-    public void setQuantityArticleInput(TextField quantityArticleInput) {
-        this.quantityArticleInput = quantityArticleInput;
+    public void setAmountArticleInput(TextField amountArticleInput) {
+        this.amountArticleInput = amountArticleInput;
     }
 
     public Button getAddButton() {
@@ -93,6 +95,14 @@ public class Stock extends Views{
 
     public void setAddButton(Button addButton) {
         this.addButton = addButton;
+    }
+
+    public Button getCancelButton() {
+        return cancelButton;
+    }
+
+    public void setCancelButton(Button cancelButton) {
+        this.cancelButton = cancelButton;
     }
 
     public VBox getvBox() {
@@ -111,20 +121,12 @@ public class Stock extends Views{
         this.hBox = hBox;
     }
 
-    public TableView<Article> getStockArticleTableView() {
-        return stockArticleTableView;
+    public TableView<Article> getAddArticleTableView() {
+        return addArticleTableView;
     }
 
-    public void setStockArticleTableView(TableView<Article> stockArticleTableView) {
-        this.stockArticleTableView = stockArticleTableView;
-    }
-
-    public TableColumn<Article, String> getQuantityColumn() {
-        return quantityColumn;
-    }
-
-    public void setQuantityColumn(TableColumn<Article, String> quantityColumn) {
-        this.quantityColumn = quantityColumn;
+    public void setAddArticleTableView(TableView<Article> addArticleTableView) {
+        this.addArticleTableView = addArticleTableView;
     }
 
     public TableColumn<Article, String> getBrandColumn() {
@@ -159,11 +161,11 @@ public class Stock extends Views{
         this.typeColumn = typeColumn;
     }
 
-    public CheckBox getNegateBox() {
-        return negateBox;
+    public TableColumn<Article, String> getPriceColumn() {
+        return priceColumn;
     }
 
-    public void setNegateBox(CheckBox negateBox) {
-        this.negateBox = negateBox;
+    public void setPriceColumn(TableColumn<Article, String> priceColumn) {
+        this.priceColumn = priceColumn;
     }
 }

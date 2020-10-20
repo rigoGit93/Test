@@ -57,6 +57,7 @@ public class UserController extends Controllers {
                 System.out.println("Hi " + usernameInput);
 
                 MainApplication.switchController(new DashboardController());
+                // hier moeten de firstName en lastName meegegeven worden als parameter
             }
 
             else {
