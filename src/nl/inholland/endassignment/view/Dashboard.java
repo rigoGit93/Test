@@ -1,17 +1,19 @@
 package nl.inholland.endassignment.view;
 
-import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.time.LocalDate;
 
-public class Dashboard extends Views {
+public class Dashboard {
 
-    private Parent root;
+    private Stage stage;
+    //private Parent root;
     private VBox vBox;
     private LocalDate localDate;
     private MenuItem homeMenuItem;
@@ -57,17 +59,32 @@ public class Dashboard extends Views {
 
         // add a layout node and controls
         vBox.getChildren().addAll(salesBar, welcomeLabel, roleLabel, dateLabel);
-        root = vBox;
+        //root = vBox;
+
+        Scene scene = new Scene(vBox);
+
+        stage = new Stage();
+        stage.setTitle("Dashboard");
+        stage.setScene(scene);
+
     }
 
-    @Override
-    public Parent getRoot() {
-        return root;
+//    @Override
+//    public Parent getRoot() {
+//        return root;
+//    }
+
+    public Stage getStage() {
+        return stage;
     }
 
-    public void setRoot(Parent root) {
-        this.root = root;
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
+
+//    public void setRoot(Parent root) {
+//        this.root = root;
+//    }
 
     public VBox getvBox() {
         return vBox;

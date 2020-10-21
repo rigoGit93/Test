@@ -1,27 +1,24 @@
 package nl.inholland.endassignment.controller;
 
-import nl.inholland.endassignment.MainApplication;
-import nl.inholland.endassignment.data.UserDao;
 import nl.inholland.endassignment.view.Dashboard;
-import nl.inholland.endassignment.view.Views;
 
-public class DashboardController extends Controllers{
+public class DashboardController{
 
     private Dashboard view;
-    private UserDao userDao;
+    //private UserDao userDao;
 
     public DashboardController(){
         view = new Dashboard();
-        userDao = MainApplication.getUserDao();
+        //userDao = MainApplication.getUserDao();
         //view.getOrderMenuItem().setOnAction(e -> createOrderButton());
     }
 
     public void createOrderButton(){
-        MainApplication.switchController(new CreateOrderController());
+        //MainApplication.switchController(new CreateOrderController());
     }
 
-    @Override
-    public Views getView() {
-        return view;
-    }
+//    @Override
+//    public Views getView() {
+//        return view;
+//    }
 }

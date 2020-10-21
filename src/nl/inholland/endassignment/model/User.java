@@ -22,7 +22,9 @@ public class User {
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.birtDate = birtDate;
         this.enummer = enummer;
+
 
 
         // HashMap<String, String > userHashMap = new HashMap<String, String>();
@@ -31,6 +33,14 @@ public class User {
         // userHashMap.put("SalesAcc","Passwrd");
 
 
+    }
+
+    public ArrayList<User> getList() {
+        return list;
+    }
+
+    public void setList(ArrayList<User> list) {
+        this.list = list;
     }
 
     public String getUserName() {

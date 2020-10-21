@@ -34,6 +34,7 @@ public class AddArticle extends Views{
 
         addArticleTableView = new TableView();
         addArticleTableView.setEditable(true);
+        addArticleTableView.prefWidth(200);
 
         brandColumn = new TableColumn("Brand");
         brandColumn.setCellValueFactory(new PropertyValueFactory<>("brand"));
