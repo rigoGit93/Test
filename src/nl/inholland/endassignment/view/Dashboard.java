@@ -1,45 +1,61 @@
 package nl.inholland.endassignment.view;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import nl.inholland.endassignment.model.Database;
+import nl.inholland.endassignment.model.Role;
+import nl.inholland.endassignment.model.User;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Dashboard {
 
     private Stage stage;
-    //private Parent root;
     private VBox vBox;
+    private HBox hBoxName;
+    private HBox hBoxRole;
+    private HBox hBoxDate;
     private LocalDate localDate;
     private MenuItem homeMenuItem;
     private MenuItem salesMenuItem;
     private MenuItem listOrderMenuItem;
     private MenuItem orderMenuItem;
     private MenuItem maintainMenuItem;
+    private Database database;
+    private User user;
+    private Label firstNameLbl;
 
 
-    public Dashboard() {
+    public Dashboard(User user) {
+        this.user = user;
+
         initLayout();
     }
 
     private void initLayout(){
 
         //Menu
-        MenuBar salesBar = new MenuBar();
-        MenuBar managerBar = new MenuBar();
+        MenuBar menuBar = new MenuBar();
         Menu homeMenu = new Menu("Home");
         Menu salesMenu = new Menu("Sales");
         Menu stockMenu = new Menu("Stock");
         Menu managerSalesMenu = new Menu("Sales");
 
         //sorteer menu toegevoegd
-        salesBar.getMenus().addAll(homeMenu, salesMenu);
-        managerBar.getMenus().addAll(homeMenu,managerSalesMenu, stockMenu);
+        menuBar.getMenus().addAll(homeMenu, salesMenu, stockMenu);
 
         //salesmenu en homemenu
         orderMenuItem = new MenuItem("Order");
@@ -47,18 +63,41 @@ public class Dashboard {
         maintainMenuItem = new MenuItem("Maintain");
         salesMenu.getItems().addAll(orderMenuItem, listOrderMenuItem);
         stockMenu.getItems().addAll(maintainMenuItem);
-        managerSalesMenu.getItems().addAll(listOrderMenuItem);
+        //managerSalesMenu.getItems().addAll(listOrderMenuItem);
 
         VBox vBox = new VBox();
+        hBoxName = new HBox();
+        hBoxRole = new HBox();
+        hBoxDate = new HBox();
+
+        hBoxName.setPadding(new Insets(10, 10, 10, 10));
+        hBoxRole.setPadding(new Insets(10, 10, 10, 10));
+        hBoxDate.setPadding(new Insets(10, 10, 10, 10));
+
 
         Label welcomeLabel = new Label("Welcome ");
+        Label firstNameLabel = new Label();
+        firstNameLabel.setText(user.firstName + " ");
+        Label lastNameLabel = new Label();
+        lastNameLabel.setText(user.lastName);
+
+        hBoxName.getChildren().addAll(welcomeLabel,firstNameLabel,lastNameLabel);
 
         Label roleLabel = new Label("You`re role is: ");
+        Label roleDisplayLabel = new Label();
+        roleDisplayLabel.setText(user.enummer.toString());
 
-        Label dateLabel = new Label("Today is: ");
+        hBoxRole.getChildren().addAll(roleLabel,roleDisplayLabel);
+
+        Date date = Calendar.getInstance().getTime();
+        DateFormat dateFormat = new SimpleDateFormat();
+        String stringDate = dateFormat.format(date);
+        Label dateLabel = new Label("Today is: " + (stringDate));
+        hBoxDate.getChildren().addAll(dateLabel);
+
 
         // add a layout node and controls
-        vBox.getChildren().addAll(salesBar, welcomeLabel, roleLabel, dateLabel);
+        vBox.getChildren().addAll(menuBar, hBoxName, hBoxRole, hBoxDate);
         //root = vBox;
 
         Scene scene = new Scene(vBox);
@@ -67,24 +106,39 @@ public class Dashboard {
         stage.setTitle("Dashboard");
         stage.setScene(scene);
 
-    }
+        if(user.enummer == Role.ADMIN){
+            orderMenuItem.setVisible(false);
+        }
+        else if(user.enummer == Role.SALES){
+            stockMenu.setVisible(false);
+        }
 
-//    @Override
-//    public Parent getRoot() {
-//        return root;
-//    }
+        orderMenuItem.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+
+                CreateOrder order= new CreateOrder(user);
+                order.getStage().showAndWait();
+            }
+        });
+
+    }
 
     public Stage getStage() {
         return stage;
     }
 
+    public Label getFirstNameLbl() {
+        return firstNameLbl;
+    }
+
+    public void setFirstNameLbl(Label firstNameLbl) {
+        this.firstNameLbl = firstNameLbl;
+    }
+
     public void setStage(Stage stage) {
         this.stage = stage;
     }
-
-//    public void setRoot(Parent root) {
-//        this.root = root;
-//    }
 
     public VBox getvBox() {
         return vBox;

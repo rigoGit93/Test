@@ -9,7 +9,7 @@ import javafx.scene.layout.VBox;
 import nl.inholland.endassignment.model.Article;
 import nl.inholland.endassignment.model.CustomerList;
 
-public class OrderList extends Views{
+public class OrderList{
 
     private Parent root;
     private VBox vBox;
@@ -121,14 +121,6 @@ public class OrderList extends Views{
 
     }
 
-    @Override
-    public Parent getRoot() {
-        return root;
-    }
-
-    public void setRoot(Parent root) {
-        this.root = root;
-    }
 
     public VBox getvBox() {
         return vBox;

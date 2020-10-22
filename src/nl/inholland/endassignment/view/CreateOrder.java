@@ -1,17 +1,20 @@
 package nl.inholland.endassignment.view;
 
 import javafx.geometry.Insets;
-import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import nl.inholland.endassignment.model.Article;
+import nl.inholland.endassignment.model.Role;
+import nl.inholland.endassignment.model.User;
 
-public class CreateOrder extends Views{
+public class CreateOrder{
 
-    private Parent root;
+    private Stage stage;
     private GridPane gridPane;
     private TextField customerSearchInput;
     private Button searchButton;
@@ -25,7 +28,13 @@ public class CreateOrder extends Views{
     private MenuItem orderMenuItem;
     private MenuItem maintainMenuItem;
     private VBox vBox;
-    private HBox hBox;
+    private HBox hBoxButton;
+    private HBox hBoxSearchCustomer;
+    private HBox hBoxShowCustomer;
+    private VBox hBoxFspCustomer;
+    private VBox hBoxLceCustomer;
+    private HBox hBoxCustomerInfo;
+    private User user;
 
 
     private TableView<Article> articleTableView;
@@ -36,21 +45,23 @@ public class CreateOrder extends Views{
     private TableColumn<Article, String> typeColumn;
     private TableColumn<Article, String> priceColumn;
 
-    public CreateOrder(){initLayout();}
+    public CreateOrder(User user){
+        this.user = user;
+
+        initLayout();
+    }
 
     private void initLayout(){
 
         //Menu
-        MenuBar salesBar = new MenuBar();
-        MenuBar managerBar = new MenuBar();
+        MenuBar menuBar = new MenuBar();
         Menu homeMenu = new Menu("Home");
         Menu salesMenu = new Menu("Sales");
         Menu stockMenu = new Menu("Stock");
         Menu managerSalesMenu = new Menu("Sales");
 
         //sorteer menu toegevoegd
-        salesBar.getMenus().addAll(homeMenu, salesMenu);
-        managerBar.getMenus().addAll(homeMenu,managerSalesMenu, stockMenu);
+        menuBar.getMenus().addAll(homeMenu, salesMenu, stockMenu);
 
         //salesmenu en homemenu
         orderMenuItem = new MenuItem("Order");
@@ -58,11 +69,10 @@ public class CreateOrder extends Views{
         maintainMenuItem = new MenuItem("Maintain");
         salesMenu.getItems().addAll(orderMenuItem, listOrderMenuItem);
         stockMenu.getItems().addAll(maintainMenuItem);
-        managerSalesMenu.getItems().addAll(listOrderMenuItem);
 
         gridPane = new GridPane();
 
-        gridPane.setPadding(new Insets(100, 100, 100, 100));
+        gridPane.setPadding(new Insets(10, 10, 10, 10));
         gridPane.setVgap(10);
         gridPane.setHgap(10);
 
@@ -70,67 +80,116 @@ public class CreateOrder extends Views{
         gridPane.add(titleLabel, 0, 0);
 
         Label customerLabel = new Label("Customer");
-        gridPane.add(titleLabel, 0, 1);
+        gridPane.add(customerLabel, 0, 1);
 
         customerSearchInput = new TextField();
         customerSearchInput.setPromptText("username");
         gridPane.add(customerSearchInput, 0, 2);
 
-        searchButton = new Button("Login");
+        searchButton = new Button("Search");
         gridPane.add(searchButton, 1, 2);
 
-        Label articlesLabel = new Label("Articles ");
-        gridPane.add(titleLabel, 0, 3);
+        Label customerFirstNameLabel = new Label("First name: ");
+        Label streetAddressLabel = new Label("Street address: ");
+        Label phoneNumberLabel = new Label("Phone Number: ");
 
-        articleTableView = new TableView();
+        Label customerLastNameLabel = new Label("Last name: ");
+        Label cityLabel = new Label("City: ");
+        Label emailAddressLabel = new Label("Email address: ");
+
+
+//        Label firstNameLabel = new Label();
+//        firstNameLabel.setText(user.firstName + " ");
+//        Label lastNameLabel = new Label();
+//        lastNameLabel.setText(user.lastName);
+
+        Label articleLabel = new Label("Articles ");
+        gridPane.add(articleLabel, 0, 3);
+
+        // Setting up the grades table view
+        TableView<Article> articleTableView = new TableView<>();
         articleTableView.setEditable(true);
+        articleTableView.getSelectionModel().setCellSelectionEnabled(false);
+        articleTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-        //id Column settings
-        quantityColumn = new TableColumn("Quantity");
-        quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-        quantityColumn.setPrefWidth(50);
+        this.articleTableView = new TableView();
+        this.articleTableView.setEditable(true);
 
-        brandColumn = new TableColumn("Brand");
-        brandColumn.setCellValueFactory(new PropertyValueFactory<>("brand"));
-        brandColumn.setPrefWidth(50);
+        TableColumn quantityColumn = new TableColumn("Quantity");
+        quantityColumn.setMinWidth(150);
+        quantityColumn.setCellValueFactory(new PropertyValueFactory<Article, String>("quantity"));
 
-        modelColumn = new TableColumn("Model");
-        modelColumn.setCellValueFactory(new PropertyValueFactory<>("model"));
-        modelColumn.setPrefWidth(50);
+        TableColumn brandColumn = new TableColumn("Brand");
+        brandColumn.setMinWidth(120);
+        brandColumn.setCellValueFactory(new PropertyValueFactory<Article, String>("brand"));
 
-        acousticColumn = new TableColumn("Acoustic");
-        acousticColumn.setCellValueFactory(new PropertyValueFactory<>("acoustic"));
-        acousticColumn.setPrefWidth(50);
+        TableColumn modelColumn = new TableColumn("Model");
+        modelColumn.setMinWidth(150);
+        modelColumn.setCellValueFactory(new PropertyValueFactory<Article, String>("model"));
 
-        typeColumn = new TableColumn("Type");
-        typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
-        typeColumn.setPrefWidth(50);
+        TableColumn acousticColumn = new TableColumn("Acoustic");
+        acousticColumn.setMinWidth(120);
+        acousticColumn.setCellValueFactory(new PropertyValueFactory<Article, String>("acoustic"));
 
-        priceColumn = new TableColumn("Price");
-        priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-        priceColumn.setPrefWidth(50);
+        TableColumn typeColumn = new TableColumn("Type");
+        typeColumn.setMinWidth(150);
+        typeColumn.setCellValueFactory(new PropertyValueFactory<Article, String>("type"));
 
-        //columns into the tableview
-        articleTableView.getColumns().addAll(quantityColumn, brandColumn, modelColumn, acousticColumn,
-                typeColumn, priceColumn);
+        TableColumn priceColumn = new TableColumn("Price");
+        priceColumn.setMinWidth(120);
+        priceColumn.setCellValueFactory(new PropertyValueFactory<Article, String>("price"));
+
+        articleTableView.getColumns().addAll(quantityColumn,brandColumn,modelColumn,acousticColumn,typeColumn,
+                priceColumn);
+
 
         addButton= new Button("Add");
         deleteButton= new Button("Delete");
         confirmButton= new Button("Confirm");
         resetButton= new Button("Reset");
 
-        hBox = new HBox();
-        hBox.getChildren().addAll(addButton,deleteButton,confirmButton,resetButton);
+        hBoxSearchCustomer = new HBox();
+        hBoxSearchCustomer.getChildren().addAll(customerSearchInput,searchButton);
+
+        hBoxFspCustomer = new VBox();
+        hBoxFspCustomer.getChildren().addAll(customerFirstNameLabel,streetAddressLabel,phoneNumberLabel);
+
+        hBoxLceCustomer = new VBox();
+        hBoxLceCustomer.getChildren().addAll(customerLastNameLabel,cityLabel,emailAddressLabel);
+
+        hBoxShowCustomer = new HBox();
+        hBoxShowCustomer.getChildren().addAll(hBoxFspCustomer, hBoxLceCustomer);
+
+        hBoxCustomerInfo = new HBox();
+        hBoxCustomerInfo.getChildren().addAll(hBoxSearchCustomer,hBoxShowCustomer);
+
+        hBoxButton = new HBox();
+        hBoxButton.getChildren().addAll(addButton,deleteButton,confirmButton,resetButton);
 
         vBox = new VBox();
-        vBox.getChildren().addAll(salesBar, gridPane, hBox);
+        vBox.getChildren().addAll(menuBar, gridPane,hBoxCustomerInfo,articleTableView, hBoxButton);
 
-        root = vBox;
+        Scene scene = new Scene(vBox);
+
+        stage = new Stage();
+        stage.setTitle("Create an Order");
+        stage.setScene(scene);
+
+        if(user.enummer == Role.ADMIN){
+            orderMenuItem.setVisible(false);
+        }
+        else if(user.enummer == Role.SALES){
+            stockMenu.setVisible(false);
+        }
 
     }
 
-    public void setRoot(Parent root) {
-        this.root = root;
+    public Stage getStage() {
+        return stage;
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 
     public GridPane getGridPane() {
@@ -237,13 +296,7 @@ public class CreateOrder extends Views{
         this.vBox = vBox;
     }
 
-    public HBox gethBox() {
-        return hBox;
-    }
 
-    public void sethBox(HBox hBox) {
-        this.hBox = hBox;
-    }
 
     public TableView<Article> getArticleTableView() {
         return articleTableView;
@@ -301,8 +354,4 @@ public class CreateOrder extends Views{
         this.priceColumn = priceColumn;
     }
 
-    @Override
-    public Parent getRoot() {
-        return root;
-    }
 }

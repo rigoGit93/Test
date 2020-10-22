@@ -2,13 +2,12 @@ package nl.inholland.endassignment;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import nl.inholland.endassignment.data.UserDao;
 import nl.inholland.endassignment.view.Login;
 
 public class MainApplication extends Application {
 
     //private static Stage stage;
-    private static UserDao userDAO;
+    //private static UserDao userDAO;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -31,5 +30,5 @@ public class MainApplication extends Application {
 //        stage.show();
 //    }
 
-    public static UserDao getUserDao(){ return userDAO; }
+    //public static UserDao getUserDao(){ return userDAO; }
 }

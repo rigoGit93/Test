@@ -1,12 +1,9 @@
 package nl.inholland.endassignment.view;
 
 import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -18,7 +15,9 @@ import javafx.stage.Stage;
 import nl.inholland.endassignment.model.Database;
 import nl.inholland.endassignment.model.User;
 
-public class Login {
+import java.io.Serializable;
+
+public class Login implements Serializable {
 
     private static Stage stage;
     private Database database;
@@ -26,8 +25,6 @@ public class Login {
     private TextField userInput;
     private TextField passwordInput;
     private Button loginButton;
-    private ObservableList<User> users;
-    private Parent root;
 
     public Login()
     {
@@ -37,7 +34,6 @@ public class Login {
     private void initLayout() {
 
         database = new Database();
-        users = FXCollections.observableArrayList(database.getList());
         VBox vBox = new VBox();
 
         gridPane = new GridPane();
@@ -75,7 +71,6 @@ public class Login {
         gridPane.getChildren().addAll(loginLabel, userLabel, userInput, passwordLabel, passwordInput, loginButton, visiblePassword);
 
         vBox.getChildren().addAll(gridPane);
-        root = vBox;
 
         Scene scene = new Scene(vBox);
 
@@ -87,42 +82,23 @@ public class Login {
             @Override
             public void handle(ActionEvent actionEvent) {
 
-               for (int i = 0; i < database.getList().size(); i++) {
-
-                    System.out.println("Het werkt");
-
-                    Dashboard dashboard = new Dashboard();
-                    dashboard.getStage().showAndWait();
-
-
-
-//                    if (userDao.getAll().get(i).userName.equals(userInput) &&
-//                            userDao.getAll().get(i).password.equals(passwordInput)){
-//                        System.out.println("Hi " + userInput);
-//
-//                        DashboardController saw = new DashboardController();
-//
-//
-//                        //MainApplication.switchController(new ArticleController());
-//                        // hier moeten de firstName en lastName meegegeven worden als parameter
-//                    }
-
-//                    else {
-//                        System.out.println("Login komt niet overeen!");
-//                        break;
-//                    }
-
+                User login = database.getUserList().stream()
+                        .filter(user -> userInput.getText().equals(user.userName)
+                                && passwordInput.getText().equals(user.password))
+                        .findAny()
+                        .orElse(null);
+                if(login == null){
+                    System.out.println("Inloggen is mislukt");
                 }
-
+                else{
+                    System.out.println("Wel user gevonden");
+                    Dashboard dashboard = new Dashboard(login);
+                    dashboard.getStage().showAndWait();
+                }
             }
         });
 
     }
-
-//    @Override
-//    public Parent getRoot() {
-//        return root;
-//    }
 
     public Database getDatabase() {
         return database;
@@ -132,13 +108,13 @@ public class Login {
         this.database = database;
     }
 
-    public ObservableList<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(ObservableList<User> users) {
-        this.users = users;
-    }
+//    public ObservableList<User> getUsers() {
+//        return users;
+//    }
+//
+//    public void setUsers(ObservableList<User> users) {
+//        this.users = users;
+//    }
 
     public static Stage getStage() {
         return stage;

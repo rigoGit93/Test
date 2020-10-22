@@ -10,7 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import nl.inholland.endassignment.model.Article;
 
-public class AddArticle extends Views{
+public class AddArticle{
 
     private Parent root;
     private TextField amountArticleInput;
@@ -69,18 +69,11 @@ public class AddArticle extends Views{
         vBox = new VBox();
         vBox.getChildren().addAll(addArticleTableView, hBox);
 
-        root = vBox;
 
     }
 
-    @Override
-    public Parent getRoot() {
-        return root;
-    }
 
-    public void setRoot(Parent root) {
-        this.root = root;
-    }
+
 
     public TextField getAmountArticleInput() {
         return amountArticleInput;

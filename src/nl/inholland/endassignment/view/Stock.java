@@ -7,7 +7,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import nl.inholland.endassignment.model.Article;
 
-public class Stock extends Views{
+public class Stock{
 
     private Parent root;
     private TextField quantityArticleInput;
@@ -70,14 +70,6 @@ public class Stock extends Views{
     }
 
 
-    @Override
-    public Parent getRoot() {
-        return root;
-    }
-
-    public void setRoot(Parent root) {
-        this.root = root;
-    }
 
     public TextField getQuantityArticleInput() {
         return quantityArticleInput;
