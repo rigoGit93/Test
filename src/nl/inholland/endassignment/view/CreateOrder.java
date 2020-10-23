@@ -1,5 +1,9 @@
 package nl.inholland.endassignment.view;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -8,9 +12,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import nl.inholland.endassignment.model.Article;
-import nl.inholland.endassignment.model.Role;
-import nl.inholland.endassignment.model.User;
+import nl.inholland.endassignment.model.*;
 
 public class CreateOrder{
 
@@ -35,6 +37,10 @@ public class CreateOrder{
     private VBox hBoxLceCustomer;
     private HBox hBoxCustomerInfo;
     private User user;
+    private Database db;
+    private ObservableList<Customer> customers;
+    private Customer customer;
+    private CustomerView customerView;
 
 
     private TableView<Article> articleTableView;
@@ -48,10 +54,14 @@ public class CreateOrder{
     public CreateOrder(User user){
         this.user = user;
 
+
         initLayout();
     }
 
     private void initLayout(){
+
+        db = new Database();
+        customers = FXCollections.observableArrayList(db.getCustomer());
 
         //Menu
         MenuBar menuBar = new MenuBar();
@@ -90,6 +100,7 @@ public class CreateOrder{
         gridPane.add(searchButton, 1, 2);
 
         Label customerFirstNameLabel = new Label("First name: ");
+        //customerFirstNameLabel.setText();
         Label streetAddressLabel = new Label("Street address: ");
         Label phoneNumberLabel = new Label("Phone Number: ");
 
@@ -136,7 +147,7 @@ public class CreateOrder{
         typeColumn.setCellValueFactory(new PropertyValueFactory<Article, String>("type"));
 
         TableColumn priceColumn = new TableColumn("Price");
-        priceColumn.setMinWidth(120);
+        priceColumn.setMinWidth(50);
         priceColumn.setCellValueFactory(new PropertyValueFactory<Article, String>("price"));
 
         articleTableView.getColumns().addAll(quantityColumn,brandColumn,modelColumn,acousticColumn,typeColumn,
@@ -181,6 +192,18 @@ public class CreateOrder{
         else if(user.enummer == Role.SALES){
             stockMenu.setVisible(false);
         }
+
+        /**
+         * verwijst naar CustomerView
+         */
+        searchButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+
+                CustomerView customerView= new CustomerView();
+                customerView.getStage().showAndWait();
+            }
+        });
 
     }
 

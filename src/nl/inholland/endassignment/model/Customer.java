@@ -1,15 +1,15 @@
 package nl.inholland.endassignment.model;
 
-public class CustomerList {
+public class Customer {
     private String firstName;
     private String lastName;
     private String streetAddress;
     private String cityLocation;
-    private int phoneNumber;
+    private long phoneNumber;
     private String emailAddress;
 
-    public CustomerList(String firstName, String lastName, String streetAddress, String cityLocation, int phoneNumber,
-                        String emailAddress)
+    public Customer(String firstName, String lastName, String streetAddress, String cityLocation, long phoneNumber,
+                    String emailAddress)
     {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -51,7 +51,7 @@ public class CustomerList {
         this.cityLocation = cityLocation;
     }
 
-    public int getPhoneNumber() {
+    public long getPhoneNumber() {
         return phoneNumber;
     }
 

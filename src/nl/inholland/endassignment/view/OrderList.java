@@ -7,7 +7,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import nl.inholland.endassignment.model.Article;
-import nl.inholland.endassignment.model.CustomerList;
+import nl.inholland.endassignment.model.Customer;
 
 public class OrderList{
 
@@ -15,15 +15,15 @@ public class OrderList{
     private VBox vBox;
     private HBox hBox;
 
-    private TableView<CustomerList> orderListTableView;
-    private TableColumn<CustomerList, String> orderNumberColumn;
-    private TableColumn<CustomerList, String> dateColumn;
-    private TableColumn<CustomerList, String> customerNameColumn;
-    private TableColumn<CustomerList, String> cityLocationColumn;
-    private TableColumn<CustomerList, String> phoneNumberColumn;
-    private TableColumn<CustomerList, String> emailAddressColumn;
-    private TableColumn<CustomerList, String> countColumn;
-    private TableColumn<CustomerList, String> totalColumn;
+    private TableView<Customer> orderListTableView;
+    private TableColumn<Customer, String> orderNumberColumn;
+    private TableColumn<Customer, String> dateColumn;
+    private TableColumn<Customer, String> customerNameColumn;
+    private TableColumn<Customer, String> cityLocationColumn;
+    private TableColumn<Customer, String> phoneNumberColumn;
+    private TableColumn<Customer, String> emailAddressColumn;
+    private TableColumn<Customer, String> countColumn;
+    private TableColumn<Customer, String> totalColumn;
 
     private TableView<Article> orderDetailsTableView;
     private TableColumn<Article, String> uuidColumn;
@@ -138,75 +138,75 @@ public class OrderList{
         this.hBox = hBox;
     }
 
-    public TableView<CustomerList> getOrderListTableView() {
+    public TableView<Customer> getOrderListTableView() {
         return orderListTableView;
     }
 
-    public void setOrderListTableView(TableView<CustomerList> orderListTableView) {
+    public void setOrderListTableView(TableView<Customer> orderListTableView) {
         this.orderListTableView = orderListTableView;
     }
 
-    public TableColumn<CustomerList, String> getOrderNumberColumn() {
+    public TableColumn<Customer, String> getOrderNumberColumn() {
         return orderNumberColumn;
     }
 
-    public void setOrderNumberColumn(TableColumn<CustomerList, String> orderNumberColumn) {
+    public void setOrderNumberColumn(TableColumn<Customer, String> orderNumberColumn) {
         this.orderNumberColumn = orderNumberColumn;
     }
 
-    public TableColumn<CustomerList, String> getDateColumn() {
+    public TableColumn<Customer, String> getDateColumn() {
         return dateColumn;
     }
 
-    public void setDateColumn(TableColumn<CustomerList, String> dateColumn) {
+    public void setDateColumn(TableColumn<Customer, String> dateColumn) {
         this.dateColumn = dateColumn;
     }
 
-    public TableColumn<CustomerList, String> getCustomerNameColumn() {
+    public TableColumn<Customer, String> getCustomerNameColumn() {
         return customerNameColumn;
     }
 
-    public void setCustomerNameColumn(TableColumn<CustomerList, String> customerNameColumn) {
+    public void setCustomerNameColumn(TableColumn<Customer, String> customerNameColumn) {
         this.customerNameColumn = customerNameColumn;
     }
 
-    public TableColumn<CustomerList, String> getCityLocationColumn() {
+    public TableColumn<Customer, String> getCityLocationColumn() {
         return cityLocationColumn;
     }
 
-    public void setCityLocationColumn(TableColumn<CustomerList, String> cityLocationColumn) {
+    public void setCityLocationColumn(TableColumn<Customer, String> cityLocationColumn) {
         this.cityLocationColumn = cityLocationColumn;
     }
 
-    public TableColumn<CustomerList, String> getPhoneNumberColumn() {
+    public TableColumn<Customer, String> getPhoneNumberColumn() {
         return phoneNumberColumn;
     }
 
-    public void setPhoneNumberColumn(TableColumn<CustomerList, String> phoneNumberColumn) {
+    public void setPhoneNumberColumn(TableColumn<Customer, String> phoneNumberColumn) {
         this.phoneNumberColumn = phoneNumberColumn;
     }
 
-    public TableColumn<CustomerList, String> getEmailAddressColumn() {
+    public TableColumn<Customer, String> getEmailAddressColumn() {
         return emailAddressColumn;
     }
 
-    public void setEmailAddressColumn(TableColumn<CustomerList, String> emailAddressColumn) {
+    public void setEmailAddressColumn(TableColumn<Customer, String> emailAddressColumn) {
         this.emailAddressColumn = emailAddressColumn;
     }
 
-    public TableColumn<CustomerList, String> getCountColumn() {
+    public TableColumn<Customer, String> getCountColumn() {
         return countColumn;
     }
 
-    public void setCountColumn(TableColumn<CustomerList, String> countColumn) {
+    public void setCountColumn(TableColumn<Customer, String> countColumn) {
         this.countColumn = countColumn;
     }
 
-    public TableColumn<CustomerList, String> getTotalColumn() {
+    public TableColumn<Customer, String> getTotalColumn() {
         return totalColumn;
     }
 
-    public void setTotalColumn(TableColumn<CustomerList, String> totalColumn) {
+    public void setTotalColumn(TableColumn<Customer, String> totalColumn) {
         this.totalColumn = totalColumn;
     }
 
