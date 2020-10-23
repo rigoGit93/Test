@@ -100,7 +100,6 @@ public class CreateOrder{
         gridPane.add(searchButton, 1, 2);
 
         Label customerFirstNameLabel = new Label("First name: ");
-        //customerFirstNameLabel.setText();
         Label streetAddressLabel = new Label("Street address: ");
         Label phoneNumberLabel = new Label("Phone Number: ");
 
@@ -110,7 +109,7 @@ public class CreateOrder{
 
 
 //        Label firstNameLabel = new Label();
-//        firstNameLabel.setText(user.firstName + " ");
+//        firstNameLabel.setText(customer.getFirstName() + " ");
 //        Label lastNameLabel = new Label();
 //        lastNameLabel.setText(user.lastName);
 
