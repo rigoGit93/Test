@@ -1,5 +1,8 @@
 package nl.inholland.endassignment.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Customer {
     private String firstName;
     private String lastName;
@@ -7,6 +10,7 @@ public class Customer {
     private String cityLocation;
     private long phoneNumber;
     private String emailAddress;
+    private List<Article> articleTest =new ArrayList<>();
 
 
     public Customer(String firstName, String lastName, String streetAddress, String cityLocation, long phoneNumber,
@@ -71,5 +75,9 @@ public class Customer {
 
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
+    }
+
+    public List<Article> getArticlelist() {
+        return articleTest;
     }
 }

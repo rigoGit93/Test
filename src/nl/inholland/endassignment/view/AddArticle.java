@@ -11,9 +11,6 @@ import javafx.stage.Stage;
 import nl.inholland.endassignment.model.Article;
 import nl.inholland.endassignment.model.Database;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 public class AddArticle {
 
     private Stage stage;
@@ -35,6 +32,7 @@ public class AddArticle {
     private ObservableList<Article> articles;
     private Article article;
 
+
     public AddArticle() {
         initLayout();
     }
@@ -42,7 +40,7 @@ public class AddArticle {
     private void initLayout() {
 
         db = new Database();
-        articles = FXCollections.observableArrayList(db.getArticlelist());
+        articles = FXCollections.observableArrayList();
 
 
         addArticleTableView = new TableView();
@@ -187,8 +185,8 @@ public class AddArticle {
 //            System.out.println(data);
 
 
-            List<Integer> amounts = db.getArticlelist().stream().map(Article::getQuantity).collect(Collectors.toList());
-            System.out.println("Here we have the extracted List of amounts: " + amounts);
+            //List<Integer> amounts = db.getArticlelist().stream().map(Article::getQuantity).collect(Collectors.toList());
+            //System.out.println("Here we have the extracted List of amounts: " + amounts);
 
             //  Object value  =
 
@@ -201,6 +199,13 @@ public class AddArticle {
         });
     }
 
+    public ObservableList<Article> getArticles() {
+        return articles;
+    }
+
+    public Article getArticle() {
+        return article;
+    }
 
     public TextField getAmountArticleInput() {
         return amountArticleInput;

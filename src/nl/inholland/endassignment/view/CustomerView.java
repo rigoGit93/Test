@@ -99,10 +99,10 @@ public class CustomerView {
 
                 createOrder.getCustomerFirstNameLabel().setText("Firstname: " + newValue.getFirstName());
                 createOrder.getCustomerLastNameLbl().setText("Lastname: " + newValue.getLastName());
-                createOrder.getCustomerstrNameLbl().setText("Streetname: " + newValue.getCityLocation());
-                createOrder.getCustomerphoneLbl().setText("Phone: " + newValue.getFirstName());
-                createOrder.getCustomercityLbl().setText("City: " + newValue.getFirstName());
-                createOrder.getCustomermailLbl().setText("Email Address: " + newValue.getFirstName());
+                createOrder.getCustomerstrNameLbl().setText("Streetname: " + newValue.getStreetAddress());
+                createOrder.getCustomerphoneLbl().setText("Phone: " + newValue.getPhoneNumber());
+                createOrder.getCustomercityLbl().setText("City: " + newValue.getCityLocation());
+                createOrder.getCustomermailLbl().setText("Email Address: " + newValue.getEmailAddress());
 
                 System.out.println("Selected Person: "
                         + newValue.getFirstName() + " "

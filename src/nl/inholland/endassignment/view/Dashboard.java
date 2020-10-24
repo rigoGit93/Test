@@ -1,7 +1,5 @@
 package nl.inholland.endassignment.view;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -114,7 +112,7 @@ public class Dashboard {
 
         orderMenuItem.setOnAction(actionEvent -> {
 
-            CreateOrder order = new CreateOrder(user);
+            CreateOrder order = new CreateOrder(user,database);
             order.getStage().showAndWait();
         });
 

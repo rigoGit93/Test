@@ -39,6 +39,7 @@ public class CreateOrder {
     private ObservableList<Customer> customers;
     private CustomerView customerView;
     private ObservableList<Article> articles;
+    private TableView<Article> addArticleTableView;
 
     private Label customerFirstNameLabel;
     private Label customerLastNameLbl;
@@ -46,6 +47,7 @@ public class CreateOrder {
     private Label customermailLbl;
     private Label customerphoneLbl;
     private Label customercityLbl;
+    private ObservableList<Customer> customer;
 
 
     private TableView<Article> articleTableView;
@@ -56,7 +58,7 @@ public class CreateOrder {
     private TableColumn<Article, String> typeColumn;
     private TableColumn<Article, String> priceColumn;
 
-    public CreateOrder(User user) {
+    public CreateOrder(User user, Database database) {
         this.user = user;
 
         initLayout();
@@ -67,6 +69,7 @@ public class CreateOrder {
         db = new Database();
         customers = FXCollections.observableArrayList(db.getCustomer());
         customerView = new CustomerView(this);
+        articles = FXCollections.observableArrayList();
 
         //Menu
         MenuBar menuBar = new MenuBar();
@@ -122,7 +125,7 @@ public class CreateOrder {
         /*
         Setting up the grades table view
          */
-        TableView<Article> articleTableView = new TableView<>();
+        TableView<Customer> articleTableView = new TableView<>();
         articleTableView.setEditable(true);
         articleTableView.getSelectionModel().setCellSelectionEnabled(false);
         articleTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -161,7 +164,15 @@ public class CreateOrder {
                 priceColumn);
 
 
-        articleTableView.setItems(articles);
+        articleTableView.setItems(customer);
+//        articleTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Article>() {
+//            @Override
+//            public void changed(ObservableValue<? extends Article> observable, Article oldValue, Article newValue) {
+//                articles.clear();
+////                articles.add(newValue.getQuantity(), newValue.getBrand(), newValue.getBrand(), newValue.getModel(),
+////                        newValue.getAcoustic(), newValue.getType(), newValue.getPrice());
+//            }
+//        });
 
         addButton = new Button("Add");
         deleteButton = new Button("Delete");
