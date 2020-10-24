@@ -1,23 +1,16 @@
 package nl.inholland.endassignment.view;
 
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import nl.inholland.endassignment.model.Article;
 import nl.inholland.endassignment.model.Database;
-import nl.inholland.endassignment.model.User;
 
-import java.awt.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,6 +33,7 @@ public class AddArticle {
 
     private Database db;
     private ObservableList<Article> articles;
+    private Article article;
 
     public AddArticle() {
         initLayout();
@@ -157,23 +151,26 @@ public class AddArticle {
         }));
 
 
-
         addButton.setOnAction(actionEvent -> {
 
             String text1 = amountArticleInput.getText();
             int int1 = Integer.parseInt(text1);
-            Article person = artTbList.getSelectionModel().getSelectedItem();
-            System.out.println("---\n Amount of guitar " + person.getQuantity());
+            Article selectedArticle = artTbList.getSelectionModel().getSelectedItem();
+            System.out.println("---\n Amount of guitar " + selectedArticle.getQuantity());
 
-            if (int1 >= person.getQuantity())  {
+            if (int1 >= selectedArticle.getQuantity()) {
 
-                quantityLbl.setText("Not enough in stock for " + person.getBrand() + " " + person.getModel()+
-                        ". Only" + person.getQuantity()+ " remaining.");
-               // quantityLbl.(Color.RED);
-            }else
+                quantityLbl.setText("Not enough in stock for " + selectedArticle.getBrand() + " " + selectedArticle.getModel() +
+                        ". Only" + selectedArticle.getQuantity() + " remaining.");
+                // quantityLbl.(Color.RED);
+            } else
+                articles.add(new Article(selectedArticle.getQuantity(), selectedArticle.getBrand(),
+                        selectedArticle.getModel(), selectedArticle.getAcoustic(), selectedArticle.getType(),
+                        selectedArticle.getPrice()));
+            stage.close();
 
-               // int nieuw = person.getQuantity() - int1;
-                quantityLbl.setText("");
+            // int nieuw = selectedArticle.getQuantity() - int1;
+            quantityLbl.setText("");
 
 
 //            TablePosition pos = artTbList.getSelectionModel().getSelectedCells().get(0);

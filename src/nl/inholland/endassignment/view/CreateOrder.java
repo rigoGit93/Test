@@ -38,6 +38,7 @@ public class CreateOrder {
     private Database db;
     private ObservableList<Customer> customers;
     private CustomerView customerView;
+    private ObservableList<Article> articles;
 
     private Label customerFirstNameLabel;
     private Label customerLastNameLbl;
@@ -159,6 +160,8 @@ public class CreateOrder {
         articleTableView.getColumns().addAll(quantityColumn, brandColumn, modelColumn, acousticColumn, typeColumn,
                 priceColumn);
 
+
+        articleTableView.setItems(articles);
 
         addButton = new Button("Add");
         deleteButton = new Button("Delete");

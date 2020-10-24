@@ -8,6 +8,7 @@ public class Customer {
     private long phoneNumber;
     private String emailAddress;
 
+
     public Customer(String firstName, String lastName, String streetAddress, String cityLocation, long phoneNumber,
                     String emailAddress)
     {
@@ -17,6 +18,11 @@ public class Customer {
         this.cityLocation = cityLocation;
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
+
+    }
+
+    public void setPhoneNumber(long phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getFirstName() {
