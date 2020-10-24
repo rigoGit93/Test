@@ -27,8 +27,7 @@ public class Database implements Serializable {
         Customer cl3 = new Customer("Jenny", "Gump", "Rodekruis 67",
                 "Den Haag", 061234567, "jenny@email.com");
 
-        cl1.getArticlelist().add(new Article(1, "Fender", "Telecaster", false, GuitarType.REGULAR,
-                1079.79));
+     // cl1.get
 
         customer.add(cl1);
         customer.add(cl2);
