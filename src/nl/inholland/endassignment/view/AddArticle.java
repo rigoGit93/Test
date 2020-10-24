@@ -1,21 +1,33 @@
 package nl.inholland.endassignment.view;
 
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import nl.inholland.endassignment.model.Article;
+import nl.inholland.endassignment.model.Database;
+import nl.inholland.endassignment.model.User;
 
-public class AddArticle{
+import java.awt.*;
+import java.util.List;
+import java.util.stream.Collectors;
 
-    private Parent root;
+public class AddArticle {
+
+    private Stage stage;
     private TextField amountArticleInput;
     private Button addButton;
     private Button cancelButton;
+    private Label quantityLbl;
     private VBox vBox;
     private HBox hBox;
 
@@ -26,16 +38,62 @@ public class AddArticle{
     private TableColumn<Article, String> typeColumn;
     private TableColumn<Article, String> priceColumn;
 
-    public AddArticle(){
+    private Database db;
+    private ObservableList<Article> articles;
+
+    public AddArticle() {
         initLayout();
     }
 
-    private void initLayout(){
+    private void initLayout() {
+
+        db = new Database();
+        articles = FXCollections.observableArrayList(db.getArticlelist());
+
 
         addArticleTableView = new TableView();
         addArticleTableView.setEditable(true);
         addArticleTableView.prefWidth(200);
 
+
+        TableView<Article> artTbList = new TableView<>();
+        artTbList.setEditable(true);
+        artTbList.getSelectionModel().setCellSelectionEnabled(false);
+        artTbList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+
+        /*
+        Colums worden geinitialiseerd.
+         */
+
+        TableColumn brandClm = new TableColumn("Brand");
+        brandClm.setMinWidth(75);
+        brandClm.setCellValueFactory(new PropertyValueFactory<Article, String>("brand"));
+
+        TableColumn modelClm = new TableColumn("Model");
+        modelClm.setMinWidth(75);
+        modelClm.setCellValueFactory(new PropertyValueFactory<Article, String>("model"));
+
+        TableColumn acousticClm = new TableColumn("Acoustic");
+        acousticClm.setMinWidth(75);
+        acousticClm.setCellValueFactory(new PropertyValueFactory<Article, String>("acoustic"));
+
+        TableColumn typeClm = new TableColumn("Type");
+        typeClm.setMinWidth(75);
+        typeClm.setCellValueFactory(new PropertyValueFactory<Article, String>("type"));
+
+        TableColumn priceClm = new TableColumn("Price");
+        priceClm.setMinWidth(75);
+        priceClm.setCellValueFactory(new PropertyValueFactory<Article, String>("price"));
+
+
+        artTbList.getColumns().addAll(brandClm, modelClm, acousticClm, typeClm, priceClm);
+
+
+        artTbList.setItems(articles);
+        /*
+
+         */
         brandColumn = new TableColumn("Brand");
         brandColumn.setCellValueFactory(new PropertyValueFactory<>("brand"));
         brandColumn.setPrefWidth(50);
@@ -56,23 +114,95 @@ public class AddArticle{
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
         priceColumn.setPrefWidth(50);
 
-        //columns into the tableview
+        /*
+        Columns into the tableview
+         */
         addArticleTableView.getColumns().addAll(brandColumn, modelColumn, acousticColumn,
                 typeColumn, priceColumn);
 
-        addButton= new Button("Add");
-        cancelButton= new Button("Cancel");
+
+        quantityLbl = new Label("Amount: ");
+        amountArticleInput = new TextField();
+        addButton = new Button("Add");
+        cancelButton = new Button("Cancel");
 
         hBox = new HBox();
-        hBox.getChildren().addAll(addButton,cancelButton);
+        hBox.getChildren().addAll(amountArticleInput, addButton, cancelButton);
 
         vBox = new VBox();
-        vBox.getChildren().addAll(addArticleTableView, hBox);
+        vBox.getChildren().addAll(artTbList, hBox, quantityLbl);
 
 
+        Scene scene = new Scene(vBox);
+
+        stage = new Stage();
+        stage.setTitle("Create an Order");
+        stage.setScene(scene);
+
+
+        artTbList.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
+
+
+            if (newValue != null) {
+                if (addButton.isPressed()) {
+                    System.out.println("Button is pressed with quantity" + newValue.getQuantity());
+                }
+
+                System.out.println("Amount: "
+                        + newValue.getQuantity() + " "
+
+                );
+            }
+
+        }));
+
+
+
+        addButton.setOnAction(actionEvent -> {
+
+            String text1 = amountArticleInput.getText();
+            int int1 = Integer.parseInt(text1);
+            Article person = artTbList.getSelectionModel().getSelectedItem();
+            System.out.println("---\n Amount of guitar " + person.getQuantity());
+
+            if (int1 >= person.getQuantity())  {
+
+                quantityLbl.setText("Not enough in stock for " + person.getBrand() + " " + person.getModel()+
+                        ". Only" + person.getQuantity()+ " remaining.");
+               // quantityLbl.(Color.RED);
+            }else
+
+               // int nieuw = person.getQuantity() - int1;
+                quantityLbl.setText("");
+
+
+//            TablePosition pos = artTbList.getSelectionModel().getSelectedCells().get(0);
+//            int row = pos.getRow();
+//
+//            // Item here is the table view type:
+//            Article item = artTbList.getItems().get(row);
+//
+//            TableColumn col = pos.getTableColumn();
+//
+//            // this gives the value in the selected cell:
+//            String data = (String) col.getCellObservableValue(item).getValue();
+//
+//            System.out.println(data);
+
+
+            List<Integer> amounts = db.getArticlelist().stream().map(Article::getQuantity).collect(Collectors.toList());
+            System.out.println("Here we have the extracted List of amounts: " + amounts);
+
+            //  Object value  =
+
+//            if (addButton.isPressed()){
+//                System.out.println("Button is pressed with amount: ");
+//            }
+//            if () {
+//
+//            }
+        });
     }
-
-
 
 
     public TextField getAmountArticleInput() {
@@ -85,6 +215,22 @@ public class AddArticle{
 
     public Button getAddButton() {
         return addButton;
+    }
+
+    public Stage getStage() {
+        return stage;
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
+    public Label getQuantityLbl() {
+        return quantityLbl;
+    }
+
+    public void setQuantityLbl(Label quantityLbl) {
+        this.quantityLbl = quantityLbl;
     }
 
     public void setAddButton(Button addButton) {

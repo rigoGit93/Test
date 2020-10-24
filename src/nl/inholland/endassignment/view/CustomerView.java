@@ -21,7 +21,9 @@ public class CustomerView {
     private Stage stage;
     private Database db;
     private ObservableList<Customer> customers;
+    private CreateOrder createOrder;
     private Customer customer;
+
 
     private TableView<Customer> customerTableView;
     private TableColumn<Customer, String> firstNameColumn;
@@ -31,12 +33,12 @@ public class CustomerView {
     private TableColumn<Customer, String> phoneNumberColumn;
     private TableColumn<Customer, String> emailAddressColumn;
 
-    public CustomerView()
-    {
+    public CustomerView(CreateOrder createOrder) {
+        this.createOrder = createOrder;
         initLayout();
     }
 
-    private void initLayout(){
+    private void initLayout() {
 
         db = new Database();
         customers = FXCollections.observableArrayList(db.getCustomer());
@@ -78,8 +80,8 @@ public class CustomerView {
         emailAddressColumn.setMinWidth(150);
         emailAddressColumn.setCellValueFactory(new PropertyValueFactory<>("emailAddress"));
 
-        customerTableView.getColumns().addAll(firstNameColumn,lastNameColumn,streetAddressColumn,cityLocationColumn,
-                phoneNumberColumn,emailAddressColumn);
+        customerTableView.getColumns().addAll(firstNameColumn, lastNameColumn, streetAddressColumn, cityLocationColumn,
+                phoneNumberColumn, emailAddressColumn);
 
         customerTableView.setItems(customers);
 
@@ -90,7 +92,18 @@ public class CustomerView {
 //        System.out.println(selectedItem);
 
         customerTableView.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
-            if(newValue != null){
+
+
+            if (newValue != null) {
+
+
+                createOrder.getCustomerFirstNameLabel().setText("Firstname: " + newValue.getFirstName());
+                createOrder.getCustomerLastNameLbl().setText("Lastname: " + newValue.getLastName());
+                createOrder.getCustomerstrNameLbl().setText("Streetname: " + newValue.getCityLocation());
+                createOrder.getCustomerphoneLbl().setText("Phone: " + newValue.getFirstName());
+                createOrder.getCustomercityLbl().setText("City: " + newValue.getFirstName());
+                createOrder.getCustomermailLbl().setText("Email Address: " + newValue.getFirstName());
+
                 System.out.println("Selected Person: "
                         + newValue.getFirstName() + " "
                         + newValue.getLastName() + " "
@@ -100,7 +113,12 @@ public class CustomerView {
                         + newValue.getEmailAddress() + " "
                 );
             }
+
         }));
+
+        customerTableView.getSelectionModel().selectedIndexProperty().addListener(ov -> {
+
+        });
 
         layout.getChildren().addAll(customerListLabel, customerTableView);
 

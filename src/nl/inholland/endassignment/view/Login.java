@@ -26,8 +26,7 @@ public class Login implements Serializable {
     private TextField passwordInput;
     private Button loginButton;
 
-    public Login()
-    {
+    public Login() {
         initLayout();
     }
 
@@ -78,23 +77,22 @@ public class Login implements Serializable {
         stage.setTitle("Login");
         stage.setScene(scene);
 
-        loginButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
+        /*
 
-                User login = database.getUserList().stream()
-                        .filter(user -> userInput.getText().equals(user.userName)
-                                && passwordInput.getText().equals(user.password))
-                        .findAny()
-                        .orElse(null);
-                if(login == null){
-                    System.out.println("Inloggen is mislukt");
-                }
-                else{
-                    System.out.println("Wel user gevonden");
-                    Dashboard dashboard = new Dashboard(login);
-                    dashboard.getStage().showAndWait();
-                }
+         */
+        loginButton.setOnAction(actionEvent -> {
+
+            User login = database.getUserList().stream()
+                    .filter(user -> userInput.getText().equals(user.userName)
+                            && passwordInput.getText().equals(user.password))
+                    .findAny()
+                    .orElse(null);
+            if (login == null) {
+                System.out.println("Inloggen is mislukt");
+            } else {
+                System.out.println("Wel user gevonden");
+                Dashboard dashboard = new Dashboard(login);
+                dashboard.getStage().showAndWait();
             }
         });
 

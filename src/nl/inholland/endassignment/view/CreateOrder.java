@@ -2,8 +2,6 @@ package nl.inholland.endassignment.view;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -14,7 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import nl.inholland.endassignment.model.*;
 
-public class CreateOrder{
+public class CreateOrder {
 
     private Stage stage;
     private GridPane gridPane;
@@ -39,8 +37,14 @@ public class CreateOrder{
     private User user;
     private Database db;
     private ObservableList<Customer> customers;
-    private Customer customer;
     private CustomerView customerView;
+
+    private Label customerFirstNameLabel;
+    private Label customerLastNameLbl;
+    private Label customerstrNameLbl;
+    private Label customermailLbl;
+    private Label customerphoneLbl;
+    private Label customercityLbl;
 
 
     private TableView<Article> articleTableView;
@@ -51,17 +55,17 @@ public class CreateOrder{
     private TableColumn<Article, String> typeColumn;
     private TableColumn<Article, String> priceColumn;
 
-    public CreateOrder(User user){
+    public CreateOrder(User user) {
         this.user = user;
-
 
         initLayout();
     }
 
-    private void initLayout(){
+    private void initLayout() {
 
         db = new Database();
         customers = FXCollections.observableArrayList(db.getCustomer());
+        customerView = new CustomerView(this);
 
         //Menu
         MenuBar menuBar = new MenuBar();
@@ -99,32 +103,34 @@ public class CreateOrder{
         searchButton = new Button("Search");
         gridPane.add(searchButton, 1, 2);
 
-        Label customerFirstNameLabel = new Label("First name: ");
-        //customerFirstNameLabel.setText();
-        Label streetAddressLabel = new Label("Street address: ");
-        Label phoneNumberLabel = new Label("Phone Number: ");
 
-        Label customerLastNameLabel = new Label("Last name: ");
-        Label cityLabel = new Label("City: ");
-        Label emailAddressLabel = new Label("Email address: ");
+        /*
+        Labels van de create order view
+         */
+        customerFirstNameLabel = new Label();
+        customerstrNameLbl = new Label();
+        customerphoneLbl = new Label();
 
-
-//        Label firstNameLabel = new Label();
-//        firstNameLabel.setText(user.firstName + " ");
-//        Label lastNameLabel = new Label();
-//        lastNameLabel.setText(user.lastName);
+        customerLastNameLbl = new Label();
+        customercityLbl = new Label();
+        customermailLbl = new Label();
 
         Label articleLabel = new Label("Articles ");
         gridPane.add(articleLabel, 0, 3);
 
-        // Setting up the grades table view
+        /*
+        Setting up the grades table view
+         */
         TableView<Article> articleTableView = new TableView<>();
         articleTableView.setEditable(true);
         articleTableView.getSelectionModel().setCellSelectionEnabled(false);
         articleTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
         this.articleTableView = new TableView();
         this.articleTableView.setEditable(true);
+
+        /*
+        Colums worden geinitialiseerd.
+         */
 
         TableColumn quantityColumn = new TableColumn("Quantity");
         quantityColumn.setMinWidth(150);
@@ -150,35 +156,37 @@ public class CreateOrder{
         priceColumn.setMinWidth(50);
         priceColumn.setCellValueFactory(new PropertyValueFactory<Article, String>("price"));
 
-        articleTableView.getColumns().addAll(quantityColumn,brandColumn,modelColumn,acousticColumn,typeColumn,
+        articleTableView.getColumns().addAll(quantityColumn, brandColumn, modelColumn, acousticColumn, typeColumn,
                 priceColumn);
 
 
-        addButton= new Button("Add");
-        deleteButton= new Button("Delete");
-        confirmButton= new Button("Confirm");
-        resetButton= new Button("Reset");
+        addButton = new Button("Add");
+        deleteButton = new Button("Delete");
+        confirmButton = new Button("Confirm");
+        resetButton = new Button("Reset");
 
         hBoxSearchCustomer = new HBox();
-        hBoxSearchCustomer.getChildren().addAll(customerSearchInput,searchButton);
+        hBoxSearchCustomer.getChildren().addAll(customerSearchInput, searchButton);
 
         hBoxFspCustomer = new VBox();
-        hBoxFspCustomer.getChildren().addAll(customerFirstNameLabel,streetAddressLabel,phoneNumberLabel);
+        hBoxFspCustomer.getChildren().addAll(customerFirstNameLabel, customerstrNameLbl, customerphoneLbl);
+        hBoxFspCustomer.setPadding(new Insets(10, 10, 10, 10));
 
         hBoxLceCustomer = new VBox();
-        hBoxLceCustomer.getChildren().addAll(customerLastNameLabel,cityLabel,emailAddressLabel);
+        hBoxLceCustomer.getChildren().addAll(customerLastNameLbl, customercityLbl, customermailLbl);
+        hBoxLceCustomer.setPadding(new Insets(10, 10, 10, 10));
 
         hBoxShowCustomer = new HBox();
         hBoxShowCustomer.getChildren().addAll(hBoxFspCustomer, hBoxLceCustomer);
 
         hBoxCustomerInfo = new HBox();
-        hBoxCustomerInfo.getChildren().addAll(hBoxSearchCustomer,hBoxShowCustomer);
+        hBoxCustomerInfo.getChildren().addAll(hBoxSearchCustomer, hBoxShowCustomer);
 
         hBoxButton = new HBox();
-        hBoxButton.getChildren().addAll(addButton,deleteButton,confirmButton,resetButton);
+        hBoxButton.getChildren().addAll(addButton, deleteButton, confirmButton, resetButton);
 
         vBox = new VBox();
-        vBox.getChildren().addAll(menuBar, gridPane,hBoxCustomerInfo,articleTableView, hBoxButton);
+        vBox.getChildren().addAll(menuBar, gridPane, hBoxCustomerInfo, articleTableView, hBoxButton);
 
         Scene scene = new Scene(vBox);
 
@@ -186,23 +194,30 @@ public class CreateOrder{
         stage.setTitle("Create an Order");
         stage.setScene(scene);
 
-        if(user.enummer == Role.ADMIN){
+
+        /*
+         * Laat menu zien op basis van role
+         */
+
+        if (user.enummer == Role.ADMIN) {
             orderMenuItem.setVisible(false);
-        }
-        else if(user.enummer == Role.SALES){
+        } else if (user.enummer == Role.SALES) {
             stockMenu.setVisible(false);
         }
 
-        /**
+
+        /*
          * verwijst naar CustomerView
          */
-        searchButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
+        searchButton.setOnAction(actionEvent -> {
 
-                CustomerView customerView= new CustomerView();
-                customerView.getStage().showAndWait();
-            }
+            CustomerView customerView = new CustomerView(this);
+            customerView.getStage().showAndWait();
+        });
+
+        addButton.setOnAction(actionEvent -> {
+            AddArticle customerView = new AddArticle();
+            customerView.getStage().showAndWait();
         });
 
     }
@@ -231,6 +246,14 @@ public class CreateOrder{
         this.customerSearchInput = customerSearchInput;
     }
 
+    public void setCustomerFirstNameLabel(Label customerFirstNameLabel) {
+        this.customerFirstNameLabel = customerFirstNameLabel;
+    }
+
+    public Label getCustomerFirstNameLabel() {
+        return customerFirstNameLabel;
+    }
+
     public Button getSearchButton() {
         return searchButton;
     }
@@ -257,6 +280,46 @@ public class CreateOrder{
 
     public Button getConfirmButton() {
         return confirmButton;
+    }
+
+    public Label getCustomerLastNameLbl() {
+        return customerLastNameLbl;
+    }
+
+    public void setCustomerLastNameLbl(Label customerLastNameLbl) {
+        this.customerLastNameLbl = customerLastNameLbl;
+    }
+
+    public Label getCustomerstrNameLbl() {
+        return customerstrNameLbl;
+    }
+
+    public void setCustomerstrNameLbl(Label customerstrNameLbl) {
+        this.customerstrNameLbl = customerstrNameLbl;
+    }
+
+    public Label getCustomermailLbl() {
+        return customermailLbl;
+    }
+
+    public void setCustomermailLbl(Label customermailLbl) {
+        this.customermailLbl = customermailLbl;
+    }
+
+    public Label getCustomerphoneLbl() {
+        return customerphoneLbl;
+    }
+
+    public void setCustomerphoneLbl(Label customerphoneLbl) {
+        this.customerphoneLbl = customerphoneLbl;
+    }
+
+    public Label getCustomercityLbl() {
+        return customercityLbl;
+    }
+
+    public void setCustomercityLbl(Label customercityLbl) {
+        this.customercityLbl = customercityLbl;
     }
 
     public void setConfirmButton(Button confirmButton) {
@@ -318,7 +381,6 @@ public class CreateOrder{
     public void setvBox(VBox vBox) {
         this.vBox = vBox;
     }
-
 
 
     public TableView<Article> getArticleTableView() {

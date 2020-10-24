@@ -45,7 +45,7 @@ public class Dashboard {
         initLayout();
     }
 
-    private void initLayout(){
+    private void initLayout() {
 
         //Menu
         MenuBar menuBar = new MenuBar();
@@ -81,13 +81,13 @@ public class Dashboard {
         Label lastNameLabel = new Label();
         lastNameLabel.setText(user.lastName);
 
-        hBoxName.getChildren().addAll(welcomeLabel,firstNameLabel,lastNameLabel);
+        hBoxName.getChildren().addAll(welcomeLabel, firstNameLabel, lastNameLabel);
 
         Label roleLabel = new Label("You`re role is: ");
         Label roleDisplayLabel = new Label();
         roleDisplayLabel.setText(user.enummer.toString());
 
-        hBoxRole.getChildren().addAll(roleLabel,roleDisplayLabel);
+        hBoxRole.getChildren().addAll(roleLabel, roleDisplayLabel);
 
         Date date = Calendar.getInstance().getTime();
         DateFormat dateFormat = new SimpleDateFormat();
@@ -106,20 +106,16 @@ public class Dashboard {
         stage.setTitle("Dashboard");
         stage.setScene(scene);
 
-        if(user.enummer == Role.ADMIN){
+        if (user.enummer == Role.ADMIN) {
             orderMenuItem.setVisible(false);
-        }
-        else if(user.enummer == Role.SALES){
+        } else if (user.enummer == Role.SALES) {
             stockMenu.setVisible(false);
         }
 
-        orderMenuItem.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
+        orderMenuItem.setOnAction(actionEvent -> {
 
-                CreateOrder order= new CreateOrder(user);
-                order.getStage().showAndWait();
-            }
+            CreateOrder order = new CreateOrder(user);
+            order.getStage().showAndWait();
         });
 
     }

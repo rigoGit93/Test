@@ -4,11 +4,11 @@ public class Article {
     private int quantity;
     private String brand;
     private String model;
-    private String acoustic;
+    private boolean acoustic;
     private GuitarType type;
     private double price;
 
-    public Article(int quantity, String brand, String model, String acoustic, GuitarType type, double price) {
+    public Article(int quantity, String brand, String model, boolean acoustic, GuitarType type, double price) {
         this.quantity = quantity;
         this.brand = brand;
         this.model = model;
@@ -41,11 +41,11 @@ public class Article {
         this.model = model;
     }
 
-    public String getAcoustic() {
+    public boolean getAcoustic() {
         return acoustic;
     }
 
-    public void setAcoustic(String acoustic) {
+    public void setAcoustic(boolean acoustic) {
         this.acoustic = acoustic;
     }
 
