@@ -71,6 +71,7 @@ public class OrderList {
         Label orderListLabel = new Label("Order List");
 
         TableView<Customer> orderListTableView = new TableView<>();
+        orderListTableView.setMaxHeight(250);
         orderListTableView.setEditable(true);
         orderListTableView.getSelectionModel().setCellSelectionEnabled(false);
         orderListTableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -115,6 +116,7 @@ public class OrderList {
         Label orderDetailsListLabel = new Label("Details");
 
         TableView<Customer> orderDetailsTableView = new TableView<>();
+        orderDetailsTableView.setMaxHeight(250);
         orderDetailsTableView.setEditable(true);
         orderDetailsTableView.getSelectionModel().setCellSelectionEnabled(false);
         orderDetailsTableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
