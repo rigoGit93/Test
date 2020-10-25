@@ -9,7 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import nl.inholland.endassignment.model.*;
 
-public class OrderList{
+public class OrderList {
 
     private Stage stage;
     private Parent root;
@@ -42,11 +42,13 @@ public class OrderList{
     private TableColumn<Article, String> priceColumn;
     private TableColumn<Article, String> quantityColumn;
 
-    public OrderList(){
+    public OrderList(User user) {
+
+        this.user = user;
         initLayout();
     }
 
-    private void initLayout(){
+    private void initLayout() {
 
         //Menu
         MenuBar menuBar = new MenuBar();
@@ -73,7 +75,7 @@ public class OrderList{
         orderListTableView.getSelectionModel().setCellSelectionEnabled(false);
         orderListTableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
-        TableColumn<Customer, String> orderNumberColumn  = new TableColumn<>("Order Number");
+        TableColumn<Customer, String> orderNumberColumn = new TableColumn<>("Order Number");
         orderNumberColumn.setMinWidth(150);
         orderNumberColumn.setCellValueFactory(new PropertyValueFactory<>("orderNumber"));
 
@@ -107,7 +109,7 @@ public class OrderList{
 
 
         orderListTableView.getColumns().addAll(orderNumberColumn, dateColumn, customerNameColumn, cityLocationColumn,
-                phoneNumberColumn, emailAddressColumn, countColumn, totalColumn );
+                phoneNumberColumn, emailAddressColumn, countColumn, totalColumn);
 
 
         Label orderDetailsListLabel = new Label("Details");
@@ -147,10 +149,10 @@ public class OrderList{
 
 
         orderDetailsTableView.getColumns().addAll(uuidColumn, brandColumn, modelColumn, acousticColumn,
-                typeColumn, priceColumn, quantityColumn );
+                typeColumn, priceColumn, quantityColumn);
 
         vBox = new VBox();
-        vBox.getChildren().addAll(orderListTableView, orderDetailsTableView);
+        vBox.getChildren().addAll(orderListLabel, orderListTableView, orderDetailsListLabel, orderDetailsTableView);
 
 
         Scene scene = new Scene(vBox);
@@ -174,7 +176,7 @@ public class OrderList{
 
         orderMenuItem.setOnAction(actionEvent -> {
 
-            CreateOrder order = new CreateOrder(user,database);
+            CreateOrder order = new CreateOrder(user, database);
             order.getStage().showAndWait();
         });
 

@@ -119,9 +119,17 @@ public class Dashboard {
 
         orderMenuItem.setOnAction(actionEvent -> {
 
-            CreateOrder order = new CreateOrder(user,database);
+            CreateOrder order = new CreateOrder(user, database);
             order.getStage().showAndWait();
         });
+
+
+        listOrderMenuItem.setOnAction(actionEvent -> {
+
+            OrderList order = new OrderList(user);
+            order.getStage().showAndWait();
+        });
+
 
         maintainMenuItem.setOnAction(actionEvent -> {
 
@@ -169,6 +177,14 @@ public class Dashboard {
 
     public void setHomeMenuItem(MenuItem homeMenuItem) {
         this.homeMenuItem = homeMenuItem;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public MenuItem getSalesMenuItem() {
