@@ -9,10 +9,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import nl.inholland.endassignment.model.*;
 
+
 public class Stock{
 
     private Stage stage;
-    private Parent root;
     private TextField quantityArticleInput;
     private Button addButton;
     private VBox vBox;
@@ -34,8 +34,9 @@ public class Stock{
     private CheckBox negateBox;
 
     public Stock(User user){
-        initLayout();
         this.user = user;
+        initLayout();
+
 
     }
 
@@ -180,6 +181,46 @@ public class Stock{
 
     public TableColumn<Article, String> getQuantityColumn() {
         return quantityColumn;
+    }
+
+    public MenuItem getHomeMenuItem() {
+        return homeMenuItem;
+    }
+
+    public void setHomeMenuItem(MenuItem homeMenuItem) {
+        this.homeMenuItem = homeMenuItem;
+    }
+
+    public MenuItem getSalesMenuItem() {
+        return salesMenuItem;
+    }
+
+    public void setSalesMenuItem(MenuItem salesMenuItem) {
+        this.salesMenuItem = salesMenuItem;
+    }
+
+    public MenuItem getListOrderMenuItem() {
+        return listOrderMenuItem;
+    }
+
+    public void setListOrderMenuItem(MenuItem listOrderMenuItem) {
+        this.listOrderMenuItem = listOrderMenuItem;
+    }
+
+    public MenuItem getOrderMenuItem() {
+        return orderMenuItem;
+    }
+
+    public void setOrderMenuItem(MenuItem orderMenuItem) {
+        this.orderMenuItem = orderMenuItem;
+    }
+
+    public MenuItem getMaintainMenuItem() {
+        return maintainMenuItem;
+    }
+
+    public void setMaintainMenuItem(MenuItem maintainMenuItem) {
+        this.maintainMenuItem = maintainMenuItem;
     }
 
     public void setQuantityColumn(TableColumn<Article, String> quantityColumn) {
