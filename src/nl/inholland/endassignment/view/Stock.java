@@ -1,19 +1,29 @@
 package nl.inholland.endassignment.view;
 
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import nl.inholland.endassignment.model.Article;
+import javafx.stage.Stage;
+import nl.inholland.endassignment.model.*;
 
 public class Stock{
 
+    private Stage stage;
     private Parent root;
     private TextField quantityArticleInput;
     private Button addButton;
     private VBox vBox;
     private HBox hBox;
+    private MenuItem homeMenuItem;
+    private MenuItem salesMenuItem;
+    private MenuItem listOrderMenuItem;
+    private MenuItem orderMenuItem;
+    private MenuItem maintainMenuItem;
+    private User user;
+    private Database database;
 
     private TableView<Article> stockArticleTableView;
     private TableColumn<Article, String> quantityColumn;
@@ -23,34 +33,58 @@ public class Stock{
     private TableColumn<Article, String> typeColumn;
     private CheckBox negateBox;
 
-    public Stock(){
+    public Stock(User user){
         initLayout();
+        this.user = user;
+
     }
 
     private void initLayout(){
 
-        stockArticleTableView = new TableView();
+        //Menu
+        MenuBar menuBar = new MenuBar();
+        Menu homeMenu = new Menu("Home");
+        Menu salesMenu = new Menu("Sales");
+        Menu stockMenu = new Menu("Stock");
+        Menu managerSalesMenu = new Menu("Sales");
+
+        //sorteer menu toegevoegd
+        menuBar.getMenus().addAll(homeMenu, salesMenu, stockMenu);
+
+        //salesmenu en homemenu
+        orderMenuItem = new MenuItem("Order");
+        listOrderMenuItem = new MenuItem("List orders");
+        maintainMenuItem = new MenuItem("Maintain");
+        salesMenu.getItems().addAll(orderMenuItem, listOrderMenuItem);
+        stockMenu.getItems().addAll(maintainMenuItem);
+
+        Label stockMaintenanceLabel = new Label("Stock maintenance");
+
+        TableView<Customer> stockArticleTableView = new TableView<>();
         stockArticleTableView.setEditable(true);
+        stockArticleTableView.getSelectionModel().setCellSelectionEnabled(false);
+        stockArticleTableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
-        quantityColumn = new TableColumn("Quantity");
+        TableColumn<Customer, String> quantityColumn = new TableColumn<>("Quantity");
+        quantityColumn.setMinWidth(150);
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-        quantityColumn.setPrefWidth(50);
 
-        brandColumn = new TableColumn("Brand");
+        TableColumn<Customer, String> brandColumn = new TableColumn<>("Brand");
+        brandColumn.setMinWidth(150);
         brandColumn.setCellValueFactory(new PropertyValueFactory<>("brand"));
-        brandColumn.setPrefWidth(50);
 
-        modelColumn = new TableColumn("Model");
+        TableColumn<Customer, String> modelColumn = new TableColumn<>("Model");
+        modelColumn.setMinWidth(150);
         modelColumn.setCellValueFactory(new PropertyValueFactory<>("model"));
-        modelColumn.setPrefWidth(50);
 
-        acousticColumn = new TableColumn("Acoustic");
+        TableColumn<Customer, String> acousticColumn = new TableColumn<>("Acoustic");
+        acousticColumn.setMinWidth(150);
         acousticColumn.setCellValueFactory(new PropertyValueFactory<>("acoustic"));
-        acousticColumn.setPrefWidth(50);
 
-        typeColumn = new TableColumn("Type");
+        TableColumn<Customer, String> typeColumn = new TableColumn<>("Type");
+        typeColumn.setMinWidth(150);
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
-        typeColumn.setPrefWidth(50);
+
 
         stockArticleTableView.getColumns().addAll(quantityColumn,brandColumn, modelColumn, acousticColumn,
                 typeColumn);
@@ -65,11 +99,44 @@ public class Stock{
         vBox = new VBox();
         vBox.getChildren().addAll(stockArticleTableView, hBox);
 
-        root = vBox;
+        Scene scene = new Scene(vBox);
+
+        stage = new Stage();
+        stage.setTitle("Stock maintenance");
+        stage.setScene(scene);
+
+        if (user.enummer == Role.ADMIN) {
+            orderMenuItem.setVisible(false);
+
+        } else if (user.enummer == Role.SALES) {
+            stockMenu.setVisible(false);
+        }
 
     }
 
+    public Stage getStage() {
+        return stage;
+    }
 
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Database getDatabase() {
+        return database;
+    }
+
+    public void setDatabase(Database database) {
+        this.database = database;
+    }
 
     public TextField getQuantityArticleInput() {
         return quantityArticleInput;

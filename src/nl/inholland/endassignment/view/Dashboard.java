@@ -104,8 +104,15 @@ public class Dashboard {
         stage.setTitle("Dashboard");
         stage.setScene(scene);
 
+//        listOrderMenuItem.setOnAction(actionEvent -> {
+//
+//            OrderList orderList = new OrderList();
+//            orderList.getStage().showAndWait();
+//        });
+
         if (user.enummer == Role.ADMIN) {
             orderMenuItem.setVisible(false);
+
         } else if (user.enummer == Role.SALES) {
             stockMenu.setVisible(false);
         }
@@ -114,6 +121,12 @@ public class Dashboard {
 
             CreateOrder order = new CreateOrder(user,database);
             order.getStage().showAndWait();
+        });
+
+        maintainMenuItem.setOnAction(actionEvent -> {
+
+            Stock stock = new Stock(user);
+            stock.getStage().showAndWait();
         });
 
     }
