@@ -1,6 +1,5 @@
 package nl.inholland.endassignment.view;
 
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -12,7 +11,6 @@ import nl.inholland.endassignment.model.*;
 public class Stock{
 
     private Stage stage;
-    private Parent root;
     private TextField quantityArticleInput;
     private Button addButton;
     private VBox vBox;
@@ -112,6 +110,46 @@ public class Stock{
             stockMenu.setVisible(false);
         }
 
+    }
+
+    public MenuItem getHomeMenuItem() {
+        return homeMenuItem;
+    }
+
+    public void setHomeMenuItem(MenuItem homeMenuItem) {
+        this.homeMenuItem = homeMenuItem;
+    }
+
+    public MenuItem getSalesMenuItem() {
+        return salesMenuItem;
+    }
+
+    public void setSalesMenuItem(MenuItem salesMenuItem) {
+        this.salesMenuItem = salesMenuItem;
+    }
+
+    public MenuItem getListOrderMenuItem() {
+        return listOrderMenuItem;
+    }
+
+    public void setListOrderMenuItem(MenuItem listOrderMenuItem) {
+        this.listOrderMenuItem = listOrderMenuItem;
+    }
+
+    public MenuItem getOrderMenuItem() {
+        return orderMenuItem;
+    }
+
+    public void setOrderMenuItem(MenuItem orderMenuItem) {
+        this.orderMenuItem = orderMenuItem;
+    }
+
+    public MenuItem getMaintainMenuItem() {
+        return maintainMenuItem;
+    }
+
+    public void setMaintainMenuItem(MenuItem maintainMenuItem) {
+        this.maintainMenuItem = maintainMenuItem;
     }
 
     public Stage getStage() {
