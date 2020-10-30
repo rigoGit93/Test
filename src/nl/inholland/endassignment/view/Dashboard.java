@@ -19,7 +19,7 @@ import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Dashboard {
+public class Dashboard extends Exception{
 
     private Stage stage;
     private VBox vBox;
@@ -136,6 +136,21 @@ public class Dashboard {
             Stock stock = new Stock(user);
             stock.getStage().showAndWait();
         });
+//
+//        try {
+//            Files.readAllLines(Paths.get(“WelcomeMessages.dat"))
+//                    .forEach(line ->
+//                            products.add(
+//                                    new Product(
+//                                            line.split(",")[0],
+//                                            Integer.parseInt(line.split(",")[1]),
+//                                            Double.parseDouble(line.split(",")[2]),
+//                                            )
+//                            )
+//                    );
+//        } catch (IOException ioe) {
+//            ioe.printStackTrace();
+//        }
 
     }
 

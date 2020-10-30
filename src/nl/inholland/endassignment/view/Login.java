@@ -1,8 +1,6 @@
 package nl.inholland.endassignment.view;
 
 import javafx.beans.property.StringProperty;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -81,6 +79,7 @@ public class Login implements Serializable {
 
          */
         loginButton.setOnAction(actionEvent -> {
+            //try{}
 
             User login = database.getUserList().stream()
                     .filter(user -> userInput.getText().equals(user.userName)
@@ -89,6 +88,7 @@ public class Login implements Serializable {
                     .orElse(null);
             if (login == null) {
                 System.out.println("Inloggen is mislukt");
+
             } else {
                 System.out.println("Wel user gevonden");
                 Dashboard dashboard = new Dashboard(login);
