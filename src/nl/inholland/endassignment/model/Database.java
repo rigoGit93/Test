@@ -10,8 +10,11 @@ public class Database implements Serializable {
     private ArrayList<User> userList;
     private ArrayList<Customer> customer;
     private ArrayList<Article> articlelist;
+    private ArrayList<OrderExample> orderExamples;
 
     public Database() {
+        orderExamples = new ArrayList<>();
+
         this.userList = new ArrayList<>();
         User obj1 = new User("Admin", "Pass", "Salman", "tester", LocalDate.now(), Role.ADMIN);
         User obj2 = new User("Employee", "Pass", "Vince", "tester", LocalDate.now(), Role.SALES);
@@ -61,5 +64,9 @@ public class Database implements Serializable {
 
     public ArrayList<Article> getArticlelist() {
         return articlelist;
+    }
+
+    public ArrayList<OrderExample> getOrderExamples() {
+        return orderExamples;
     }
 }

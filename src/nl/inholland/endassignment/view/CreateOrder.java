@@ -12,6 +12,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import nl.inholland.endassignment.model.*;
 
+import java.util.ArrayList;
+
 public class CreateOrder {
 
     private Stage stage;
@@ -39,7 +41,7 @@ public class CreateOrder {
     private ObservableList<Customer> customers;
     private CustomerView customerView;
     private ObservableList<Article> articles;
-    private TableView<Article> addArticleTableView;
+    private TableView<OrderExample> addArticleTableView;
 
     private Label customerFirstNameLabel;
     private Label customerLastNameLbl;
@@ -50,22 +52,27 @@ public class CreateOrder {
     private ObservableList<Customer> customer;
 
 
-    private TableView<Article> articleTableView;
+    private static TableView<OrderExample> articleTableView;
     private TableColumn<Article, String> quantityColumn;
     private TableColumn<Article, String> brandColumn;
     private TableColumn<Article, String> modelColumn;
     private TableColumn<Article, String> acousticColumn;
     private TableColumn<Article, String> typeColumn;
     private TableColumn<Article, String> priceColumn;
+    private AddArticle addArticle;
 
     public CreateOrder(User user, Database database) {
         this.user = user;
 
         initLayout();
     }
+    public CreateOrder(){
+    }
 
-    private void initLayout() {
 
+
+    public void initLayout() {
+        addArticle = new AddArticle();
         db = new Database();
         customers = FXCollections.observableArrayList(db.getCustomer());
         customerView = new CustomerView(this);
@@ -125,7 +132,7 @@ public class CreateOrder {
         /*
         Setting up the grades table view
          */
-        TableView<Customer> articleTableView = new TableView<>();
+        TableView<OrderExample> articleTableView = new TableView<>();
         articleTableView.setEditable(true);
         articleTableView.getSelectionModel().setCellSelectionEnabled(false);
         articleTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -163,8 +170,39 @@ public class CreateOrder {
         articleTableView.getColumns().addAll(quantityColumn, brandColumn, modelColumn, acousticColumn, typeColumn,
                 priceColumn);
 
+//        addArticle.getDb().getOrderExamples().add(1, "Fender", "Telecaster", false, GuitarType.REGULAR,
+//                1079.79);
 
-        articleTableView.setItems(customer);
+        ArrayList<OrderExample> ar = new ArrayList<>();
+        ar.add(new OrderExample(1, "Fender", "Telecaster", false, GuitarType.REGULAR, 1079.79));
+
+        ObservableList<OrderExample> oAr = FXCollections.observableArrayList(ar);
+        //articleTableView.setItems(oAr);
+
+        //ar.addAll(addArticle.getDb().getOrderExamples());
+
+        //ObservableList<OrderExample> oList = FXCollections.observableArrayList(addArticle.getDb().getOrderExamples());
+        ObservableList<OrderExample> articleOList = null;
+        try {
+            System.out.println("IK BEN NOG NIEEEEET EMPTY");
+            articleOList = FXCollections.observableArrayList(AddArticle.getoList());
+            System.out.println(articleOList);
+        } catch (NullPointerException ex){
+            System.out.println("IK BE NOG EMPTY \n" +ex);
+        }
+
+
+        if(articleOList != null) {
+            try {
+                System.out.println("IK BEN NIET EMPTY");
+                articleTableView.setItems(articleOList);
+                articleTableView.refresh();
+                //articleTableView.insert
+            } catch (NullPointerException ex){
+                System.out.println(ex);
+            }
+        }
+
 //        articleTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Article>() {
 //            @Override
 //            public void changed(ObservableValue<? extends Article> observable, Article oldValue, Article newValue) {
@@ -233,7 +271,11 @@ public class CreateOrder {
             AddArticle customerView = new AddArticle();
             customerView.getStage().showAndWait();
         });
-
+        resetButton.setOnAction(actionEvent -> {
+            System.out.println("REFRESHING");
+            initLayout();
+            articleTableView.refresh();
+        });
     }
 
     public Stage getStage() {
@@ -397,11 +439,11 @@ public class CreateOrder {
     }
 
 
-    public TableView<Article> getArticleTableView() {
+    public static TableView<OrderExample> getArticleTableView() {
         return articleTableView;
     }
 
-    public void setArticleTableView(TableView<Article> articleTableView) {
+    public void setArticleTableView(TableView<OrderExample> articleTableView) {
         this.articleTableView = articleTableView;
     }
 

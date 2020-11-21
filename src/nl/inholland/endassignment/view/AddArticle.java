@@ -15,9 +15,11 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import nl.inholland.endassignment.model.Article;
 import nl.inholland.endassignment.model.Database;
+import nl.inholland.endassignment.model.OrderExample;
 import nl.inholland.endassignment.model.User;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,20 +39,38 @@ public class AddArticle {
     private TableColumn<Article, String> acousticColumn;
     private TableColumn<Article, String> typeColumn;
     private TableColumn<Article, String> priceColumn;
+    private ArrayList<OrderExample> ar = new ArrayList<>();
+    private static ObservableList<OrderExample> oList;
+
+    public static ObservableList<OrderExample> getoList() {
+        return oList;
+    }
 
     private Database db;
     private ObservableList<Article> articles;
+   // private ArrayList ar;
+    private int quantity;
+    CreateOrder cr;
+    User user;
 
     public AddArticle() {
         initLayout();
     }
+    public AddArticle(int id){
+
+    }
+
+    public Database getDb(){
+        return db;
+    }
 
     private void initLayout() {
+
 
         db = new Database();
         articles = FXCollections.observableArrayList(db.getArticlelist());
 
-
+        ar = new ArrayList<>();
         addArticleTableView = new TableView();
         addArticleTableView.setEditable(true);
         addArticleTableView.prefWidth(200);
@@ -145,7 +165,10 @@ public class AddArticle {
 
             if (newValue != null) {
                 if (addButton.isPressed()) {
+
+
                     System.out.println("Button is pressed with quantity" + newValue.getQuantity());
+                    quantity = newValue.getQuantity();
                 }
 
                 System.out.println("Amount: "
@@ -153,6 +176,7 @@ public class AddArticle {
 
                 );
             }
+
 
         }));
 
@@ -163,6 +187,22 @@ public class AddArticle {
             String text1 = amountArticleInput.getText();
             int int1 = Integer.parseInt(text1);
             Article person = artTbList.getSelectionModel().getSelectedItem();
+            //OrderExample oe = ;
+            ar.add(new OrderExample(int1, person.getBrand(), person.getModel(), person.getAcoustic(), person.getType(), person.getPrice()));
+            oList = FXCollections.observableArrayList(ar);
+            CreateOrder.getArticleTableView().getItems().add(new OrderExample(int1, person.getBrand(), person.getModel(), person.getAcoustic(), person.getType(), person.getPrice()));
+            System.out.println(
+                    CreateOrder.getArticleTableView().getItems());
+            CreateOrder.getArticleTableView().refresh();
+
+
+
+
+            System.out.println(oList.get(0));
+            //ar.add(oe.getQuantity(), oe.getBrand(), oe.getModel(), oe.isAcoustic() ,oe.getType(), oe.getPrice());
+
+            //db.getOrderExamples().add(oe);
+
             System.out.println("---\n Amount of guitar " + person.getQuantity());
 
             if (int1 >= person.getQuantity())  {
@@ -202,6 +242,10 @@ public class AddArticle {
 //
 //            }
         });
+    }
+
+    public ArrayList<OrderExample> getAr(){
+        return ar;
     }
 
 
