@@ -30,7 +30,7 @@ public class Login implements Serializable {
 
     private void initLayout() {
 
-        database = Database.getDatabaseInstance();
+        database = new Database();
         VBox vBox = new VBox();
 
         gridPane = new GridPane();
