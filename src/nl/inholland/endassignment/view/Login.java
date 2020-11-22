@@ -18,7 +18,7 @@ import java.io.Serializable;
 public class Login implements Serializable {
 
     private static Stage stage;
-    private Database database;
+    public static Database database;
     private GridPane gridPane;
     private TextField userInput;
     private TextField passwordInput;
@@ -30,7 +30,7 @@ public class Login implements Serializable {
 
     private void initLayout() {
 
-        database = new Database();
+        database = Database.getDatabaseInstance();
         VBox vBox = new VBox();
 
         gridPane = new GridPane();

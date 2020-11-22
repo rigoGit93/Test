@@ -63,6 +63,7 @@ public class CreateOrder {
 
     public CreateOrder(User user, Database database) {
         this.user = user;
+        this.db = database;
 
         initLayout();
     }
@@ -73,7 +74,7 @@ public class CreateOrder {
 
     public void initLayout() {
         addArticle = new AddArticle();
-        db = new Database();
+        db =  Login.database;
         customers = FXCollections.observableArrayList(db.getCustomer());
         customerView = new CustomerView(this);
         articles = FXCollections.observableArrayList();
@@ -183,6 +184,9 @@ public class CreateOrder {
 
         //ObservableList<OrderExample> oList = FXCollections.observableArrayList(addArticle.getDb().getOrderExamples());
         ObservableList<OrderExample> articleOList = null;
+
+
+        //Prepares the list
         try {
             System.out.println("IK BEN NOG NIEEEEET EMPTY");
             articleOList = FXCollections.observableArrayList(AddArticle.getoList());
@@ -191,7 +195,7 @@ public class CreateOrder {
             System.out.println("IK BE NOG EMPTY \n" +ex);
         }
 
-
+        //Fills the table
         if(articleOList != null) {
             try {
                 System.out.println("IK BEN NIET EMPTY");

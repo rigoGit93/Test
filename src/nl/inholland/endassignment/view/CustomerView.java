@@ -40,7 +40,7 @@ public class CustomerView {
 
     private void initLayout() {
 
-        db = new Database();
+        db = Login.database;
         customers = FXCollections.observableArrayList(db.getCustomer());
         VBox layout = new VBox();
         layout.setPadding(new Insets(10));

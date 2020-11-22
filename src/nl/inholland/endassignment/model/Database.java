@@ -6,13 +6,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Database implements Serializable {
+    public static int objCount = 0;
+
 
     private ArrayList<User> userList;
     private ArrayList<Customer> customer;
     private ArrayList<Article> articlelist;
-    private ArrayList<OrderExample> orderExamples;
+    private static ArrayList<OrderExample> orderExamples;
 
-    public Database() {
+    public static synchronized Database getDatabaseInstance(){
+        if(objCount<1){
+            System.out.println("DATABASE HAS BEEN MADE");
+            return new Database();
+        }
+        System.out.println("MAX DATABASES AMOUNT HAS BEEN REACHED");
+        return null;
+    }
+
+    private Database() {
+        objCount++;
         orderExamples = new ArrayList<>();
 
         this.userList = new ArrayList<>();
@@ -66,7 +78,8 @@ public class Database implements Serializable {
         return articlelist;
     }
 
-    public ArrayList<OrderExample> getOrderExamples() {
+    public static ArrayList<OrderExample> getOrderExamples() {
         return orderExamples;
     }
+
 }

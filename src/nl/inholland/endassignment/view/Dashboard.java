@@ -35,6 +35,7 @@ public class Dashboard extends Exception{
     private Database database;
     private User user;
     private Label firstNameLbl;
+    private CreateOrder order;
 
 
     public Dashboard(User user) {

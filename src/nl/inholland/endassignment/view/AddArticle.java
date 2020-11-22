@@ -67,7 +67,7 @@ public class AddArticle {
     private void initLayout() {
 
 
-        db = new Database();
+        db = Login.database;
         articles = FXCollections.observableArrayList(db.getArticlelist());
 
         ar = new ArrayList<>();
@@ -188,17 +188,13 @@ public class AddArticle {
             int int1 = Integer.parseInt(text1);
             Article person = artTbList.getSelectionModel().getSelectedItem();
             //OrderExample oe = ;
-            ar.add(new OrderExample(int1, person.getBrand(), person.getModel(), person.getAcoustic(), person.getType(), person.getPrice()));
-            oList = FXCollections.observableArrayList(ar);
-            CreateOrder.getArticleTableView().getItems().add(new OrderExample(int1, person.getBrand(), person.getModel(), person.getAcoustic(), person.getType(), person.getPrice()));
-            System.out.println(
-                    CreateOrder.getArticleTableView().getItems());
-            CreateOrder.getArticleTableView().refresh();
+            //ar.add();
+
+            Database.getOrderExamples().add(new OrderExample(int1, person.getBrand(), person.getModel(), person.getAcoustic(), person.getType(), person.getPrice()));
+            oList = FXCollections.observableArrayList(Database.getOrderExamples());
 
 
 
-
-            System.out.println(oList.get(0));
             //ar.add(oe.getQuantity(), oe.getBrand(), oe.getModel(), oe.isAcoustic() ,oe.getType(), oe.getPrice());
 
             //db.getOrderExamples().add(oe);
