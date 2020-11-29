@@ -37,6 +37,9 @@ public class Dashboard extends Exception{
     private Label firstNameLbl;
     private CreateOrder order;
 
+    public CreateOrder getOrder(){
+        return order;
+    }
 
     public Dashboard(User user) {
         this.user = user;
@@ -120,8 +123,8 @@ public class Dashboard extends Exception{
 
         orderMenuItem.setOnAction(actionEvent -> {
 
-            CreateOrder order = new CreateOrder(user, database);
-            order.getStage().showAndWait();
+            order = new CreateOrder(user, database);
+            order.getStage().show();
         });
 
 

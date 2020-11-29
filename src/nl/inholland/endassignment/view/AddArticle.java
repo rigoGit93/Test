@@ -1,14 +1,9 @@
 package nl.inholland.endassignment.view;
 
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -18,7 +13,6 @@ import nl.inholland.endassignment.model.Database;
 import nl.inholland.endassignment.model.OrderExample;
 import nl.inholland.endassignment.model.User;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -48,7 +42,7 @@ public class AddArticle {
 
     private Database db;
     private ObservableList<Article> articles;
-   // private ArrayList ar;
+    // private ArrayList ar;
     private int quantity;
     CreateOrder cr;
     User user;
@@ -192,9 +186,11 @@ public class AddArticle {
 
             Database.getOrderExamples().add(new OrderExample(int1, person.getBrand(), person.getModel(), person.getAcoustic(), person.getType(), person.getPrice()));
             oList = FXCollections.observableArrayList(Database.getOrderExamples());
+            ArrayList<OrderExample> ar = new ArrayList<>();
 
+            ObservableList<OrderExample> oAr = FXCollections.observableArrayList(ar);
 
-
+            Login.dashboard.getOrder().getArticleTableView().setItems(oList);
             //ar.add(oe.getQuantity(), oe.getBrand(), oe.getModel(), oe.isAcoustic() ,oe.getType(), oe.getPrice());
 
             //db.getOrderExamples().add(oe);
@@ -229,7 +225,6 @@ public class AddArticle {
             List<Integer> amounts = db.getArticlelist().stream().map(Article::getQuantity).collect(Collectors.toList());
             System.out.println("Here we have the extracted List of amounts: " + amounts);
 
-            //  Object value  =
 
 //            if (addButton.isPressed()){
 //                System.out.println("Button is pressed with amount: ");

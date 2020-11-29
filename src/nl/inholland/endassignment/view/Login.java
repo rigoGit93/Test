@@ -23,6 +23,7 @@ public class Login implements Serializable {
     private TextField userInput;
     private TextField passwordInput;
     private Button loginButton;
+    public static Dashboard dashboard;
 
     public Login() {
         initLayout();
@@ -91,8 +92,9 @@ public class Login implements Serializable {
 
             } else {
                 System.out.println("Wel user gevonden");
-                Dashboard dashboard = new Dashboard(login);
-                dashboard.getStage().showAndWait();
+                dashboard = new Dashboard(login);
+                stage.close();
+                dashboard.getStage().show();
             }
         });
 

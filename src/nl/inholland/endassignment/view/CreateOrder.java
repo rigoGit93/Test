@@ -52,7 +52,7 @@ public class CreateOrder {
     private ObservableList<Customer> customer;
 
 
-    private static TableView<OrderExample> articleTableView;
+    private TableView<OrderExample> articleTableView;
     private TableColumn<Article, String> quantityColumn;
     private TableColumn<Article, String> brandColumn;
     private TableColumn<Article, String> modelColumn;
@@ -70,7 +70,9 @@ public class CreateOrder {
     public CreateOrder(){
     }
 
-
+    public TableView<OrderExample> getAddArticleTableView() {
+        return addArticleTableView;
+    }
 
     public void initLayout() {
         addArticle = new AddArticle();
@@ -133,11 +135,11 @@ public class CreateOrder {
         /*
         Setting up the grades table view
          */
-        TableView<OrderExample> articleTableView = new TableView<>();
+        //TableView<OrderExample> articleTableView = new TableView<>();
+        this.articleTableView = new TableView();
         articleTableView.setEditable(true);
         articleTableView.getSelectionModel().setCellSelectionEnabled(false);
         articleTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        this.articleTableView = new TableView();
         this.articleTableView.setEditable(true);
 
         /*
@@ -279,6 +281,13 @@ public class CreateOrder {
             System.out.println("REFRESHING");
             initLayout();
             articleTableView.refresh();
+        });
+
+
+
+        homeMenu.setOnAction(actionEvent -> {
+            System.out.println("AHHASDIUHDGKFVJLS");
+            Login.dashboard.getStage().showAndWait();
         });
     }
 
@@ -443,7 +452,7 @@ public class CreateOrder {
     }
 
 
-    public static TableView<OrderExample> getArticleTableView() {
+    public TableView<OrderExample> getArticleTableView() {
         return articleTableView;
     }
 
