@@ -30,6 +30,7 @@ public class Login implements Serializable {
     private TextField userInput;
     private TextField passwordInput;
     private Button loginButton;
+    public static Dashboard dashboard;
 
     public Login() {
         initLayout();
@@ -88,15 +89,15 @@ public class Login implements Serializable {
         stage.setTitle("Guitarshop FX - Login");
         stage.setScene(scene);
 
-        stage.setWidth(SystemProperties.getScreenSize()[0]/3.0);
-        stage.setHeight(SystemProperties.getScreenSize()[1]/3.0);
+        stage.setWidth(500);
+        stage.setHeight(300);
 
 
         /*
 
          */
         loginButton.setOnAction(actionEvent -> {
-            //try{}
+
             if (userInput.getText().isEmpty() | passwordInput.getText().isEmpty()){
                 Notifications.errorNotification("Username and Password is required!", "Login Error", null);
             }else {
@@ -114,6 +115,7 @@ public class Login implements Serializable {
                     Dashboard dashboard = new Dashboard(login);
                     dashboard.getStage().showAndWait();
                 }
+
             }
         });
 

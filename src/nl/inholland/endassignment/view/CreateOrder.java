@@ -68,7 +68,9 @@ public class CreateOrder {
     public CreateOrder(){
     }
 
-
+    public TableView<OrderExample> getAddArticleTableView() {
+        return addArticleTableView;
+    }
 
     public void initLayout() {
         db = Login.database;
@@ -112,13 +114,10 @@ public class CreateOrder {
         Label articleLabel = new Label("Articles ");
         gridPane.add(articleLabel, 0, 3);
 
-        /*
-        Setting up the grades table view
-         */
         this.articleTableView = new TableView<>();
-        this.articleTableView.setEditable(true);
-        this.articleTableView.getSelectionModel().setCellSelectionEnabled(false);
-        this.articleTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        articleTableView.setEditable(true);
+        articleTableView.getSelectionModel().setCellSelectionEnabled(false);
+        articleTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         /*
         Colums worden geinitialiseerd.
@@ -257,6 +256,13 @@ public class CreateOrder {
             ConfirmOrder confirmOrder = new ConfirmOrder(this);
             confirmOrder.getStage().showAndWait();
         });
+
+
+
+//        homeMenu.setOnAction(actionEvent -> {
+//            System.out.println("AHHASDIUHDGKFVJLS");
+//            Login.dashboard.getStage().showAndWait();
+//        });
     }
 
     public Stage getStage() {

@@ -2,12 +2,10 @@ package nl.inholland.endassignment.view;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -21,7 +19,6 @@ import nl.inholland.endassignment.model.User;
 import nl.inholland.endassignment.util.Notifications;
 import nl.inholland.endassignment.util.SystemProperties;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -51,7 +48,7 @@ public class AddArticle {
 
     private Database db;
     private ObservableList<Article> articles;
-   // private ArrayList ar;
+    // private ArrayList ar;
     private int quantity;
     CreateOrder cr;
     private TableView<OrderExample>  articleTableView;

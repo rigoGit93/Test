@@ -41,6 +41,9 @@ public class Dashboard extends Exception{
     private Label firstNameLbl;
     private CreateOrder order;
 
+    public CreateOrder getOrder(){
+        return order;
+    }
 
     public Dashboard(User user) {
         this.user = user;
@@ -116,6 +119,7 @@ public class Dashboard extends Exception{
             gridPane.getChildren().clear();
             gridPane.getChildren().add(order.getvBox());
             stage.setTitle("Create an Order");
+
         });
 
 
