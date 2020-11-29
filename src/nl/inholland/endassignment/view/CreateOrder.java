@@ -24,11 +24,7 @@ public class CreateOrder {
     private Button deleteButton;
     private Button confirmButton;
     private Button resetButton;
-    private MenuItem homeMenuItem;
-    private MenuItem salesMenuItem;
-    private MenuItem listOrderMenuItem;
-    private MenuItem orderMenuItem;
-    private MenuItem maintainMenuItem;
+
     private VBox vBox;
     private HBox hBoxButton;
     private HBox hBoxSearchCustomer;
@@ -80,23 +76,6 @@ public class CreateOrder {
         customers = FXCollections.observableArrayList(db.getCustomer());
         customerView = new CustomerView(this);
         articles = FXCollections.observableArrayList();
-
-        //Menu
-        MenuBar menuBar = new MenuBar();
-        Menu homeMenu = new Menu("Home");
-        Menu salesMenu = new Menu("Sales");
-        Menu stockMenu = new Menu("Stock");
-        Menu managerSalesMenu = new Menu("Sales");
-
-        //sorteer menu toegevoegd
-        menuBar.getMenus().addAll(homeMenu, salesMenu, stockMenu);
-
-        //salesmenu en homemenu
-        orderMenuItem = new MenuItem("Order");
-        listOrderMenuItem = new MenuItem("List orders");
-        maintainMenuItem = new MenuItem("Maintain");
-        salesMenu.getItems().addAll(orderMenuItem, listOrderMenuItem);
-        stockMenu.getItems().addAll(maintainMenuItem);
 
         gridPane = new GridPane();
 
@@ -244,25 +223,13 @@ public class CreateOrder {
         hBoxButton.getChildren().addAll(addButton, deleteButton, confirmButton, resetButton);
 
         vBox = new VBox();
-        vBox.getChildren().addAll(menuBar, gridPane, hBoxCustomerInfo, articleTableView, hBoxButton);
+        vBox.getChildren().addAll(gridPane, hBoxCustomerInfo, articleTableView, hBoxButton);
 
         Scene scene = new Scene(vBox);
 
         stage = new Stage();
         stage.setTitle("Create an Order");
         stage.setScene(scene);
-
-
-        /*
-         * Laat menu zien op basis van role
-         */
-
-        if (user.enummer == Role.ADMIN) {
-            orderMenuItem.setVisible(false);
-        } else if (user.enummer == Role.SALES) {
-            stockMenu.setVisible(false);
-        }
-
 
         /*
          * verwijst naar CustomerView
@@ -285,10 +252,10 @@ public class CreateOrder {
 
 
 
-        homeMenu.setOnAction(actionEvent -> {
-            System.out.println("AHHASDIUHDGKFVJLS");
-            Login.dashboard.getStage().showAndWait();
-        });
+//        homeMenu.setOnAction(actionEvent -> {
+//            System.out.println("AHHASDIUHDGKFVJLS");
+//            Login.dashboard.getStage().showAndWait();
+//        });
     }
 
     public Stage getStage() {
@@ -401,46 +368,6 @@ public class CreateOrder {
 
     public void setResetButton(Button resetButton) {
         this.resetButton = resetButton;
-    }
-
-    public MenuItem getHomeMenuItem() {
-        return homeMenuItem;
-    }
-
-    public void setHomeMenuItem(MenuItem homeMenuItem) {
-        this.homeMenuItem = homeMenuItem;
-    }
-
-    public MenuItem getSalesMenuItem() {
-        return salesMenuItem;
-    }
-
-    public void setSalesMenuItem(MenuItem salesMenuItem) {
-        this.salesMenuItem = salesMenuItem;
-    }
-
-    public MenuItem getListOrderMenuItem() {
-        return listOrderMenuItem;
-    }
-
-    public void setListOrderMenuItem(MenuItem listOrderMenuItem) {
-        this.listOrderMenuItem = listOrderMenuItem;
-    }
-
-    public MenuItem getOrderMenuItem() {
-        return orderMenuItem;
-    }
-
-    public void setOrderMenuItem(MenuItem orderMenuItem) {
-        this.orderMenuItem = orderMenuItem;
-    }
-
-    public MenuItem getMaintainMenuItem() {
-        return maintainMenuItem;
-    }
-
-    public void setMaintainMenuItem(MenuItem maintainMenuItem) {
-        this.maintainMenuItem = maintainMenuItem;
     }
 
     public VBox getvBox() {

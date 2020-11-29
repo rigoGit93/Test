@@ -174,8 +174,6 @@ public class AddArticle {
 
         }));
 
-
-
         addButton.setOnAction(actionEvent -> {
 
             String text1 = amountArticleInput.getText();
@@ -188,9 +186,11 @@ public class AddArticle {
             oList = FXCollections.observableArrayList(Database.getOrderExamples());
             ArrayList<OrderExample> ar = new ArrayList<>();
 
+
             ObservableList<OrderExample> oAr = FXCollections.observableArrayList(ar);
 
             Login.dashboard.getOrder().getArticleTableView().setItems(oList);
+
             //ar.add(oe.getQuantity(), oe.getBrand(), oe.getModel(), oe.isAcoustic() ,oe.getType(), oe.getPrice());
 
             //db.getOrderExamples().add(oe);
