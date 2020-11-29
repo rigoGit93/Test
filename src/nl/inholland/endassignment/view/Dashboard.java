@@ -1,17 +1,21 @@
 package nl.inholland.endassignment.view;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import nl.inholland.endassignment.model.Database;
 import nl.inholland.endassignment.model.Role;
 import nl.inholland.endassignment.model.User;
+import nl.inholland.endassignment.util.SystemProperties;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -23,9 +27,9 @@ public class Dashboard extends Exception{
 
     private Stage stage;
     private VBox vBox;
-    private HBox hBoxName;
-    private HBox hBoxRole;
-    private HBox hBoxDate;
+    private GridPane gridPane;
+    final Pane cardsPane = new StackPane();
+
     private LocalDate localDate;
     private MenuItem homeMenuItem;
     private MenuItem salesMenuItem;
@@ -65,38 +69,31 @@ public class Dashboard extends Exception{
         //managerSalesMenu.getItems().addAll(listOrderMenuItem);
 
         VBox vBox = new VBox();
-        hBoxName = new HBox();
-        hBoxRole = new HBox();
-        hBoxDate = new HBox();
 
-        hBoxName.setPadding(new Insets(10, 10, 10, 10));
-        hBoxRole.setPadding(new Insets(10, 10, 10, 10));
-        hBoxDate.setPadding(new Insets(10, 10, 10, 10));
+        gridPane = new GridPane();
 
+        gridPane.setPadding(new Insets(30, 30, 30, 30));
+        gridPane.setVgap(10);
+        gridPane.setHgap(10);
 
-        Label welcomeLabel = new Label("Welcome ");
-        Label firstNameLabel = new Label();
-        firstNameLabel.setText(user.firstName + " ");
-        Label lastNameLabel = new Label();
-        lastNameLabel.setText(user.lastName);
+        Label welcomeLabel = new Label("Welcome " + user.firstName + " " + user.lastName);
+        welcomeLabel.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
+        GridPane.setConstraints(welcomeLabel, 0, 0);
 
-        hBoxName.getChildren().addAll(welcomeLabel, firstNameLabel, lastNameLabel);
-
-        Label roleLabel = new Label("You`re role is: ");
-        Label roleDisplayLabel = new Label();
-        roleDisplayLabel.setText(user.enummer.toString());
-
-        hBoxRole.getChildren().addAll(roleLabel, roleDisplayLabel);
+        Label roleLabel = new Label("You`re role is: " + user.enummer.toString());
+        GridPane.setConstraints(roleLabel, 0, 1);
 
         Date date = Calendar.getInstance().getTime();
         DateFormat dateFormat = new SimpleDateFormat();
         String stringDate = dateFormat.format(date);
         Label dateLabel = new Label("Today is: " + (stringDate));
-        hBoxDate.getChildren().addAll(dateLabel);
+        GridPane.setConstraints(dateLabel, 0, 2);
 
+        gridPane.getChildren().addAll(welcomeLabel, roleLabel, dateLabel);
+        gridPane.setAlignment(Pos.TOP_LEFT);
 
         // add a layout node and controls
-        vBox.getChildren().addAll(menuBar, hBoxName, hBoxRole, hBoxDate);
+        vBox.getChildren().addAll(menuBar, gridPane);
         //root = vBox;
 
         Scene scene = new Scene(vBox);
@@ -104,12 +101,8 @@ public class Dashboard extends Exception{
         stage = new Stage();
         stage.setTitle("Dashboard");
         stage.setScene(scene);
-
-//        listOrderMenuItem.setOnAction(actionEvent -> {
-//
-//            OrderList orderList = new OrderList();
-//            orderList.getStage().showAndWait();
-//        });
+        stage.setWidth(SystemProperties.getScreenSize()[0] - 100);
+        stage.setHeight(SystemProperties.getScreenSize()[1] - 100);
 
         if (user.enummer == Role.ADMIN) {
             orderMenuItem.setVisible(false);
@@ -119,39 +112,28 @@ public class Dashboard extends Exception{
         }
 
         orderMenuItem.setOnAction(actionEvent -> {
-
             CreateOrder order = new CreateOrder(user, database);
-            order.getStage().showAndWait();
+            gridPane.getChildren().clear();
+            gridPane.getChildren().add(order.getvBox());
+            stage.setTitle("Create an Order");
         });
 
 
         listOrderMenuItem.setOnAction(actionEvent -> {
-
             OrderList order = new OrderList(user);
-            order.getStage().showAndWait();
+            gridPane.getChildren().clear();
+            gridPane.getChildren().add(order.getvBox());
+            stage.setTitle("View Order List");
         });
 
 
         maintainMenuItem.setOnAction(actionEvent -> {
 
             Stock stock = new Stock(user);
-            stock.getStage().showAndWait();
+            gridPane.getChildren().clear();
+            gridPane.getChildren().add(stock.getvBox());
+            stage.setTitle("View Stock List");
         });
-//
-//        try {
-//            Files.readAllLines(Paths.get(“WelcomeMessages.dat"))
-//                    .forEach(line ->
-//                            products.add(
-//                                    new Product(
-//                                            line.split(",")[0],
-//                                            Integer.parseInt(line.split(",")[1]),
-//                                            Double.parseDouble(line.split(",")[2]),
-//                                            )
-//                            )
-//                    );
-//        } catch (IOException ioe) {
-//            ioe.printStackTrace();
-//        }
 
     }
 

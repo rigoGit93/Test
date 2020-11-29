@@ -15,11 +15,6 @@ public class OrderList {
     private Parent root;
     private VBox vBox;
     private HBox hBox;
-    private MenuItem homeMenuItem;
-    private MenuItem salesMenuItem;
-    private MenuItem listOrderMenuItem;
-    private MenuItem orderMenuItem;
-    private MenuItem maintainMenuItem;
     private User user;
     private Database database;
 
@@ -49,25 +44,6 @@ public class OrderList {
     }
 
     private void initLayout() {
-
-        //Menu
-        MenuBar menuBar = new MenuBar();
-        Menu homeMenu = new Menu("Home");
-        Menu salesMenu = new Menu("Sales");
-        Menu stockMenu = new Menu("Stock");
-        Menu managerSalesMenu = new Menu("Sales");
-
-        //sorteer menu toegevoegd
-        menuBar.getMenus().addAll(homeMenu, salesMenu, stockMenu);
-
-        //salesmenu en homemenu
-        orderMenuItem = new MenuItem("Order");
-        listOrderMenuItem = new MenuItem("List orders");
-        maintainMenuItem = new MenuItem("Maintain");
-        salesMenu.getItems().addAll(orderMenuItem, listOrderMenuItem);
-        stockMenu.getItems().addAll(maintainMenuItem);
-        //managerSalesMenu.getItems().addAll(listOrderMenuItem);
-
         Label orderListLabel = new Label("Order List");
 
         TableView<Customer> orderListTableView = new TableView<>();
@@ -155,39 +131,11 @@ public class OrderList {
 
         vBox = new VBox();
         vBox.getChildren().addAll(orderListLabel, orderListTableView, orderDetailsListLabel, orderDetailsTableView);
-
-
-        Scene scene = new Scene(vBox);
-
-        stage = new Stage();
-        stage.setTitle("View Order List");
-        stage.setScene(scene);
-
-
-        if (user.enummer == Role.ADMIN) {
-            orderMenuItem.setVisible(false);
-        } else if (user.enummer == Role.SALES) {
-            stockMenu.setVisible(false);
-        }
-
-//        listOrderMenuItem.setOnAction(actionEvent -> {
-//
-//            OrderList orderList = new OrderList();
-//            orderList.getStage().showAndWait();
-//        });
-
-        orderMenuItem.setOnAction(actionEvent -> {
-
-            CreateOrder order = new CreateOrder(user, database);
-            order.getStage().showAndWait();
-        });
-
     }
 
     public Stage getStage() {
         return stage;
     }
-
     public void setStage(Stage stage) {
         this.stage = stage;
     }
