@@ -9,6 +9,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import nl.inholland.endassignment.model.*;
 
@@ -34,6 +37,7 @@ public class CreateOrder {
     private HBox hBoxCustomerInfo;
     private User user;
     private Database db;
+    private Customer customer;
     private ObservableList<Customer> customers;
     private CustomerView customerView;
     private ObservableList<Article> articles;
@@ -45,10 +49,8 @@ public class CreateOrder {
     private Label customermailLbl;
     private Label customerphoneLbl;
     private Label customercityLbl;
-    private ObservableList<Customer> customer;
 
-
-    private static TableView<OrderExample> articleTableView;
+    private TableView<OrderExample> articleTableView;
     private TableColumn<Article, String> quantityColumn;
     private TableColumn<Article, String> brandColumn;
     private TableColumn<Article, String> modelColumn;
@@ -69,11 +71,12 @@ public class CreateOrder {
 
 
     public void initLayout() {
-        addArticle = new AddArticle();
-        db =  Login.database;
+        db = Login.database;
+        articles = FXCollections.observableArrayList(db.getArticlelist());
         customers = FXCollections.observableArrayList(db.getCustomer());
         customerView = new CustomerView(this);
-        articles = FXCollections.observableArrayList();
+        //articles = FXCollections.observableArrayList();
+
 
         gridPane = new GridPane();
 
@@ -82,6 +85,7 @@ public class CreateOrder {
         gridPane.setHgap(10);
 
         Label titleLabel = new Label("Create Order ");
+        titleLabel.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 14));
         gridPane.add(titleLabel, 0, 0);
 
         Label customerLabel = new Label("Customer");
@@ -93,7 +97,6 @@ public class CreateOrder {
 
         searchButton = new Button("Search");
         gridPane.add(searchButton, 1, 2);
-
 
         /*
         Labels van de create order view
@@ -112,19 +115,17 @@ public class CreateOrder {
         /*
         Setting up the grades table view
          */
-        TableView<OrderExample> articleTableView = new TableView<>();
-        articleTableView.setEditable(true);
-        articleTableView.getSelectionModel().setCellSelectionEnabled(false);
-        articleTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        this.articleTableView = new TableView();
+        this.articleTableView = new TableView<>();
         this.articleTableView.setEditable(true);
+        this.articleTableView.getSelectionModel().setCellSelectionEnabled(false);
+        this.articleTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         /*
         Colums worden geinitialiseerd.
          */
 
         TableColumn quantityColumn = new TableColumn("Quantity");
-        quantityColumn.setMinWidth(150);
+        quantityColumn.setMinWidth(100);
         quantityColumn.setCellValueFactory(new PropertyValueFactory<Article, String>("quantity"));
 
         TableColumn brandColumn = new TableColumn("Brand");
@@ -147,7 +148,7 @@ public class CreateOrder {
         priceColumn.setMinWidth(50);
         priceColumn.setCellValueFactory(new PropertyValueFactory<Article, String>("price"));
 
-        articleTableView.getColumns().addAll(quantityColumn, brandColumn, modelColumn, acousticColumn, typeColumn,
+        this.articleTableView.getColumns().addAll(quantityColumn, brandColumn, modelColumn, acousticColumn, typeColumn,
                 priceColumn);
 
 //        addArticle.getDb().getOrderExamples().add(1, "Fender", "Telecaster", false, GuitarType.REGULAR,
@@ -157,11 +158,7 @@ public class CreateOrder {
         ar.add(new OrderExample(1, "Fender", "Telecaster", false, GuitarType.REGULAR, 1079.79));
 
         ObservableList<OrderExample> oAr = FXCollections.observableArrayList(ar);
-        //articleTableView.setItems(oAr);
 
-        //ar.addAll(addArticle.getDb().getOrderExamples());
-
-        //ObservableList<OrderExample> oList = FXCollections.observableArrayList(addArticle.getDb().getOrderExamples());
         ObservableList<OrderExample> articleOList = null;
 
 
@@ -178,22 +175,13 @@ public class CreateOrder {
         if(articleOList != null) {
             try {
                 System.out.println("IK BEN NIET EMPTY");
-                articleTableView.setItems(articleOList);
-                articleTableView.refresh();
+                this.articleTableView.setItems(articleOList);
+                this.articleTableView.refresh();
                 //articleTableView.insert
             } catch (NullPointerException ex){
                 System.out.println(ex);
             }
         }
-
-//        articleTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Article>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Article> observable, Article oldValue, Article newValue) {
-//                articles.clear();
-////                articles.add(newValue.getQuantity(), newValue.getBrand(), newValue.getBrand(), newValue.getModel(),
-////                        newValue.getAcoustic(), newValue.getType(), newValue.getPrice());
-//            }
-//        });
 
         addButton = new Button("Add");
         deleteButton = new Button("Delete");
@@ -219,33 +207,55 @@ public class CreateOrder {
 
         hBoxButton = new HBox();
         hBoxButton.getChildren().addAll(addButton, deleteButton, confirmButton, resetButton);
+        hBoxButton.setSpacing(10);
+        hBoxButton.setPadding(new Insets(10, 10, 10, 10));
 
         vBox = new VBox();
         vBox.getChildren().addAll(gridPane, hBoxCustomerInfo, articleTableView, hBoxButton);
-
-        Scene scene = new Scene(vBox);
-
-        stage = new Stage();
-        stage.setTitle("Create an Order");
-        stage.setScene(scene);
 
         /*
          * verwijst naar CustomerView
          */
         searchButton.setOnAction(actionEvent -> {
-
             CustomerView customerView = new CustomerView(this);
             customerView.getStage().showAndWait();
         });
 
         addButton.setOnAction(actionEvent -> {
-            AddArticle customerView = new AddArticle();
+            AddArticle customerView = new AddArticle(this.articleTableView, articles);
             customerView.getStage().showAndWait();
         });
         resetButton.setOnAction(actionEvent -> {
-            System.out.println("REFRESHING");
-            initLayout();
-            articleTableView.refresh();
+            ObservableList<OrderExample> observableList = this.articleTableView.getItems();
+            for(int i=0; i < observableList.size(); i++){
+                int quantity = observableList.get(i).getQuantity();
+                if (observableList.get(i).getModel().equalsIgnoreCase("Telecaster")){
+                    articles.get(0).setQuantity(articles.get(0).getQuantity() + quantity);
+                }else if (observableList.get(i).getModel().equalsIgnoreCase("Precision")){
+                    articles.get(1).setQuantity(articles.get(1).getQuantity() + quantity);
+                }else{
+                    articles.get(2).setQuantity(articles.get(2).getQuantity() + quantity);
+                }
+                this.articleTableView.getItems().remove(i);
+            }
+        });
+
+        deleteButton.setOnAction(actionEvent -> {
+            OrderExample order = this.articleTableView.getSelectionModel().getSelectedItem();
+            int quantity = order.getQuantity();
+            if (order.getModel().equalsIgnoreCase("Telecaster")){
+                articles.get(0).setQuantity(articles.get(0).getQuantity() + quantity);
+            }else if (order.getModel().equalsIgnoreCase("Precision")){
+                articles.get(1).setQuantity(articles.get(1).getQuantity() + quantity);
+            }else{
+                articles.get(2).setQuantity(articles.get(2).getQuantity() + quantity);
+            }
+            this.articleTableView.getItems().remove(this.articleTableView.getSelectionModel().getFocusedIndex());
+        });
+
+        confirmButton.setOnAction(actionEvent -> {
+            ConfirmOrder confirmOrder = new ConfirmOrder(this);
+            confirmOrder.getStage().showAndWait();
         });
     }
 
@@ -309,6 +319,18 @@ public class CreateOrder {
         return confirmButton;
     }
 
+    public void setCustomer(Customer customer){
+        this.customer = customer;
+    }
+
+    public Customer getCustomer(){
+        return this.customer;
+    }
+
+    public ObservableList<OrderExample> getOrders(){
+        return this.articleTableView.getItems();
+    }
+
     public Label getCustomerLastNameLbl() {
         return customerLastNameLbl;
     }
@@ -370,8 +392,8 @@ public class CreateOrder {
     }
 
 
-    public static TableView<OrderExample> getArticleTableView() {
-        return articleTableView;
+    public TableView<OrderExample> getArticleTableView() {
+        return this.articleTableView;
     }
 
     public void setArticleTableView(TableView<OrderExample> articleTableView) {

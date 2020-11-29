@@ -126,9 +126,7 @@ public class Dashboard extends Exception{
             stage.setTitle("View Order List");
         });
 
-
         maintainMenuItem.setOnAction(actionEvent -> {
-
             Stock stock = new Stock(user);
             gridPane.getChildren().clear();
             gridPane.getChildren().add(stock.getvBox());

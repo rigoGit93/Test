@@ -1,9 +1,8 @@
 package nl.inholland.endassignment.view;
 
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Parent;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -13,10 +12,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.scene.paint.Color;
+
 import nl.inholland.endassignment.model.Article;
 import nl.inholland.endassignment.model.Database;
 import nl.inholland.endassignment.model.OrderExample;
 import nl.inholland.endassignment.model.User;
+import nl.inholland.endassignment.util.Notifications;
+import nl.inholland.endassignment.util.SystemProperties;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -51,9 +54,12 @@ public class AddArticle {
    // private ArrayList ar;
     private int quantity;
     CreateOrder cr;
+    private TableView<OrderExample>  articleTableView;
     User user;
 
-    public AddArticle() {
+    public AddArticle(TableView<OrderExample>  articleTableView, ObservableList<Article> articles) {
+        this.articleTableView = articleTableView;
+        this.articles = articles;
         initLayout();
     }
     public AddArticle(int id){
@@ -65,15 +71,11 @@ public class AddArticle {
     }
 
     private void initLayout() {
-
-
         db = Login.database;
-        articles = FXCollections.observableArrayList(db.getArticlelist());
-
+        // articles = FXCollections.observableArrayList(db.getArticlelist());
         ar = new ArrayList<>();
         addArticleTableView = new TableView();
         addArticleTableView.setEditable(true);
-        addArticleTableView.prefWidth(200);
 
 
         TableView<Article> artTbList = new TableView<>();
@@ -141,12 +143,16 @@ public class AddArticle {
                 typeColumn, priceColumn);
 
 
-        quantityLbl = new Label("Amount: ");
+        quantityLbl = new Label("");
+        quantityLbl.setTextFill(Color.web("#ff0000", 1));
         amountArticleInput = new TextField();
         addButton = new Button("Add");
         cancelButton = new Button("Cancel");
 
         hBox = new HBox();
+        hBox.setSpacing(10);
+        hBox.setPadding(new Insets(10, 10, 10, 10));
+
         hBox.getChildren().addAll(amountArticleInput, addButton, cancelButton);
 
         vBox = new VBox();
@@ -158,7 +164,7 @@ public class AddArticle {
         stage = new Stage();
         stage.setTitle("Create an Order");
         stage.setScene(scene);
-
+        stage.setWidth(SystemProperties.getScreenSize()[0]/3.0);
 
         artTbList.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
 
@@ -183,56 +189,36 @@ public class AddArticle {
         addButton.setOnAction(actionEvent -> {
 
             String text1 = amountArticleInput.getText();
-            int int1 = Integer.parseInt(text1);
-            Article person = artTbList.getSelectionModel().getSelectedItem();
-            //OrderExample oe = ;
-            //ar.add();
+            if (text1.isEmpty()){
+                Notifications.errorNotification("Amount cannot empty! ", "Error Message!", "");
+            }else {
+                int amount = Integer.parseInt(text1);
+                Article article = artTbList.getSelectionModel().getSelectedItem();
 
-            Database.getOrderExamples().add(new OrderExample(int1, person.getBrand(), person.getModel(), person.getAcoustic(), person.getType(), person.getPrice()));
-            oList = FXCollections.observableArrayList(Database.getOrderExamples());
+                if (amount > article.getQuantity()) {
+                    quantityLbl.setText("Not enough in stock for " + article.getBrand() + " " + article.getModel() +
+                            ". Only " + article.getQuantity() + " remaining!");
+                } else if (amount < 1) {
+                    quantityLbl.setText("Amount cannot be less than 1! ");
+                } else {
+                    OrderExample order = new OrderExample(amount, article.getBrand(), article.getModel(), article.getAcoustic(), article.getType(), article.getPrice());
 
-            //ar.add(oe.getQuantity(), oe.getBrand(), oe.getModel(), oe.isAcoustic() ,oe.getType(), oe.getPrice());
+                    Database.getOrderExamples().add(order);
+                    oList = FXCollections.observableArrayList(Database.getOrderExamples());
 
-            //db.getOrderExamples().add(oe);
+                    int nieuw = article.getQuantity() - amount;
+                    article.setQuantity(nieuw);
+                    quantityLbl.setText("");
+                    this.articleTableView.getItems().add(order);
+                }
+                //List<Integer> amounts = db.getArticlelist().stream().map(Article::getQuantity).collect(Collectors.toList());
+                //System.out.println("Here we have the extracted List of amounts: " + amounts);
+            }
 
-            System.out.println("---\n Amount of guitar " + person.getQuantity());
+        });
 
-            if (int1 >= person.getQuantity())  {
-
-                quantityLbl.setText("Not enough in stock for " + person.getBrand() + " " + person.getModel()+
-                        ". Only" + person.getQuantity()+ " remaining.");
-                // quantityLbl.(Color.RED);
-            }else
-
-                // int nieuw = person.getQuantity() - int1;
-                quantityLbl.setText("");
-
-
-//            TablePosition pos = artTbList.getSelectionModel().getSelectedCells().get(0);
-//            int row = pos.getRow();
-//
-//            // Item here is the table view type:
-//            Article item = artTbList.getItems().get(row);
-//
-//            TableColumn col = pos.getTableColumn();
-//
-//            // this gives the value in the selected cell:
-//            String data = (String) col.getCellObservableValue(item).getValue();
-//
-//            System.out.println(data);
-
-
-            List<Integer> amounts = db.getArticlelist().stream().map(Article::getQuantity).collect(Collectors.toList());
-            System.out.println("Here we have the extracted List of amounts: " + amounts);
-
-            //  Object value  =
-
-//            if (addButton.isPressed()){
-//                System.out.println("Button is pressed with amount: ");
-//            }
-//            if () {
-//
-//            }
+        cancelButton.setOnAction(actionEvent -> {
+            stage.hide();
         });
     }
 

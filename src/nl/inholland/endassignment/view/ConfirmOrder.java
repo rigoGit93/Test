@@ -1,12 +1,19 @@
 package nl.inholland.endassignment.view;
 
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import nl.inholland.endassignment.model.Customer;
+import nl.inholland.endassignment.model.OrderExample;
+import nl.inholland.endassignment.util.SystemProperties;
 
 public class ConfirmOrder {
 
@@ -15,8 +22,14 @@ public class ConfirmOrder {
     private Label quantityLbl;
     private VBox vBox;
     private GridPane gridPane;
+    private CreateOrder createOrder;
+    private Customer customer;
+    private ObservableList<OrderExample> orders;
 
-    public ConfirmOrder() {
+    public ConfirmOrder(CreateOrder createOrder) {
+        this.createOrder = createOrder;
+        this.customer = this.createOrder.getCustomer();
+        this.orders = this.createOrder.getOrders();
         initLayout();
     }
 
@@ -30,65 +43,78 @@ public class ConfirmOrder {
         gridPane.setHgap(10);
 
         Label customerLabel = new Label("Customer: ");
+        customerLabel.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 16));
         GridPane.setConstraints(customerLabel, 0, 0);
 
-        Label fullNameLabel = new Label("");
+        Label fullNameLabel = new Label(this.customer.getFirstName() + " " + this.customer.getLastName());
         GridPane.setConstraints(fullNameLabel, 1, 0);
 
-        Label streetAddressLabel = new Label("");
+        Label streetAddressLabel = new Label(this.customer.getStreetAddress());
         GridPane.setConstraints(streetAddressLabel, 1,1);
 
-        Label cityLocationLabel = new Label("");
+        Label cityLocationLabel = new Label(this.customer.getCityLocation());
         GridPane.setConstraints(cityLocationLabel, 1, 2);
 
-        Label phoneNumberLabel = new Label("");
+        Label phoneNumberLabel = new Label(Long.toString(this.customer.getPhoneNumber()));
         GridPane.setConstraints(phoneNumberLabel, 1, 3);
 
-        Label emailAddressLabel = new Label("");
+        Label emailAddressLabel = new Label(this.customer.getEmailAddress());
         GridPane.setConstraints(emailAddressLabel, 1, 4);
 
-
-
         Label quantityLabel = new Label("Qty");
+        quantityLabel.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 14));
         GridPane.setConstraints(quantityLabel, 0, 5);
-        Label quantityLabel1 = new Label("");
-        GridPane.setConstraints(quantityLabel1, 0, 6);
 
         Label brandLabel = new Label("Brand");
+        brandLabel.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 14));
         GridPane.setConstraints(brandLabel, 1, 5);
-        Label brandLabel1 = new Label("");
-        GridPane.setConstraints(brandLabel1, 1, 6);
 
         Label modelLabel = new Label("Model");
+        modelLabel.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 14));
         GridPane.setConstraints(modelLabel, 2, 5);
-        Label modelLabel1 = new Label("");
-        GridPane.setConstraints(modelLabel1, 2, 6);
 
         Label typeLabel = new Label("Type");
+        typeLabel.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 14));
         GridPane.setConstraints(typeLabel, 3, 5);
-        Label typeLabel1 = new Label("");
-        GridPane.setConstraints(typeLabel1, 3, 6);
 
         Label priceLabel = new Label("Price");
+        priceLabel.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 14));
         GridPane.setConstraints(priceLabel, 4, 5);
-        Label priceLabel1 = new Label("");
-        GridPane.setConstraints(priceLabel1, 4, 6);
-
-
-
-        Label totalPriceLabel = new Label("Total price");
-        GridPane.setConstraints(totalPriceLabel, 0, 7);
-
-
-
-        confirmButton = new Button("Confirm");
-        GridPane.setConstraints(confirmButton, 0, 8);
-
 
         gridPane.getChildren().addAll(customerLabel, fullNameLabel, streetAddressLabel, cityLocationLabel,
-                phoneNumberLabel, emailAddressLabel, quantityLabel,quantityLabel1, brandLabel,
-                brandLabel1, modelLabel, modelLabel1, typeLabel, typeLabel1, priceLabel, priceLabel1,
-                totalPriceLabel, confirmButton);
+                phoneNumberLabel, emailAddressLabel, quantityLabel, brandLabel,
+                modelLabel, typeLabel, priceLabel);
+
+        double total = 0;
+
+        for(int i = 0; i < orders.size(); i++){
+            Label quantityLabel1 = new Label(Integer.toString(orders.get(i).getQuantity()));
+            GridPane.setConstraints(quantityLabel1, 0, i + 6);
+
+            Label brandLabel1 = new Label(orders.get(i).getBrand());
+            GridPane.setConstraints(brandLabel1, 1, i + 6);
+
+            Label modelLabel1 = new Label(orders.get(i).getModel());
+            GridPane.setConstraints(modelLabel1, 2, i + 6);
+
+            Label typeLabel1 = new Label(orders.get(i).getType().name());
+            GridPane.setConstraints(typeLabel1, 3, i + 6);
+
+            Label priceLabel1 = new Label(Double.toString(orders.get(i).getPrice()));
+            GridPane.setConstraints(priceLabel1, 4, i + 6);
+
+            gridPane.getChildren().addAll(quantityLabel1, brandLabel1, modelLabel1, typeLabel1, priceLabel1);
+
+            total += orders.get(i).getPrice() * orders.get(i).getQuantity();
+        }
+
+        Label totalPriceLabel = new Label("Total price: " + Double.toString(total));
+        GridPane.setConstraints(totalPriceLabel, 0, orders.size() + 7);
+
+        confirmButton = new Button("Confirm");
+        GridPane.setConstraints(confirmButton, 0, orders.size() + 8);
+
+        gridPane.getChildren().addAll(totalPriceLabel, confirmButton);
 
         vBox.getChildren().addAll(gridPane);
 
@@ -97,6 +123,11 @@ public class ConfirmOrder {
         stage = new Stage();
         stage.setTitle("Confirm order");
         stage.setScene(scene);
+        stage.setWidth(SystemProperties.getScreenSize()[0]/3.0);
+
+        confirmButton.setOnAction(actionEvent -> {
+
+        });
 
     }
 

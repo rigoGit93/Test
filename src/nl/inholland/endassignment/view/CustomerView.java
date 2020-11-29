@@ -92,11 +92,7 @@ public class CustomerView {
 //        System.out.println(selectedItem);
 
         customerTableView.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
-
-
             if (newValue != null) {
-
-
                 createOrder.getCustomerFirstNameLabel().setText("Firstname: " + newValue.getFirstName());
                 createOrder.getCustomerLastNameLbl().setText("Lastname: " + newValue.getLastName());
                 createOrder.getCustomerstrNameLbl().setText("Streetname: " + newValue.getStreetAddress());
@@ -112,6 +108,7 @@ public class CustomerView {
                         + newValue.getPhoneNumber() + " "
                         + newValue.getEmailAddress() + " "
                 );
+                createOrder.setCustomer(newValue);
             }
 
         }));
