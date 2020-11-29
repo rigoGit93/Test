@@ -80,7 +80,6 @@ public class AddArticle {
         artTbList.getSelectionModel().setCellSelectionEnabled(false);
         artTbList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
-
         /*
         Colums worden geinitialiseerd.
          */

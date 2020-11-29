@@ -11,9 +11,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-import nl.inholland.endassignment.model.Customer;
-import nl.inholland.endassignment.model.OrderExample;
+import nl.inholland.endassignment.model.*;
 import nl.inholland.endassignment.util.SystemProperties;
+
+import javax.xml.crypto.Data;
+import java.time.LocalDate;
+import java.util.Date;
 
 public class ConfirmOrder {
 
@@ -24,12 +27,21 @@ public class ConfirmOrder {
     private GridPane gridPane;
     private CreateOrder createOrder;
     private Customer customer;
+    private Database database;
     private ObservableList<OrderExample> orders;
+    private long orderNum;
+    private double total;
 
     public ConfirmOrder(CreateOrder createOrder) {
         this.createOrder = createOrder;
         this.customer = this.createOrder.getCustomer();
         this.orders = this.createOrder.getOrders();
+        this.orderNum = this.createOrder.getOrderNumber();
+
+        for(OrderExample order: this.orders){
+            this.customer.getArticlelist().add(new Article(order.getQuantity(), order.getBrand(), order.getModel(), order.isAcoustic(), order.getType(), order.getPrice()));
+        }
+
         initLayout();
     }
 
@@ -85,7 +97,7 @@ public class ConfirmOrder {
                 phoneNumberLabel, emailAddressLabel, quantityLabel, brandLabel,
                 modelLabel, typeLabel, priceLabel);
 
-        double total = 0;
+        total = 0;
 
         for(int i = 0; i < orders.size(); i++){
             Label quantityLabel1 = new Label(Integer.toString(orders.get(i).getQuantity()));
@@ -126,7 +138,13 @@ public class ConfirmOrder {
         stage.setWidth(SystemProperties.getScreenSize()[0]/3.0);
 
         confirmButton.setOnAction(actionEvent -> {
-
+            database = Login.database;
+            LocalDate date = LocalDate.now();
+            database.getOrderList().add(new Order((int) orderNum, date,
+                    customer.getFirstName() + " " + customer.getLastName(),
+                    customer.getCityLocation(), customer.getPhoneNumber(), customer.getEmailAddress(),
+                    orders, orders.size(), total));
+            stage.close();
         });
 
     }

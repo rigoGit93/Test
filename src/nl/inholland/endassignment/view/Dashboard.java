@@ -3,10 +3,7 @@ package nl.inholland.endassignment.view;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -33,6 +30,8 @@ public class Dashboard extends Exception{
     private LocalDate localDate;
     private MenuItem homeMenuItem;
     private MenuItem salesMenuItem;
+    private MenuItem userDetailsMenuItem;
+    private MenuItem logoutMenuItem;
     private MenuItem listOrderMenuItem;
     private MenuItem orderMenuItem;
     private MenuItem maintainMenuItem;
@@ -65,8 +64,11 @@ public class Dashboard extends Exception{
 
         //salesmenu en homemenu
         orderMenuItem = new MenuItem("Order");
+        userDetailsMenuItem = new MenuItem("User Details");
+        logoutMenuItem = new MenuItem("Log Out");
         listOrderMenuItem = new MenuItem("List orders");
         maintainMenuItem = new MenuItem("Maintain");
+        homeMenu.getItems().addAll(userDetailsMenuItem, logoutMenuItem);
         salesMenu.getItems().addAll(orderMenuItem, listOrderMenuItem);
         stockMenu.getItems().addAll(maintainMenuItem);
         //managerSalesMenu.getItems().addAll(listOrderMenuItem);
@@ -113,6 +115,20 @@ public class Dashboard extends Exception{
         } else if (user.enummer == Role.SALES) {
             stockMenu.setVisible(false);
         }
+
+        userDetailsMenuItem.setOnAction(actionEvent -> {
+            gridPane.getChildren().clear();
+            gridPane.getChildren().addAll(welcomeLabel, roleLabel, dateLabel);
+            stage.setTitle("Dashboard");
+        });
+
+        logoutMenuItem.setOnAction(actionEvent -> {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION,  "Are you sure you want to logout?", ButtonType.YES, ButtonType.NO);
+            alert.showAndWait();
+            if (alert.getResult() == ButtonType.YES){
+                System.exit(1);
+            }
+        });
 
         orderMenuItem.setOnAction(actionEvent -> {
             CreateOrder order = new CreateOrder(user, database);

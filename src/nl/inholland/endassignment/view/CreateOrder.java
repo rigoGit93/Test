@@ -6,15 +6,15 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import nl.inholland.endassignment.model.*;
 
+import java.time.Instant;
 import java.util.ArrayList;
 
 public class CreateOrder {
@@ -29,6 +29,7 @@ public class CreateOrder {
     private Button resetButton;
 
     private VBox vBox;
+    private VBox vBoxHeader;
     private HBox hBoxButton;
     private HBox hBoxSearchCustomer;
     private HBox hBoxShowCustomer;
@@ -59,6 +60,8 @@ public class CreateOrder {
     private TableColumn<Article, String> priceColumn;
     private AddArticle addArticle;
 
+    private long orderNumber;
+
     public CreateOrder(User user, Database database) {
         this.user = user;
         this.db = database;
@@ -73,32 +76,32 @@ public class CreateOrder {
     }
 
     public void initLayout() {
+        this.orderNumber = Instant.now().getEpochSecond();
+
         db = Login.database;
         articles = FXCollections.observableArrayList(db.getArticlelist());
         customers = FXCollections.observableArrayList(db.getCustomer());
         customerView = new CustomerView(this);
-        //articles = FXCollections.observableArrayList();
 
-
-        gridPane = new GridPane();
-
-        gridPane.setPadding(new Insets(10, 10, 10, 10));
-        gridPane.setVgap(10);
-        gridPane.setHgap(10);
-
-        Label titleLabel = new Label("Create Order ");
-        titleLabel.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 14));
-        gridPane.add(titleLabel, 0, 0);
+        Label titleLabel = new Label("Create Order " + Long.toString(orderNumber));
+        titleLabel.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
 
         Label customerLabel = new Label("Customer");
-        gridPane.add(customerLabel, 0, 1);
 
         customerSearchInput = new TextField();
         customerSearchInput.setPromptText("username");
-        gridPane.add(customerSearchInput, 0, 2);
 
         searchButton = new Button("Search");
-        gridPane.add(searchButton, 1, 2);
+
+        HBox searchBox = new HBox();
+        searchBox.getChildren().addAll(customerSearchInput, searchButton);
+        searchBox.setSpacing(10);
+        searchBox.setPadding(new Insets(10, 10, 10, 10));
+
+        vBoxHeader = new VBox();
+        vBoxHeader.getChildren().addAll(titleLabel, customerLabel, searchBox);
+        vBoxHeader.setSpacing(10);
+        vBoxHeader.setPadding(new Insets(10, 10, 10, 10));
 
         /*
         Labels van de create order view
@@ -112,12 +115,11 @@ public class CreateOrder {
         customermailLbl = new Label();
 
         Label articleLabel = new Label("Articles ");
-        gridPane.add(articleLabel, 0, 3);
 
         this.articleTableView = new TableView<>();
-        articleTableView.setEditable(true);
-        articleTableView.getSelectionModel().setCellSelectionEnabled(false);
-        articleTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        this.articleTableView.setEditable(true);
+        this.articleTableView.getSelectionModel().setCellSelectionEnabled(false);
+        this.articleTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         /*
         Colums worden geinitialiseerd.
@@ -150,6 +152,12 @@ public class CreateOrder {
         this.articleTableView.getColumns().addAll(quantityColumn, brandColumn, modelColumn, acousticColumn, typeColumn,
                 priceColumn);
 
+        VBox tblBox  = new VBox();
+        tblBox.getChildren().addAll(articleLabel, this.articleTableView);
+        tblBox.setSpacing(10);
+        tblBox.setPadding(new Insets(10, 10, 10, 10));
+
+
 //        addArticle.getDb().getOrderExamples().add(1, "Fender", "Telecaster", false, GuitarType.REGULAR,
 //                1079.79);
 
@@ -171,7 +179,7 @@ public class CreateOrder {
         }
 
         //Fills the table
-        if(articleOList != null) {
+        /*if(articleOList != null) {
             try {
                 System.out.println("IK BEN NIET EMPTY");
                 this.articleTableView.setItems(articleOList);
@@ -180,7 +188,7 @@ public class CreateOrder {
             } catch (NullPointerException ex){
                 System.out.println(ex);
             }
-        }
+        }*/
 
         addButton = new Button("Add");
         deleteButton = new Button("Delete");
@@ -188,20 +196,26 @@ public class CreateOrder {
         resetButton = new Button("Reset");
 
         hBoxSearchCustomer = new HBox();
+        hBoxSearchCustomer.setPadding(new Insets(10, 0, 10, 10));
         hBoxSearchCustomer.getChildren().addAll(customerSearchInput, searchButton);
 
         hBoxFspCustomer = new VBox();
         hBoxFspCustomer.getChildren().addAll(customerFirstNameLabel, customerstrNameLbl, customerphoneLbl);
-        hBoxFspCustomer.setPadding(new Insets(10, 10, 10, 10));
+        hBoxFspCustomer.setSpacing(10);
+        hBoxFspCustomer.setPadding(new Insets(10, 20, 10, 20));
 
         hBoxLceCustomer = new VBox();
+
         hBoxLceCustomer.getChildren().addAll(customerLastNameLbl, customercityLbl, customermailLbl);
-        hBoxLceCustomer.setPadding(new Insets(10, 10, 10, 10));
+        hBoxLceCustomer.setSpacing(10);
+        hBoxLceCustomer.setPadding(new Insets(10, 20, 10, 20));
 
         hBoxShowCustomer = new HBox();
+        hBoxShowCustomer.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
         hBoxShowCustomer.getChildren().addAll(hBoxFspCustomer, hBoxLceCustomer);
 
         hBoxCustomerInfo = new HBox();
+        hBoxCustomerInfo.setSpacing(20);
         hBoxCustomerInfo.getChildren().addAll(hBoxSearchCustomer, hBoxShowCustomer);
 
         hBoxButton = new HBox();
@@ -210,7 +224,7 @@ public class CreateOrder {
         hBoxButton.setPadding(new Insets(10, 10, 10, 10));
 
         vBox = new VBox();
-        vBox.getChildren().addAll(gridPane, hBoxCustomerInfo, articleTableView, hBoxButton);
+        vBox.getChildren().addAll(vBoxHeader, hBoxCustomerInfo, tblBox, hBoxButton);
 
         /*
          * verwijst naar CustomerView
@@ -235,8 +249,8 @@ public class CreateOrder {
                 }else{
                     articles.get(2).setQuantity(articles.get(2).getQuantity() + quantity);
                 }
-                this.articleTableView.getItems().remove(i);
             }
+            this.articleTableView.getItems().clear();
         });
 
         deleteButton.setOnAction(actionEvent -> {
@@ -255,6 +269,7 @@ public class CreateOrder {
         confirmButton.setOnAction(actionEvent -> {
             ConfirmOrder confirmOrder = new ConfirmOrder(this);
             confirmOrder.getStage().showAndWait();
+
         });
 
 
@@ -323,6 +338,10 @@ public class CreateOrder {
 
     public Button getConfirmButton() {
         return confirmButton;
+    }
+
+    public long getOrderNumber(){
+        return this.orderNumber;
     }
 
     public void setCustomer(Customer customer){

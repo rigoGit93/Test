@@ -10,6 +10,7 @@ public class Customer {
     private String cityLocation;
     private long phoneNumber;
     private String emailAddress;
+
     private List<Article> articleTest =new ArrayList<>();
 
 

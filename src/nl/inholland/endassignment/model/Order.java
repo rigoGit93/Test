@@ -1,19 +1,27 @@
 package nl.inholland.endassignment.model;
 
+import javafx.collections.ObservableList;
+
 import java.time.LocalDate;
 
 public class Order {
     private int orderNumber;
     public LocalDate orderDate;
-    private Customer customerName;
-    private OrderExample orderExample;
+    private String customerName;
+    private String city;
+    private long phoneNumber;
+    private String emailAddress;
+    private ObservableList<OrderExample> orderExample;
     private int articleCount;
     private double totalPrice;
 
-    public Order(int orderNumber, LocalDate orderDate, Customer customerName, OrderExample orderExample, int articleCount, double totalPrice) {
+    public Order(int orderNumber, LocalDate orderDate, String customerName, String city, long phoneNumber, String emailAddress, ObservableList<OrderExample> orderExample, int articleCount, double totalPrice) {
         this.orderNumber = orderNumber;
         this.orderDate = orderDate;
         this.customerName = customerName;
+        this.city = city;
+        this.phoneNumber = phoneNumber;
+        this.emailAddress = emailAddress;
         this.orderExample = orderExample;
         this.articleCount = articleCount;
         this.totalPrice = totalPrice;
@@ -35,19 +43,43 @@ public class Order {
         this.orderDate = orderDate;
     }
 
-    public Customer getCustomerName() {
+    public String getCustomerName() {
         return customerName;
     }
 
-    public void setCustomerName(Customer customerName) {
+    public void setCustomerName(String customerName) {
         this.customerName = customerName;
     }
 
-    public OrderExample getOrderExample() {
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public long getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(long phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
+
+    public ObservableList<OrderExample> getOrderExample() {
         return orderExample;
     }
 
-    public void setOrderExample(OrderExample orderExample) {
+    public void setOrderExample(ObservableList<OrderExample> orderExample) {
         this.orderExample = orderExample;
     }
 

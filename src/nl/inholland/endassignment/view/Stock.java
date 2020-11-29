@@ -1,12 +1,20 @@
 package nl.inholland.endassignment.view;
 
+import javafx.collections.FXCollections;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import nl.inholland.endassignment.model.*;
+
+import java.util.ArrayList;
 
 
 public class Stock{
@@ -15,7 +23,6 @@ public class Stock{
     private TextField quantityArticleInput;
     private Button addButton;
     private VBox vBox;
-    private HBox hBox;
 
     private User user;
     private Database database;
@@ -36,30 +43,33 @@ public class Stock{
     }
 
     private void initLayout(){
-        Label stockMaintenanceLabel = new Label("Stock maintenance");
+        database = Login.database;
 
-        TableView<Customer> stockArticleTableView = new TableView<>();
+        Label stockMaintenanceLabel = new Label("Stock maintenance");
+        stockMaintenanceLabel.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
+
+        TableView<Article> stockArticleTableView = new TableView<>();
         stockArticleTableView.setEditable(true);
         stockArticleTableView.getSelectionModel().setCellSelectionEnabled(false);
         stockArticleTableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
-        TableColumn<Customer, String> quantityColumn = new TableColumn<>("Quantity");
-        quantityColumn.setMinWidth(150);
+        TableColumn<Article, String> quantityColumn = new TableColumn<>("Quantity");
+        quantityColumn.setMinWidth(100);
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
 
-        TableColumn<Customer, String> brandColumn = new TableColumn<>("Brand");
+        TableColumn<Article, String> brandColumn = new TableColumn<>("Brand");
         brandColumn.setMinWidth(150);
         brandColumn.setCellValueFactory(new PropertyValueFactory<>("brand"));
 
-        TableColumn<Customer, String> modelColumn = new TableColumn<>("Model");
+        TableColumn<Article, String> modelColumn = new TableColumn<>("Model");
         modelColumn.setMinWidth(150);
         modelColumn.setCellValueFactory(new PropertyValueFactory<>("model"));
 
-        TableColumn<Customer, String> acousticColumn = new TableColumn<>("Acoustic");
+        TableColumn<Article, String> acousticColumn = new TableColumn<>("Acoustic");
         acousticColumn.setMinWidth(150);
         acousticColumn.setCellValueFactory(new PropertyValueFactory<>("acoustic"));
 
-        TableColumn<Customer, String> typeColumn = new TableColumn<>("Type");
+        TableColumn<Article, String> typeColumn = new TableColumn<>("Guitar Type");
         typeColumn.setMinWidth(150);
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
 
@@ -67,15 +77,46 @@ public class Stock{
         stockArticleTableView.getColumns().addAll(quantityColumn,brandColumn, modelColumn, acousticColumn,
                 typeColumn);
 
+        stockArticleTableView.setItems(FXCollections.observableArrayList(database.getArticlelist()));
+
+        VBox xBoxTbl = new VBox();
+        xBoxTbl.getChildren().addAll(stockMaintenanceLabel, stockArticleTableView);
+        xBoxTbl.setSpacing(10);
+        xBoxTbl.setPadding(new Insets(10, 10, 10, 10));
+
         quantityArticleInput = new TextField();
         negateBox = new CheckBox("Negate");
         addButton= new Button("Add");
 
-        hBox = new HBox();
-        hBox.getChildren().addAll(quantityArticleInput,negateBox,addButton);
+        HBox hBoxButton = new HBox();
+        hBoxButton.getChildren().addAll(quantityArticleInput, negateBox, addButton);
+        hBoxButton.setSpacing(10);
+        hBoxButton.setPadding(new Insets(10, 10, 10, 10));
 
         vBox = new VBox();
-        vBox.getChildren().addAll(stockArticleTableView, hBox);
+        vBox.getChildren().addAll(xBoxTbl, hBoxButton);
+
+        addButton.setOnAction(actionEvent -> {
+            if (!quantityArticleInput.getText().isEmpty() & !stockArticleTableView.getSelectionModel().isEmpty()){
+                int quantity = stockArticleTableView.getSelectionModel().getSelectedItem().getQuantity();
+                if (negateBox.isSelected()){
+                    int newquantity = quantity - Integer.parseInt(quantityArticleInput.getText());
+                    if (newquantity < 0){
+                        negateBox.setDisable(true);
+                    }else{
+                        negateBox.setDisable(false);
+
+                        stockArticleTableView.getSelectionModel().getSelectedItem().setQuantity(newquantity);
+                    }
+                }else{
+                    int newquantity = quantity + Integer.parseInt(quantityArticleInput.getText());
+                    stockArticleTableView.getSelectionModel().getSelectedItem().setQuantity(newquantity);
+                }
+            }
+            stockArticleTableView.getItems().clear();
+            stockArticleTableView.setItems(FXCollections.observableArrayList(database.getArticlelist()));
+
+        });
     }
 
     public Stage getStage() {
@@ -108,14 +149,6 @@ public class Stock{
 
     public void setvBox(VBox vBox) {
         this.vBox = vBox;
-    }
-
-    public HBox gethBox() {
-        return hBox;
-    }
-
-    public void sethBox(HBox hBox) {
-        this.hBox = hBox;
     }
 
     public User getUser() {

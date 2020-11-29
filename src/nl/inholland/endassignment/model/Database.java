@@ -11,9 +11,12 @@ public class Database implements Serializable {
     private ArrayList<Customer> customer;
     private ArrayList<Article> articlelist;
     private static ArrayList<OrderExample> orderExamples;
+    private ArrayList<Order> orderList;
 
     public Database() {
         orderExamples = new ArrayList<>();
+
+        this.orderList = new ArrayList<>();
 
         this.userList = new ArrayList<>();
         User obj1 = new User("Admin", "Pass", "Salman", "tester", LocalDate.now(), Role.ADMIN);
@@ -70,4 +73,7 @@ public class Database implements Serializable {
         return orderExamples;
     }
 
+    public ArrayList<Order> getOrderList(){
+        return this.orderList;
+    }
 }
