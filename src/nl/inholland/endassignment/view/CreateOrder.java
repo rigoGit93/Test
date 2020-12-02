@@ -3,7 +3,6 @@ package nl.inholland.endassignment.view;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
@@ -15,7 +14,6 @@ import javafx.stage.Stage;
 import nl.inholland.endassignment.model.*;
 
 import java.time.Instant;
-import java.util.ArrayList;
 
 public class CreateOrder {
 
@@ -158,14 +156,6 @@ public class CreateOrder {
         tblBox.setPadding(new Insets(10, 10, 10, 10));
 
 
-//        addArticle.getDb().getOrderExamples().add(1, "Fender", "Telecaster", false, GuitarType.REGULAR,
-//                1079.79);
-
-        ArrayList<OrderExample> ar = new ArrayList<>();
-        ar.add(new OrderExample(1, "Fender", "Telecaster", false, GuitarType.REGULAR, 1079.79));
-
-        ObservableList<OrderExample> oAr = FXCollections.observableArrayList(ar);
-
         ObservableList<OrderExample> articleOList = null;
 
 
@@ -178,17 +168,6 @@ public class CreateOrder {
             System.out.println("IK BE NOG EMPTY \n" +ex);
         }
 
-        //Fills the table
-        /*if(articleOList != null) {
-            try {
-                System.out.println("IK BEN NIET EMPTY");
-                this.articleTableView.setItems(articleOList);
-                this.articleTableView.refresh();
-                //articleTableView.insert
-            } catch (NullPointerException ex){
-                System.out.println(ex);
-            }
-        }*/
 
         addButton = new Button("Add");
         deleteButton = new Button("Delete");
@@ -205,7 +184,6 @@ public class CreateOrder {
         hBoxFspCustomer.setPadding(new Insets(10, 20, 10, 20));
 
         hBoxLceCustomer = new VBox();
-
         hBoxLceCustomer.getChildren().addAll(customerLastNameLbl, customercityLbl, customermailLbl);
         hBoxLceCustomer.setSpacing(10);
         hBoxLceCustomer.setPadding(new Insets(10, 20, 10, 20));
@@ -272,12 +250,6 @@ public class CreateOrder {
 
         });
 
-
-
-//        homeMenu.setOnAction(actionEvent -> {
-//            System.out.println("AHHASDIUHDGKFVJLS");
-//            Login.dashboard.getStage().showAndWait();
-//        });
     }
 
     public Stage getStage() {

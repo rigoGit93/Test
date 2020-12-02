@@ -14,9 +14,7 @@ import javafx.stage.Stage;
 import nl.inholland.endassignment.model.*;
 import nl.inholland.endassignment.util.SystemProperties;
 
-import javax.xml.crypto.Data;
 import java.time.LocalDate;
-import java.util.Date;
 
 public class ConfirmOrder {
 
@@ -135,7 +133,7 @@ public class ConfirmOrder {
         stage = new Stage();
         stage.setTitle("Confirm order");
         stage.setScene(scene);
-        stage.setWidth(SystemProperties.getScreenSize()[0]/3.0);
+        stage.setWidth(SystemProperties.getScreenSize()[0]/2.0);
 
         confirmButton.setOnAction(actionEvent -> {
             database = Login.database;
