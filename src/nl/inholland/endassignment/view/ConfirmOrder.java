@@ -151,39 +151,4 @@ public class ConfirmOrder {
         return stage;
     }
 
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
-
-    public Button getConfirmButton() {
-        return confirmButton;
-    }
-
-    public void setConfirmButton(Button confirmButton) {
-        this.confirmButton = confirmButton;
-    }
-
-    public Label getQuantityLbl() {
-        return quantityLbl;
-    }
-
-    public void setQuantityLbl(Label quantityLbl) {
-        this.quantityLbl = quantityLbl;
-    }
-
-    public VBox getvBox() {
-        return vBox;
-    }
-
-    public void setvBox(VBox vBox) {
-        this.vBox = vBox;
-    }
-
-    public GridPane getGridPane() {
-        return gridPane;
-    }
-
-    public void setGridPane(GridPane gridPane) {
-        this.gridPane = gridPane;
-    }
 }

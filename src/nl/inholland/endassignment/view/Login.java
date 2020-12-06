@@ -122,5 +122,4 @@ public class Login implements Serializable {
         return stage;
     }
 
-
 }
