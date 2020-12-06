@@ -137,15 +137,6 @@ public class Login implements Serializable {
             }
         });
 
-        /*loginButton.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.ENTER) {
-                    System.out.println("Enter Pressed");
-                }
-            }
-        });*/
-
     }
 
     public static Stage getStage() {

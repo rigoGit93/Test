@@ -33,8 +33,6 @@ public class Database implements Serializable {
         Customer cl3 = new Customer("Jenny", "Gump", "Rodekruis 67",
                 "Den Haag", 061234567, "jenny@email.com");
 
-     // cl1.get
-
         customer.add(cl1);
         customer.add(cl2);
         customer.add(cl3);

@@ -2,7 +2,6 @@ package nl.inholland.endassignment.view;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -12,9 +11,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import javafx.scene.paint.Color;
-
+import javafx.stage.Stage;
 import nl.inholland.endassignment.model.Article;
 import nl.inholland.endassignment.model.Database;
 import nl.inholland.endassignment.model.OrderExample;
@@ -23,8 +21,6 @@ import nl.inholland.endassignment.util.Notifications;
 import nl.inholland.endassignment.util.SystemProperties;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class AddArticle {
 
@@ -217,8 +213,7 @@ public class AddArticle {
                     quantityLbl.setText("");
                     this.articleTableView.getItems().add(order);
                 }
-                //List<Integer> amounts = db.getArticlelist().stream().map(Article::getQuantity).collect(Collectors.toList());
-                //System.out.println("Here we have the extracted List of amounts: " + amounts);
+
             }
 
         });
