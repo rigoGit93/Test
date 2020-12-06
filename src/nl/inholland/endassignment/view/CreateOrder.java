@@ -2,9 +2,12 @@ package nl.inholland.endassignment.view;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -78,8 +81,7 @@ public class CreateOrder {
 
         db = Login.database;
         articles = FXCollections.observableArrayList(db.getArticlelist());
-        customers = FXCollections.observableArrayList(db.getCustomer());
-        customerView = new CustomerView(this);
+        customers = FXCollections.observableArrayList(db.getCustomer(""));
 
         Label titleLabel = new Label("Create Order " + Long.toString(orderNumber));
         titleLabel.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
@@ -204,9 +206,15 @@ public class CreateOrder {
         vBox = new VBox();
         vBox.getChildren().addAll(vBoxHeader, hBoxCustomerInfo, tblBox, hBoxButton);
 
-        /*
-         * verwijst naar CustomerView
-         */
+        customerSearchInput.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.ENTER) {
+                    searchButton.requestFocus();
+                }
+            }
+        });
+
         searchButton.setOnAction(actionEvent -> {
             CustomerView customerView = new CustomerView(this);
             customerView.getStage().showAndWait();

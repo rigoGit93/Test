@@ -1,5 +1,6 @@
 package nl.inholland.endassignment.view;
 
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -7,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -18,6 +20,7 @@ import nl.inholland.endassignment.model.User;
 import nl.inholland.endassignment.util.Notifications;
 import nl.inholland.endassignment.util.SystemProperties;
 
+import javafx.scene.input.KeyEvent;
 import java.io.Serializable;
 
 public class Login implements Serializable {
@@ -64,6 +67,7 @@ public class Login implements Serializable {
 
         passwordInput = new PasswordField();
         passwordInput.setPromptText("password");
+        passwordInput.setPrefSize(SystemProperties.getTextBoxSize()[0], SystemProperties.getTextBoxSize()[1]);
         GridPane.setConstraints(passwordInput, 0, 4);
 
         loginButton = new Button("Login");
@@ -112,9 +116,35 @@ public class Login implements Serializable {
                     Dashboard dashboard = new Dashboard(login);
                     dashboard.getStage().showAndWait();
                 }
-
             }
         });
+
+        userInput.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.ENTER) {
+                    passwordInput.requestFocus();
+                }
+            }
+        });
+
+        passwordInput.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.ENTER) {
+                    loginButton.requestFocus();
+                }
+            }
+        });
+
+        /*loginButton.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.ENTER) {
+                    System.out.println("Enter Pressed");
+                }
+            }
+        });*/
 
     }
 
