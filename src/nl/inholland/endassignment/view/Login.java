@@ -67,6 +67,7 @@ public class Login implements Serializable {
 
         passwordInput = new PasswordField();
         passwordInput.setPromptText("password");
+        passwordInput.setPrefSize(SystemProperties.getTextBoxSize()[0], SystemProperties.getTextBoxSize()[1]);
         GridPane.setConstraints(passwordInput, 0, 4);
 
         loginButton = new Button("Login");
@@ -118,14 +119,32 @@ public class Login implements Serializable {
             }
         });
 
-        loginButton.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        userInput.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.ENTER) {
+                    passwordInput.requestFocus();
+                }
+            }
+        });
+
+        passwordInput.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.ENTER) {
+                    loginButton.requestFocus();
+                }
+            }
+        });
+
+        /*loginButton.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 if (event.getCode() == KeyCode.ENTER) {
                     System.out.println("Enter Pressed");
                 }
             }
-        });
+        });*/
 
     }
 

@@ -3,10 +3,13 @@ package nl.inholland.endassignment.view;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -163,8 +166,6 @@ public class AddArticle {
         stage.setWidth(SystemProperties.getScreenSize()[0]/3.0);
 
         artTbList.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
-
-
             if (newValue != null) {
                 if (addButton.isPressed()) {
 
@@ -181,6 +182,15 @@ public class AddArticle {
 
 
         }));
+
+        amountArticleInput.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.ENTER) {
+                    addButton.requestFocus();
+                }
+            }
+        });
 
         addButton.setOnAction(actionEvent -> {
 

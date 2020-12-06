@@ -41,7 +41,8 @@ public class CustomerView {
     private void initLayout() {
 
         db = Login.database;
-        customers = FXCollections.observableArrayList(db.getCustomer());
+        String searchItem = this.createOrder.getCustomerSearchInput().getText();
+        customers = FXCollections.observableArrayList(db.getCustomer(searchItem));
         VBox layout = new VBox();
         layout.setPadding(new Insets(10));
 

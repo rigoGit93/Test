@@ -53,8 +53,17 @@ public class Database implements Serializable {
 
     }
 
-    public ArrayList<Customer> getCustomer() {
-        return customer;
+    public ArrayList<Customer> getCustomer(String searchItem) {
+        if (searchItem.isEmpty()){
+            return customer;
+        }
+        ArrayList<Customer> customers = new ArrayList<>();
+        for(Customer cust : customer){
+            if (cust.getFirstName().toLowerCase().contains(searchItem.toLowerCase()) | cust.getLastName().toLowerCase().contains(searchItem.toLowerCase())){
+                customers.add(cust);
+            }
+        }
+        return customers;
     }
 
     public void setCustomer(ArrayList<Customer> customer) {
