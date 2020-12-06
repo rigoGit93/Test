@@ -1,6 +1,5 @@
 package nl.inholland.endassignment.view;
 
-import javafx.beans.property.StringProperty;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -21,7 +20,6 @@ import nl.inholland.endassignment.model.User;
 import nl.inholland.endassignment.util.Notifications;
 import nl.inholland.endassignment.util.SystemProperties;
 
-import java.awt.*;
 import javafx.scene.input.KeyEvent;
 import java.io.Serializable;
 
@@ -110,11 +108,10 @@ public class Login implements Serializable {
                         .findAny()
                         .orElse(null);
                 if (login == null) {
-                    Notifications.errorNotification("Inloggen is mislukt!", "Login Error", null);
+                    Notifications.errorNotification("Login is failed!", "Login Error", null);
 
                 } else {
                     stage.close();
-                    System.out.println("Wel user gevonden");
                     Dashboard dashboard = new Dashboard(login);
                     dashboard.getStage().showAndWait();
                 }
@@ -132,59 +129,9 @@ public class Login implements Serializable {
 
     }
 
-    public Database getDatabase() {
-        return database;
-    }
-
-    public void setDatabase(Database database) {
-        this.database = database;
-    }
-
-//    public ObservableList<User> getUsers() {
-//        return users;
-//    }
-//
-//    public void setUsers(ObservableList<User> users) {
-//        this.users = users;
-//    }
-
     public static Stage getStage() {
         return stage;
     }
 
-    public static void setStage(Stage stage) {
-        Login.stage = stage;
-    }
 
-    public GridPane getGridPane() {
-        return gridPane;
-    }
-
-    public void setGridPane(GridPane gridPane) {
-        this.gridPane = gridPane;
-    }
-
-    public TextField getUserInput() {
-        return userInput;
-    }
-
-    public void setUserInput(TextField userInput) {
-        this.userInput = userInput;
-    }
-
-    public TextField getPasswordInput() {
-        return passwordInput;
-    }
-
-    public void setPasswordInput(TextField passwordInput) {
-        this.passwordInput = passwordInput;
-    }
-
-    public Button getLoginButton() {
-        return loginButton;
-    }
-
-    public void setLoginButton(Button loginButton) {
-        this.loginButton = loginButton;
-    }
 }

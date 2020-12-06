@@ -40,10 +40,6 @@ public class Dashboard extends Exception{
     private Label firstNameLbl;
     private CreateOrder order;
 
-    public CreateOrder getOrder(){
-        return order;
-    }
-
     public Dashboard(User user) {
         this.user = user;
 
@@ -57,7 +53,7 @@ public class Dashboard extends Exception{
         Menu homeMenu = new Menu("Home");
         Menu salesMenu = new Menu("Sales");
         Menu stockMenu = new Menu("Stock");
-        Menu managerSalesMenu = new Menu("Sales");
+
 
         //sorteer menu toegevoegd
         menuBar.getMenus().addAll(homeMenu, salesMenu, stockMenu);
@@ -71,7 +67,6 @@ public class Dashboard extends Exception{
         homeMenu.getItems().addAll(userDetailsMenuItem, logoutMenuItem);
         salesMenu.getItems().addAll(orderMenuItem, listOrderMenuItem);
         stockMenu.getItems().addAll(maintainMenuItem);
-        //managerSalesMenu.getItems().addAll(listOrderMenuItem);
 
         VBox vBox = new VBox();
 
@@ -85,7 +80,7 @@ public class Dashboard extends Exception{
         welcomeLabel.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
         GridPane.setConstraints(welcomeLabel, 0, 0);
 
-        Label roleLabel = new Label("You`re role is: " + user.enummer.toString());
+        Label roleLabel = new Label("Your role is: " + user.enummer.toString());
         GridPane.setConstraints(roleLabel, 0, 1);
 
         Date date = Calendar.getInstance().getTime();
@@ -99,7 +94,6 @@ public class Dashboard extends Exception{
 
         // add a layout node and controls
         vBox.getChildren().addAll(menuBar, gridPane);
-        //root = vBox;
 
         Scene scene = new Scene(vBox);
 
