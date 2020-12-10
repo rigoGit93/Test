@@ -98,43 +98,4 @@ public class AddCustomer {
 
     }
 
-    public Stage getStage() {
-        return stage;
-    }
-
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
-
-    public GridPane getGridPane() {
-        return gridPane;
-    }
-
-    public void setGridPane(GridPane gridPane) {
-        this.gridPane = gridPane;
-    }
-
-    public VBox getvBox() {
-        return vBox;
-    }
-
-    public void setvBox(VBox vBox) {
-        this.vBox = vBox;
-    }
-
-    public Button getAddCustomer() {
-        return addCustomer;
-    }
-
-    public void setAddCustomer(Button addCustomer) {
-        this.addCustomer = addCustomer;
-    }
-
-    public Button getCancelButton() {
-        return cancelButton;
-    }
-
-    public void setCancelButton(Button cancelButton) {
-        this.cancelButton = cancelButton;
-    }
 }
