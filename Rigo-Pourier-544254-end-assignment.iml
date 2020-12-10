@@ -10,5 +10,6 @@
     <orderEntry type="library" name="src" level="project" />
     <orderEntry type="library" name="lib" level="project" />
     <orderEntry type="library" name="javafx-swt" level="application" />
+    <orderEntry type="library" name="javaee-api-8.0.1" level="application" />
   </component>
 </module>

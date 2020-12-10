@@ -118,7 +118,7 @@ public class ConfirmOrder {
             total += orders.get(i).getPrice() * orders.get(i).getQuantity();
         }
 
-        Label totalPriceLabel = new Label("Total price: " + Double.toString(total));
+        Label totalPriceLabel = new Label("Total price: " + Double.toString(Math.round(total * 100.0)/100.0));
         GridPane.setConstraints(totalPriceLabel, 0, orders.size() + 7);
 
         confirmButton = new Button("Confirm");
@@ -143,6 +143,12 @@ public class ConfirmOrder {
                     customer.getCityLocation(), customer.getPhoneNumber(), customer.getEmailAddress(),
                     orders, orders.size(), total));
             stage.close();
+
+            OrderList order = new OrderList(this.createOrder.getUser());
+            this.createOrder.getGridPane().getChildren().clear();
+            this.createOrder.getGridPane().getChildren().add(order.getvBox());
+            this.createOrder.getStage().setTitle("View Order List");
+
         });
 
     }

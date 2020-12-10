@@ -125,7 +125,7 @@ public class Dashboard extends Exception{
         });
 
         orderMenuItem.setOnAction(actionEvent -> {
-            CreateOrder order = new CreateOrder(user, database);
+            CreateOrder order = new CreateOrder(this);
             gridPane.getChildren().clear();
             gridPane.getChildren().add(order.getvBox());
             stage.setTitle("Create an Order");
@@ -147,6 +147,10 @@ public class Dashboard extends Exception{
             stage.setTitle("View Stock List");
         });
 
+    }
+
+    public GridPane getGridPane(){
+        return this.gridPane;
     }
 
     public Stage getStage() {
