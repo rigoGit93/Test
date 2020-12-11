@@ -1,22 +1,16 @@
 package nl.inholland.endassignment.view;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
-import javafx.collections.ObservableList;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.MapValueFactory;
+import javafx.scene.control.Label;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import nl.inholland.endassignment.model.*;
-
-import java.awt.event.MouseEvent;
-import java.util.HashMap;
-import java.util.Map;
 
 public class OrderList {
 
@@ -150,178 +144,8 @@ public class OrderList {
         vBox.getChildren().addAll(orderListLabel, orderListTableView, orderDetailsListLabel, orderDetailsTableView);
     }
 
-    public Stage getStage() {
-        return stage;
-    }
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Database getDatabase() {
-        return database;
-    }
-
-    public void setDatabase(Database database) {
-        this.database = database;
-    }
-
     public VBox getvBox() {
         return vBox;
     }
 
-    public void setvBox(VBox vBox) {
-        this.vBox = vBox;
-    }
-
-    public HBox gethBox() {
-        return hBox;
-    }
-
-    public void sethBox(HBox hBox) {
-        this.hBox = hBox;
-    }
-
-    public TableView<Customer> getOrderListTableView() {
-        return orderListTableView;
-    }
-
-    public void setOrderListTableView(TableView<Customer> orderListTableView) {
-        this.orderListTableView = orderListTableView;
-    }
-
-    public TableColumn<Customer, String> getOrderNumberColumn() {
-        return orderNumberColumn;
-    }
-
-    public void setOrderNumberColumn(TableColumn<Customer, String> orderNumberColumn) {
-        this.orderNumberColumn = orderNumberColumn;
-    }
-
-    public TableColumn<Customer, String> getDateColumn() {
-        return dateColumn;
-    }
-
-    public void setDateColumn(TableColumn<Customer, String> dateColumn) {
-        this.dateColumn = dateColumn;
-    }
-
-    public TableColumn<Customer, String> getCustomerNameColumn() {
-        return customerNameColumn;
-    }
-
-    public void setCustomerNameColumn(TableColumn<Customer, String> customerNameColumn) {
-        this.customerNameColumn = customerNameColumn;
-    }
-
-    public TableColumn<Customer, String> getCityLocationColumn() {
-        return cityLocationColumn;
-    }
-
-    public void setCityLocationColumn(TableColumn<Customer, String> cityLocationColumn) {
-        this.cityLocationColumn = cityLocationColumn;
-    }
-
-    public TableColumn<Customer, String> getPhoneNumberColumn() {
-        return phoneNumberColumn;
-    }
-
-    public void setPhoneNumberColumn(TableColumn<Customer, String> phoneNumberColumn) {
-        this.phoneNumberColumn = phoneNumberColumn;
-    }
-
-    public TableColumn<Customer, String> getEmailAddressColumn() {
-        return emailAddressColumn;
-    }
-
-    public void setEmailAddressColumn(TableColumn<Customer, String> emailAddressColumn) {
-        this.emailAddressColumn = emailAddressColumn;
-    }
-
-    public TableColumn<Customer, String> getCountColumn() {
-        return countColumn;
-    }
-
-    public void setCountColumn(TableColumn<Customer, String> countColumn) {
-        this.countColumn = countColumn;
-    }
-
-    public TableColumn<Customer, String> getTotalColumn() {
-        return totalColumn;
-    }
-
-    public void setTotalColumn(TableColumn<Customer, String> totalColumn) {
-        this.totalColumn = totalColumn;
-    }
-
-    public TableView<Article> getOrderDetailsTableView() {
-        return orderDetailsTableView;
-    }
-
-    public void setOrderDetailsTableView(TableView<Article> orderDetailsTableView) {
-        this.orderDetailsTableView = orderDetailsTableView;
-    }
-
-    public TableColumn<Article, String> getUuidColumn() {
-        return uuidColumn;
-    }
-
-    public void setUuidColumn(TableColumn<Article, String> uuidColumn) {
-        this.uuidColumn = uuidColumn;
-    }
-
-    public TableColumn<Article, String> getBrandColumn() {
-        return brandColumn;
-    }
-
-    public void setBrandColumn(TableColumn<Article, String> brandColumn) {
-        this.brandColumn = brandColumn;
-    }
-
-    public TableColumn<Article, String> getModelColumn() {
-        return modelColumn;
-    }
-
-    public void setModelColumn(TableColumn<Article, String> modelColumn) {
-        this.modelColumn = modelColumn;
-    }
-
-    public TableColumn<Article, String> getAcousticColumn() {
-        return acousticColumn;
-    }
-
-    public void setAcousticColumn(TableColumn<Article, String> acousticColumn) {
-        this.acousticColumn = acousticColumn;
-    }
-
-    public TableColumn<Article, String> getTypeColumn() {
-        return typeColumn;
-    }
-
-    public void setTypeColumn(TableColumn<Article, String> typeColumn) {
-        this.typeColumn = typeColumn;
-    }
-
-    public TableColumn<Article, String> getPriceColumn() {
-        return priceColumn;
-    }
-
-    public void setPriceColumn(TableColumn<Article, String> priceColumn) {
-        this.priceColumn = priceColumn;
-    }
-
-    public TableColumn<Article, String> getQuantityColumn() {
-        return quantityColumn;
-    }
-
-    public void setQuantityColumn(TableColumn<Article, String> quantityColumn) {
-        this.quantityColumn = quantityColumn;
-    }
 }

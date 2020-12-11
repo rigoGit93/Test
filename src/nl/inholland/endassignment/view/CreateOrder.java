@@ -271,60 +271,16 @@ public class CreateOrder {
         return this.user;
     }
 
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
-
     public GridPane getGridPane() {
         return this.dashboard.getGridPane();
-    }
-
-    public void setGridPane(GridPane gridPane) {
-        this.gridPane = gridPane;
     }
 
     public TextField getCustomerSearchInput() {
         return customerSearchInput;
     }
 
-    public void setCustomerSearchInput(TextField customerSearchInput) {
-        this.customerSearchInput = customerSearchInput;
-    }
-
-    public void setCustomerFirstNameLabel(Label customerFirstNameLabel) {
-        this.customerFirstNameLabel = customerFirstNameLabel;
-    }
-
     public Label getCustomerFirstNameLabel() {
         return customerFirstNameLabel;
-    }
-
-    public Button getSearchButton() {
-        return searchButton;
-    }
-
-    public void setSearchButton(Button searchButton) {
-        this.searchButton = searchButton;
-    }
-
-    public Button getAddButton() {
-        return addButton;
-    }
-
-    public void setAddButton(Button addButton) {
-        this.addButton = addButton;
-    }
-
-    public Button getDeleteButton() {
-        return deleteButton;
-    }
-
-    public void setDeleteButton(Button deleteButton) {
-        this.deleteButton = deleteButton;
-    }
-
-    public Button getConfirmButton() {
-        return confirmButton;
     }
 
     public long getOrderNumber(){
@@ -347,117 +303,24 @@ public class CreateOrder {
         return customerLastNameLbl;
     }
 
-    public void setCustomerLastNameLbl(Label customerLastNameLbl) {
-        this.customerLastNameLbl = customerLastNameLbl;
-    }
-
     public Label getCustomerstrNameLbl() {
         return customerstrNameLbl;
-    }
-
-    public void setCustomerstrNameLbl(Label customerstrNameLbl) {
-        this.customerstrNameLbl = customerstrNameLbl;
     }
 
     public Label getCustomermailLbl() {
         return customermailLbl;
     }
 
-    public void setCustomermailLbl(Label customermailLbl) {
-        this.customermailLbl = customermailLbl;
-    }
-
     public Label getCustomerphoneLbl() {
         return customerphoneLbl;
-    }
-
-    public void setCustomerphoneLbl(Label customerphoneLbl) {
-        this.customerphoneLbl = customerphoneLbl;
     }
 
     public Label getCustomercityLbl() {
         return customercityLbl;
     }
 
-    public void setCustomercityLbl(Label customercityLbl) {
-        this.customercityLbl = customercityLbl;
-    }
-
-    public void setConfirmButton(Button confirmButton) {
-        this.confirmButton = confirmButton;
-    }
-
-    public Button getResetButton() {
-        return resetButton;
-    }
-
-    public void setResetButton(Button resetButton) {
-        this.resetButton = resetButton;
-    }
-
     public VBox getvBox() {
         return vBox;
-    }
-
-    public void setvBox(VBox vBox) {
-        this.vBox = vBox;
-    }
-
-
-    public TableView<OrderExample> getArticleTableView() {
-        return this.articleTableView;
-    }
-
-    public void setArticleTableView(TableView<OrderExample> articleTableView) {
-        this.articleTableView = articleTableView;
-    }
-
-    public TableColumn<Article, String> getQuantityColumn() {
-        return quantityColumn;
-    }
-
-    public void setQuantityColumn(TableColumn<Article, String> quantityColumn) {
-        this.quantityColumn = quantityColumn;
-    }
-
-    public TableColumn<Article, String> getBrandColumn() {
-        return brandColumn;
-    }
-
-    public void setBrandColumn(TableColumn<Article, String> brandColumn) {
-        this.brandColumn = brandColumn;
-    }
-
-    public TableColumn<Article, String> getModelColumn() {
-        return modelColumn;
-    }
-
-    public void setModelColumn(TableColumn<Article, String> modelColumn) {
-        this.modelColumn = modelColumn;
-    }
-
-    public TableColumn<Article, String> getAcousticColumn() {
-        return acousticColumn;
-    }
-
-    public void setAcousticColumn(TableColumn<Article, String> acousticColumn) {
-        this.acousticColumn = acousticColumn;
-    }
-
-    public TableColumn<Article, String> getTypeColumn() {
-        return typeColumn;
-    }
-
-    public void setTypeColumn(TableColumn<Article, String> typeColumn) {
-        this.typeColumn = typeColumn;
-    }
-
-    public TableColumn<Article, String> getPriceColumn() {
-        return priceColumn;
-    }
-
-    public void setPriceColumn(TableColumn<Article, String> priceColumn) {
-        this.priceColumn = priceColumn;
     }
 
 }

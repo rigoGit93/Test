@@ -29,39 +29,19 @@ public class Article {
         return brand;
     }
 
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
     public String getModel() {
         return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
     }
 
     public boolean getAcoustic() {
         return acoustic;
     }
 
-    public void setAcoustic(boolean acoustic) {
-        this.acoustic = acoustic;
-    }
-
     public GuitarType getType() {
         return type;
     }
 
-    public void setType(GuitarType type) {
-        this.type = type;
-    }
-
     public double getPrice() {
         return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
     }
 }

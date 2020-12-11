@@ -26,69 +26,12 @@ public class User {
         this.enummer = enummer;
 
 
-
         // HashMap<String, String > userHashMap = new HashMap<String, String>();
         //   userHashMap.put("Admin", new User("Admin", "Pass",
         //            "Salman", "tester", LocalDate.now()));
         // userHashMap.put("SalesAcc","Passwrd");
 
 
-    }
-
-    public ArrayList<User> getList() {
-        return list;
-    }
-
-    public void setList(ArrayList<User> list) {
-        this.list = list;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public LocalDate getBirtDate() {
-        return birtDate;
-    }
-
-    public void setBirtDate(LocalDate birtDate) {
-        this.birtDate = birtDate;
-    }
-
-    public HashMap<String, User> getUserHashMap() {
-        return userHashMap;
-    }
-
-    public void setUserHashMap(HashMap<String, User> userHashMap) {
-        this.userHashMap = userHashMap;
     }
 
     @Override
