@@ -61,11 +61,14 @@ public class CreateOrder {
     private TableColumn<Article, String> priceColumn;
     private AddArticle addArticle;
 
+    private Dashboard dashboard;
+
     private long orderNumber;
 
-    public CreateOrder(User user, Database database) {
-        this.user = user;
-        this.db = database;
+    public CreateOrder(Dashboard dashboard) {
+        this.dashboard = dashboard;
+        this.user = dashboard.getUser();
+        this.db = Login.database;
 
         initLayout();
     }
@@ -261,7 +264,11 @@ public class CreateOrder {
     }
 
     public Stage getStage() {
-        return stage;
+        return this.dashboard.getStage();
+    }
+
+    public User getUser(){
+        return this.user;
     }
 
     public void setStage(Stage stage) {
@@ -269,7 +276,7 @@ public class CreateOrder {
     }
 
     public GridPane getGridPane() {
-        return gridPane;
+        return this.dashboard.getGridPane();
     }
 
     public void setGridPane(GridPane gridPane) {
