@@ -26,6 +26,38 @@ public class Customer {
 
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setStreetAddress(String streetAddress) {
+        this.streetAddress = streetAddress;
+    }
+
+    public void setCityLocation(String cityLocation) {
+        this.cityLocation = cityLocation;
+    }
+
+    public void setPhoneNumber(long phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
+
+    public List<Article> getArticleTest() {
+        return articleTest;
+    }
+
+    public void setArticleTest(List<Article> articleTest) {
+        this.articleTest = articleTest;
+    }
+
     public String getFirstName() {
         return firstName;
     }

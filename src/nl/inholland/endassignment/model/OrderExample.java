@@ -18,6 +18,30 @@ public class OrderExample {
         this.price = price;
     }
 
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public void setAcoustic(boolean acoustic) {
+        this.acoustic = acoustic;
+    }
+
+    public void setType(GuitarType type) {
+        this.type = type;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     public int getQuantity() {
         return quantity;
     }
