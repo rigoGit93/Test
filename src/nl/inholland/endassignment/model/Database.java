@@ -64,10 +64,6 @@ public class Database implements Serializable {
         return customers;
     }
 
-    public void setCustomer(ArrayList<Customer> customer) {
-        this.customer = customer;
-    }
-
     public List<User> getUserList() {
         return userList;
     }
