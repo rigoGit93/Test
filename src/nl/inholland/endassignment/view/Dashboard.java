@@ -149,7 +149,9 @@ public class Dashboard extends Exception{
 
     }
 
-    public User getUser(){return this.user;}
+    public User getUser(){
+        return this.user;
+    }
 
     public GridPane getGridPane(){
         return this.gridPane;
