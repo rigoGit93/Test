@@ -4,10 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -23,6 +20,7 @@ public class CustomerView {
     private ObservableList<Customer> customers;
     private CreateOrder createOrder;
     private Customer customer;
+    private Button addCustomerButton;
 
 
     private TableView<Customer> customerTableView;
@@ -118,7 +116,15 @@ public class CustomerView {
 
         });
 
-        layout.getChildren().addAll(customerListLabel, customerTableView);
+        addCustomerButton = new Button("Add customer");
+
+        layout.getChildren().addAll(customerListLabel, customerTableView, addCustomerButton);
+
+        addCustomerButton .setOnAction(actionEvent -> {
+            AddCustomer addCustomer = new AddCustomer();
+            addCustomer.getStage().showAndWait();
+
+        });
 
         Scene scene = new Scene(layout);
 

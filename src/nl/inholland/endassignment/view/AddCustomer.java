@@ -98,4 +98,7 @@ public class AddCustomer {
 
     }
 
+    public Stage getStage() {
+        return stage;
+    }
 }

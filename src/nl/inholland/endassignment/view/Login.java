@@ -4,11 +4,9 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -20,7 +18,6 @@ import nl.inholland.endassignment.model.User;
 import nl.inholland.endassignment.util.Notifications;
 import nl.inholland.endassignment.util.SystemProperties;
 
-import javafx.scene.input.KeyEvent;
 import java.io.Serializable;
 
 public class Login implements Serializable {
@@ -100,6 +97,14 @@ public class Login implements Serializable {
          */
         loginButton.setOnAction(actionEvent -> {
 
+//            try {
+//                System.out.println( 1 / 0);
+//            } catch (ArithmeticException ae ) {
+//                System.out.println("Must not divide by zero");
+//            } finally {
+//                System.out.println("All done, cleaning up");
+//            }
+
             if (userInput.getText().isEmpty() | passwordInput.getText().isEmpty()){
                 Notifications.errorNotification("Username and Password is required!", "Login Error", null);
             }else {
@@ -109,7 +114,15 @@ public class Login implements Serializable {
                         .findAny()
                         .orElse(null);
                 if (login == null) {
-                    Notifications.errorNotification("Login is failed!", "Login Error", null);
+                    //Notifications.errorNotification("Login is failed!", "Login Error", null);
+
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Exception");
+                    alert.setHeaderText("Account locked");
+                    alert.setContentText("Your account has been locked");
+
+                    alert.showAndWait();
+
 
                 } else {
                     stage.close();
