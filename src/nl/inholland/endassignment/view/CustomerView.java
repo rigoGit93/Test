@@ -46,12 +46,8 @@ public class CustomerView {
 
         Label customerListLabel = new Label("Customer List");
 
-        TableView<Customer> customerTableView = new TableView<>();
-        customerTableView.setEditable(true);
-        customerTableView.getSelectionModel().setCellSelectionEnabled(false);
-        customerTableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-
         this.customerTableView = new TableView();
+        this.customerTableView.getSelectionModel().setCellSelectionEnabled(false);
         this.customerTableView.setEditable(true);
         this.customerTableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
@@ -79,10 +75,10 @@ public class CustomerView {
         emailAddressColumn.setMinWidth(150);
         emailAddressColumn.setCellValueFactory(new PropertyValueFactory<>("emailAddress"));
 
-        customerTableView.getColumns().addAll(firstNameColumn, lastNameColumn, streetAddressColumn, cityLocationColumn,
+        this.customerTableView.getColumns().addAll(firstNameColumn, lastNameColumn, streetAddressColumn, cityLocationColumn,
                 phoneNumberColumn, emailAddressColumn);
 
-        customerTableView.setItems(customers);
+        this.customerTableView.setItems(customers);
 
 //        TableView.TableViewSelectionModel selectionModel = customerTableView.getSelectionModel();
 //
@@ -90,7 +86,7 @@ public class CustomerView {
 //
 //        System.out.println(selectedItem);
 
-        customerTableView.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
+        this.customerTableView.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 createOrder.getCustomerFirstNameLabel().setText("Firstname: " + newValue.getFirstName());
                 createOrder.getCustomerLastNameLbl().setText("Lastname: " + newValue.getLastName());
@@ -121,7 +117,7 @@ public class CustomerView {
         layout.getChildren().addAll(customerListLabel, customerTableView, addCustomerButton);
 
         addCustomerButton .setOnAction(actionEvent -> {
-            AddCustomer addCustomer = new AddCustomer();
+            AddCustomer addCustomer = new AddCustomer(this);
             addCustomer.getStage().showAndWait();
 
         });
@@ -138,4 +134,11 @@ public class CustomerView {
         return stage;
     }
 
+    public Database getDatabase(){
+        return this.db;
+    }
+
+    public TableView<Customer> getCustomerTableView(){
+        return this.customerTableView;
+    }
 }

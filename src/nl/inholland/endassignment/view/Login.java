@@ -13,6 +13,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import nl.inholland.endassignment.exceptions.AccountLockedException;
 import nl.inholland.endassignment.model.Database;
 import nl.inholland.endassignment.model.User;
 import nl.inholland.endassignment.util.Notifications;
@@ -29,6 +30,8 @@ public class Login implements Serializable {
     private TextField passwordInput;
     private Button loginButton;
     public static Dashboard dashboard;
+    private int loginAttempts = 3;
+    private String tmpUsername = "";
 
     public Login() {
         initLayout();
@@ -96,15 +99,6 @@ public class Login implements Serializable {
 
          */
         loginButton.setOnAction(actionEvent -> {
-
-//            try {
-//                System.out.println( 1 / 0);
-//            } catch (ArithmeticException ae ) {
-//                System.out.println("Must not divide by zero");
-//            } finally {
-//                System.out.println("All done, cleaning up");
-//            }
-
             if (userInput.getText().isEmpty() | passwordInput.getText().isEmpty()){
                 Notifications.errorNotification("Username and Password is required!", "Login Error", null);
             }else {
@@ -114,17 +108,30 @@ public class Login implements Serializable {
                         .findAny()
                         .orElse(null);
                 if (login == null) {
-                    //Notifications.errorNotification("Login is failed!", "Login Error", null);
+                    if(tmpUsername.equals(userInput.getText())){
+                        loginAttempts--;
+                    }else{
+                        if (!tmpUsername.isEmpty()){
+                            loginAttempts = 3;
+                        }
+                        tmpUsername = userInput.getText();
+                    }
+                    try{
+                        if (loginAttempts > 0) {
+                            Notifications.errorNotification("Wrong username or password! " + loginAttempts + " Attempts remaining.", "Exception", "Login Error" );
+                        }else{
+                            Notifications.errorNotification("Your account has been locked!", "Exception",
+                                    "Account locked");
+                            throw new AccountLockedException("Account locked due to maximum number of login reached!");
+                        }
 
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Exception");
-                    alert.setHeaderText("Account locked");
-                    alert.setContentText("Your account has been locked");
-
-                    alert.showAndWait();
-
+                    }catch (AccountLockedException e){
+                        System.err.println(e.getMessage());
+                        System.exit(1);
+                    }
 
                 } else {
+                    loginAttempts = 0;
                     stage.close();
                     Dashboard dashboard = new Dashboard(login);
                     dashboard.getStage().showAndWait();
@@ -155,5 +162,4 @@ public class Login implements Serializable {
     public static Stage getStage() {
         return stage;
     }
-
 }

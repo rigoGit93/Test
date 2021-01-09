@@ -4,10 +4,13 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import nl.inholland.endassignment.model.Customer;
+import nl.inholland.endassignment.model.Database;
 
 public class AddCustomer {
 
@@ -16,9 +19,13 @@ public class AddCustomer {
     private VBox vBox;
     private Button addCustomer;
     private Button cancelButton;
+    private Database database;
 
+    TableView<Customer> customerTableView;
 
-    public AddCustomer() {
+    public AddCustomer(CustomerView customerView) {
+        this.customerTableView = customerView.getCustomerTableView();
+        this.database = customerView.getDatabase();
         initLayout();
     }
 
@@ -34,7 +41,6 @@ public class AddCustomer {
         Label addCustomerLabel = new Label("Add Customer");
         GridPane.setConstraints(addCustomerLabel, 0, 0);
 
-
         Label firstNameLabel = new Label("First Name");
         GridPane.setConstraints(firstNameLabel, 0, 1);
 
@@ -46,7 +52,7 @@ public class AddCustomer {
         GridPane.setConstraints(lastNameLabel, 0,2);
 
         TextField lastNameInput = new TextField();
-        firstNameInput.setPromptText("lastName");
+        lastNameInput.setPromptText("lastName");
         GridPane.setConstraints(lastNameInput, 1, 2);
 
         Label streetAddressLabel = new Label("Street address");
@@ -84,7 +90,7 @@ public class AddCustomer {
         GridPane.setConstraints(cancelButton, 1, 7);
 
         gridPane.getChildren().addAll(addCustomerLabel, firstNameLabel, firstNameInput, lastNameLabel,
-        lastNameInput, streetAddressLabel, lastNameInput, streetAddressLabel, streetAddressInput, cityLabel,
+        lastNameInput, streetAddressLabel, streetAddressInput, cityLabel,
                 cityInput, phoneNumberLabel,phoneNumberInput,emailAddressLabel,emailAddressInput,addCustomer,
                 cancelButton);
 
@@ -95,6 +101,21 @@ public class AddCustomer {
         stage = new Stage();
         stage.setTitle("Add Customer");
         stage.setScene(scene);
+
+        addCustomer.setOnAction(actionEvent -> {
+            Customer customer = new Customer(firstNameInput.getText(), lastNameInput.getText(),
+                    streetAddressInput.getText(), cityInput.getText(), Long.parseLong(phoneNumberInput.getText()),
+                    emailAddressInput.getText());
+           this.database.getCustomer("").add(customer);
+            this.customerTableView.getItems().add(customer);
+            stage.hide();
+        });
+
+        cancelButton.setOnAction(actionEvent -> {
+            stage.hide();
+        });
+
+
 
     }
 

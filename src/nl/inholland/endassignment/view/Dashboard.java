@@ -9,18 +9,24 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import nl.inholland.endassignment.exam.WelcomeMessage;
 import nl.inholland.endassignment.model.Database;
 import nl.inholland.endassignment.model.Role;
 import nl.inholland.endassignment.model.User;
 import nl.inholland.endassignment.util.SystemProperties;
+import nl.inholland.endassignment.util.Utils;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Dashboard extends Exception{
+public class Dashboard{
 
     private Stage stage;
     private VBox vBox;
@@ -75,6 +81,20 @@ public class Dashboard extends Exception{
         gridPane.setPadding(new Insets(30, 30, 30, 30));
         gridPane.setVgap(10);
         gridPane.setHgap(10);
+
+        WelcomeMessage welcomeMessage = null;
+
+        try {
+            FileInputStream fin = new FileInputStream(Utils.getSerializedFile().getAbsolutePath());
+            ObjectInputStream ob = new ObjectInputStream(fin);
+            welcomeMessage = (WelcomeMessage)ob.readObject();
+            ob.close();
+            fin.close();
+        }catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(welcomeMessage.getContent());
 
         Label welcomeLabel = new Label("Welcome " + user.firstName + " " + user.lastName);
         welcomeLabel.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
