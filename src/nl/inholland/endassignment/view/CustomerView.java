@@ -125,7 +125,7 @@ public class CustomerView {
         Scene scene = new Scene(layout);
 
         stage = new Stage();
-        stage.setTitle("Search customer");
+        stage.setTitle("Search customers");
         stage.setScene(scene);
 
     }
