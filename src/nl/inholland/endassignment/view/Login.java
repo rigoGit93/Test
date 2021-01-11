@@ -30,7 +30,7 @@ public class Login implements Serializable {
     private TextField passwordInput;
     private Button loginButton;
     public static Dashboard dashboard;
-    private int loginAttempts = 3;
+    private int loginAttempts = 2;
     private String tmpUsername = "";
 
     public Login() {
@@ -112,7 +112,7 @@ public class Login implements Serializable {
                         loginAttempts--;
                     }else{
                         if (!tmpUsername.isEmpty()){
-                            loginAttempts = 3;
+                            loginAttempts = 2;
                         }
                         tmpUsername = userInput.getText();
                     }
