@@ -116,12 +116,6 @@ public class CustomerView {
 
         layout.getChildren().addAll(customerListLabel, customerTableView, addCustomerButton);
 
-        addCustomerButton .setOnAction(actionEvent -> {
-            AddCustomer addCustomer = new AddCustomer(this);
-            addCustomer.getStage().showAndWait();
-
-        });
-
         Scene scene = new Scene(layout);
 
         stage = new Stage();

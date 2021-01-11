@@ -20,6 +20,7 @@ public class Stock{
     private Stage stage;
     private TextField quantityArticleInput;
     private Button addButton;
+    private Button addProductButton;
     private VBox vBox;
 
     private User user;
@@ -46,7 +47,7 @@ public class Stock{
         Label stockMaintenanceLabel = new Label("Stock maintenance");
         stockMaintenanceLabel.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
 
-        TableView<Article> stockArticleTableView = new TableView<>();
+        stockArticleTableView = new TableView<>();
         stockArticleTableView.setEditable(true);
         stockArticleTableView.getSelectionModel().setCellSelectionEnabled(false);
         stockArticleTableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -85,9 +86,10 @@ public class Stock{
         quantityArticleInput = new TextField();
         negateBox = new CheckBox("Negate");
         addButton= new Button("Add");
+        addProductButton= new Button("Add Product");
 
         HBox hBoxButton = new HBox();
-        hBoxButton.getChildren().addAll(quantityArticleInput, negateBox, addButton);
+        hBoxButton.getChildren().addAll(quantityArticleInput, negateBox, addButton, addProductButton);
         hBoxButton.setSpacing(10);
         hBoxButton.setPadding(new Insets(10, 10, 10, 10));
 
@@ -115,10 +117,23 @@ public class Stock{
             stockArticleTableView.setItems(FXCollections.observableArrayList(database.getArticlelist()));
 
         });
+
+        addProductButton.setOnAction(actionEvent -> {
+            AddProduct addProduct = new AddProduct(this);
+            addProduct.getStage().showAndWait();
+        });
     }
 
     public VBox getvBox() {
         return vBox;
+    }
+
+    public TableView<Article> getStockArticleTableView(){
+        return this.stockArticleTableView;
+    }
+
+    public Database getDatabase(){
+        return this.database;
     }
 
 }

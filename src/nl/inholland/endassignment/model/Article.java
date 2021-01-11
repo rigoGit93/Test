@@ -44,4 +44,9 @@ public class Article {
     public double getPrice() {
         return price;
     }
+
+    @Override
+    public String toString() {
+        return type.toString();
+    }
 }

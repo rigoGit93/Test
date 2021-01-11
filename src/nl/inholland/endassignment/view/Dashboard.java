@@ -1,5 +1,6 @@
 package nl.inholland.endassignment.view;
 
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -9,10 +10,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-import nl.inholland.endassignment.exam.WelcomeMessage;
 import nl.inholland.endassignment.model.Database;
 import nl.inholland.endassignment.model.Role;
 import nl.inholland.endassignment.model.User;
+import nl.inholland.endassignment.util.ExitModal;
 import nl.inholland.endassignment.util.SystemProperties;
 import nl.inholland.endassignment.util.Utils;
 
@@ -82,20 +83,6 @@ public class Dashboard{
         gridPane.setVgap(10);
         gridPane.setHgap(10);
 
-        WelcomeMessage welcomeMessage = null;
-
-        try {
-            FileInputStream fin = new FileInputStream(Utils.getSerializedFile().getAbsolutePath());
-            ObjectInputStream ob = new ObjectInputStream(fin);
-            welcomeMessage = (WelcomeMessage)ob.readObject();
-            ob.close();
-            fin.close();
-        }catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println(welcomeMessage.getContent());
-
         Label welcomeLabel = new Label("Welcome " + user.firstName + " " + user.lastName);
         welcomeLabel.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
         GridPane.setConstraints(welcomeLabel, 0, 0);
@@ -123,6 +110,11 @@ public class Dashboard{
         stage.setWidth(SystemProperties.getScreenSize()[0] - 100);
         stage.setHeight(SystemProperties.getScreenSize()[1] - 100);
 
+        stage.setOnCloseRequest(event -> {
+            event.consume();
+            ExitModal modal = new ExitModal("Info", "Close the window?", stage);
+        });
+
         if (user.enummer == Role.ADMIN) {
             orderMenuItem.setVisible(false);
 
@@ -143,6 +135,7 @@ public class Dashboard{
                 System.exit(1);
             }
         });
+
 
         orderMenuItem.setOnAction(actionEvent -> {
             CreateOrder order = new CreateOrder(this);

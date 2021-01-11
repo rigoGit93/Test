@@ -1,5 +1,8 @@
 package nl.inholland.endassignment.model;
 
+import nl.inholland.endassignment.util.Utils;
+
+import java.io.File;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -25,17 +28,7 @@ public class Database implements Serializable {
         userList.add(obj1);
         userList.add(obj2);
 
-        this.customer = new ArrayList<>();
-        Customer cl1 = new Customer("Wim", "Wiltenburg", "Stentorsstraat 90",
-                "Amsterdam", 061234567, "wim@email.com");
-        Customer cl2 = new Customer("Jack", "Traven", "Dorpsstraat 10",
-                "Arnhem", 0612674567, "jack@email.com");
-        Customer cl3 = new Customer("Jenny", "Gump", "Rodekruis 67",
-                "Den Haag", 061234567, "jenny@email.com");
-
-        customer.add(cl1);
-        customer.add(cl2);
-        customer.add(cl3);
+        this.customer = Utils.getCustomersFromFile(new File(Utils.getCSVFile().getAbsolutePath()));
 
         this.articlelist = new ArrayList<>();
         Article art1 = new Article(1, "Fender", "Telecaster", false, GuitarType.REGULAR,
